@@ -1,5 +1,6 @@
 package ru.farmersregister.farmersregister.entity;
 
-public enum ArchiveStatus {
-  yes, no,
+public enum Status {
+  active, nonactive,
+
 }
