@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -63,6 +64,10 @@ public class Farmer {
   private Region region;
 
   @ManyToMany
+  @JoinTable(name = "farmer_region_fields",
+      joinColumns = @JoinColumn(name = "farmer_id"),
+      inverseJoinColumns = @JoinColumn(name = "region_id")
+  )
   private Collection<Region> regionCollection;
 
   @Column(name = "date_registration")
