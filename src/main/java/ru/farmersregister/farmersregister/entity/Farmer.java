@@ -59,22 +59,29 @@ public class Farmer {
   @Column(name = "ogrn")
   private int ogrn;
 
-  @JoinColumn(name = "registration_region_id")
-  @ManyToOne
-  private Region region;
-
-  @ManyToMany
-  @JoinTable(name = "farmer_region_fields",
-      joinColumns = @JoinColumn(name = "farmer_id"),
-      inverseJoinColumns = @JoinColumn(name = "region_id")
-  )
-  private Collection<Region> regionCollection;
-
   @Column(name = "date_registration")
   private LocalDate dateRegistration;
 
   @Column(name = "status")
   @Enumerated(EnumType.STRING)
   private Status status;
+
+
+  @JoinColumn(name = "registration_region_id")
+  @ManyToOne
+  private Region region;
+
+
+
+  @OneToMany(mappedBy = "farmer")
+  private Collection<Region> regions;
+
+
+//  @ManyToMany
+//  @JoinTable(name = "farmer_region_fields",
+//      joinColumns = @JoinColumn(name = "farmer_id"),
+//      inverseJoinColumns = @JoinColumn(name = "region_id")
+//  )
+//  private Collection<Region> regionCollection;
 
 }

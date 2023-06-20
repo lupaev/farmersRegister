@@ -17,12 +17,12 @@ import ru.farmersregister.farmersregister.entity.Status;
 @EqualsAndHashCode
 public class RegionDTO {
 
-  @JsonIgnore
-  private long id;
+//  @JsonIgnore
+  private Long id;
 
   private String name;
 
-  private int codeRegion;
+  private Integer codeRegion;
 
   private Status status;
 
