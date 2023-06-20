@@ -5,20 +5,20 @@ create table region
 (
     id bigserial primary key ,
     name varchar not null ,
-    code_region integer not null ,
-    status varchar not null
+    code_region integer ,
+    status varchar
 );
 create table farmer
 (
     id bigserial primary key ,
     name varchar not null ,
-    legal_form varchar not null ,
+    legal_form varchar ,
     inn integer not null ,
-    kpp integer not null ,
-    ogrn integer not null ,
-    registration_region_id bigint not null ,
-    date_registration date not null ,
-    status varchar not null ,
+    kpp integer ,
+    ogrn integer ,
+    registration_region_id integer ,
+    date_registration date ,
+    status varchar ,
     constraint fk_region_id foreign key (registration_region_id) references region (id)
 );
 

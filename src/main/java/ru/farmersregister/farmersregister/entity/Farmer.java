@@ -1,9 +1,6 @@
 package ru.farmersregister.farmersregister.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.util.Collection;
 import javax.persistence.CascadeType;
@@ -17,11 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -70,10 +63,13 @@ public class Farmer {
   @Enumerated(EnumType.STRING)
   private Status status;
 
+  @Column(name = "registration_region_id")
+  private Integer registrationRegion;
+
   //id регистрации
-  @JoinColumn(name = "registration_region_id")
-  @ManyToOne(fetch = FetchType.LAZY)
-  private Region region;
+//  @JoinColumn(name = "registration_region_id")
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  private Region region;
 
 
   //id регионов в которых есть поля
@@ -81,11 +77,11 @@ public class Farmer {
 //  private Collection<Region> regions;
 
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "farmer_region_fields",
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(name = "farmer_fields",
       joinColumns = @JoinColumn(name = "farmer_id"),
       inverseJoinColumns = @JoinColumn(name = "region_id")
   )
-  private Collection<Region> regionCollection;
+  private Collection<Region> fields;
 
 }

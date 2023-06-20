@@ -28,10 +28,4 @@ public class RegionDTO {
 
   private Status status;
 
-  @JsonIgnore
-  private Collection<Farmer> farmers;
-
-  @JsonIgnore
-  private Collection<Farmer> farmerCollection;
-
 }
