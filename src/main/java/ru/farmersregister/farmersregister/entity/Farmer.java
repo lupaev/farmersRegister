@@ -66,21 +66,10 @@ public class Farmer {
   @Column(name = "registration_region_id")
   private Integer registrationRegion;
 
-  //id регистрации
-//  @JoinColumn(name = "registration_region_id")
-//  @ManyToOne(fetch = FetchType.LAZY)
-//  private Region region;
-
-
-  //id регионов в которых есть поля
-//  @OneToMany(mappedBy = "farmer")
-//  private Collection<Region> regions;
-
-
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "farmer_fields",
-      joinColumns = @JoinColumn(name = "farmer_id"),
-      inverseJoinColumns = @JoinColumn(name = "region_id")
+      joinColumns = @JoinColumn(name = "farmer_id", referencedColumnName="id"),
+      inverseJoinColumns = @JoinColumn(name = "region_id", referencedColumnName="id")
   )
   private Collection<Region> fields;
 

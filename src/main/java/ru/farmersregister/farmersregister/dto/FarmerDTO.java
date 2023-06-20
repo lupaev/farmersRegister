@@ -1,6 +1,7 @@
 package ru.farmersregister.farmersregister.dto;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.farmersregister.farmersregister.entity.LegalForm;
+import ru.farmersregister.farmersregister.entity.Region;
 import ru.farmersregister.farmersregister.entity.Status;
 
 
@@ -39,7 +41,7 @@ public class FarmerDTO {
 
   private Status status;
 
-
+  private Collection<Region> fields;
 
 
 }
