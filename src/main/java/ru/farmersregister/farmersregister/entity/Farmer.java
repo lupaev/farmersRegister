@@ -2,6 +2,7 @@ package ru.farmersregister.farmersregister.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -28,6 +29,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -60,28 +62,30 @@ public class Farmer {
   private Integer ogrn;
 
   @Column(name = "date_registration")
+//  @JsonFormat(pattern="yyyy-MM-dd")
+  @DateTimeFormat(pattern= "yyyy-MM-dd")
   private LocalDate dateRegistration;
 
   @Column(name = "status")
   @Enumerated(EnumType.STRING)
   private Status status;
 
-
+  //id регистрации
   @JoinColumn(name = "registration_region_id")
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Region region;
 
 
+  //id регионов в которых есть поля
+//  @OneToMany(mappedBy = "farmer")
+//  private Collection<Region> regions;
 
-  @OneToMany(mappedBy = "farmer")
-  private Collection<Region> regions;
 
-
-//  @ManyToMany
-//  @JoinTable(name = "farmer_region_fields",
-//      joinColumns = @JoinColumn(name = "farmer_id"),
-//      inverseJoinColumns = @JoinColumn(name = "region_id")
-//  )
-//  private Collection<Region> regionCollection;
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(name = "farmer_region_fields",
+      joinColumns = @JoinColumn(name = "farmer_id"),
+      inverseJoinColumns = @JoinColumn(name = "region_id")
+  )
+  private Collection<Region> regionCollection;
 
 }

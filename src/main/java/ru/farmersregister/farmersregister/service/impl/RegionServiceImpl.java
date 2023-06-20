@@ -48,7 +48,11 @@ public class RegionServiceImpl implements RegionService {
 
   @Override
   public RegionDTO patchRegion(long id, String name, Integer codeRegion, Status status) throws Exception {
-    RegionDTO regionDTO = new RegionDTO(id, name, codeRegion, status);
+    RegionDTO regionDTO = new RegionDTO();
+    regionDTO.setId(id);
+    regionDTO.setName(name);
+    regionDTO.setCodeRegion(codeRegion);
+    regionDTO.setStatus(status);
     Region region = regionRepository.findById(id).orElseThrow(Exception::new);
     regionMapper.updateEntity(regionDTO, region);
     regionRepository.save(region);

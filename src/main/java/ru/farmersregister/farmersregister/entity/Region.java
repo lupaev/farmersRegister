@@ -49,12 +49,9 @@ public class Region {
   @Enumerated(EnumType.STRING)
   private Status status;
 
-
-
-  @OneToMany(mappedBy = "region", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "region", fetch = FetchType.LAZY)
   @JsonIgnore
   private Collection<Farmer> farmers;
-
 
 
 //  @ManyToMany(mappedBy = "regionCollection")
