@@ -55,7 +55,6 @@ public class Farmer {
   private Integer ogrn;
 
   @Column(name = "date_registration")
-//  @JsonFormat(pattern="yyyy-MM-dd")
   @DateTimeFormat(pattern= "yyyy-MM-dd")
   private LocalDate dateRegistration;
 

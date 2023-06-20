@@ -7,8 +7,8 @@ import ru.farmersregister.farmersregister.entity.Status;
 public interface RegionService {
   Collection<RegionDTO>findAll();
 
-  RegionDTO addRegion(RegionDTO regionDTO);
-  RegionDTO patchRegion(long id, String name, Integer codeRegion, Status status) throws Exception;
+  RegionDTO addRegion(String name, Integer codeRegion, Status status);
+  RegionDTO patchRegion(Long id, String name, Integer codeRegion, Status status) throws Exception;
 
 //  Collection<RegionDTO> findAllByName();
 }
