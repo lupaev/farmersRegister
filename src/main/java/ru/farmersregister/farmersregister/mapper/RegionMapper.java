@@ -13,6 +13,7 @@ public interface RegionMapper {
 
   RegionDTO toDTO(Region region);
 
-  Collection<RegionDTO> toDTOList(Collection<RegionDTO> list);
+  Collection<RegionDTO> toDTOList(Collection<Region> list);
+  Collection<Region> toEntityList(Collection<RegionDTO> list);
 
 }

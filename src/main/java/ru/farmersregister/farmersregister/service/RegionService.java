@@ -1,5 +1,10 @@
 package ru.farmersregister.farmersregister.service;
 
-public interface RegionService {
+import java.util.Collection;
+import ru.farmersregister.farmersregister.dto.RegionDTO;
 
+public interface RegionService {
+  Collection<RegionDTO>findAll();
+
+  Collection<RegionDTO> findAllByName();
 }
