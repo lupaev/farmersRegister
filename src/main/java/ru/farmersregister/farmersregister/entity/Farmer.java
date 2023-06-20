@@ -41,7 +41,7 @@ public class Farmer {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Long id;
 
   @Column(name = "name")
   private String name;
@@ -51,13 +51,13 @@ public class Farmer {
   private LegalForm legalForm;
 
   @Column(name = "inn")
-  private int inn;
+  private Integer inn;
 
   @Column(name = "kpp")
-  private int kpp;
+  private Integer kpp;
 
   @Column(name = "ogrn")
-  private int ogrn;
+  private Integer ogrn;
 
   @Column(name = "date_registration")
   private LocalDate dateRegistration;

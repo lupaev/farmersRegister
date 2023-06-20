@@ -70,7 +70,7 @@ public class RegionController {
     return ResponseEntity.ok(regionService.addRegion(regionDTO));
   }
 
-  @Operation(summary = "Изменение данных района")
+  @Operation(summary = "Изменение данных района. Отправка в архив(сделать неактивным)")
   @ApiResponses({
       @ApiResponse(
           responseCode = "200",

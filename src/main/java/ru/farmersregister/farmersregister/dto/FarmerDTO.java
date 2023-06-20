@@ -24,18 +24,18 @@ import ru.farmersregister.farmersregister.entity.Status;
 @EqualsAndHashCode
 public class FarmerDTO {
 
-  @JsonIgnore
-  private long id;
+//  @JsonIgnore
+  private Long id;
 
   private String name;
 
   private LegalForm legalForm;
 
-  private int inn;
+  private Integer inn;
 
-  private int kpp;
+  private Integer kpp;
 
-  private int ogrn;
+  private Integer ogrn;
 
   @JsonIgnore
   private Region region;
