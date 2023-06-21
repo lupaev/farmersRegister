@@ -65,11 +65,7 @@ public class Farmer {
   @Column(name = "registration_region_id")
   private Integer registrationRegion;
 
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(name = "farmer_fields",
-      joinColumns = @JoinColumn(name = "farmer_id", referencedColumnName="id"),
-      inverseJoinColumns = @JoinColumn(name = "region_id", referencedColumnName="id")
-  )
-  private Collection<Region> fields;
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  private Collection<Region> regions;
 
 }

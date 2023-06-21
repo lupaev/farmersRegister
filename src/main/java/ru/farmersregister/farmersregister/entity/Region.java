@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,14 +44,6 @@ public class Region {
   @Column(name = "status")
   @Enumerated(EnumType.STRING)
   private Status status;
-
-
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(name = "farmer_fields",
-      joinColumns = @JoinColumn(name = "region_id", referencedColumnName="id"),
-      inverseJoinColumns = @JoinColumn(name = "farmer_id", referencedColumnName="id")
-  )
-  private Collection<Farmer> farmers;
 
 
 }

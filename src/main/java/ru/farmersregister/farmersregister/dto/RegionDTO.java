@@ -28,6 +28,4 @@ public class RegionDTO {
 
   private Status status;
 
-  private Collection<Farmer> farmers;
-
 }
