@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.awt.print.Pageable;
 import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
+import ru.farmersregister.farmersregister.entity.SortRegion;
 import ru.farmersregister.farmersregister.entity.Status;
 import ru.farmersregister.farmersregister.service.RegionService;
 
@@ -46,8 +48,8 @@ public class RegionController {
       ),
   })
   @GetMapping
-  public ResponseEntity<Collection<RegionDTO>> findAll() {
-    return ResponseEntity.ok(regionService.findAll());
+  public ResponseEntity<Collection<RegionDTO>> findAll(@RequestParam(name = "sort by") SortRegion sortRegion) {
+    return ResponseEntity.ok(regionService.findAll(sortRegion));
   }
 
   @Operation(summary = "Добавление района")

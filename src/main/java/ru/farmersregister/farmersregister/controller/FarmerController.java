@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.LegalForm;
+import ru.farmersregister.farmersregister.entity.SortFarmer;
 import ru.farmersregister.farmersregister.entity.Status;
 import ru.farmersregister.farmersregister.service.FarmerService;
 
@@ -49,8 +50,8 @@ public class FarmerController {
       ),
   })
   @GetMapping
-  public ResponseEntity<Collection<FarmerDTO>> findAll() {
-    return ResponseEntity.ok(farmerService.findAll());
+  public ResponseEntity<Collection<FarmerDTO>> findAll(SortFarmer sortFarmer) {
+    return ResponseEntity.ok(farmerService.findAll(sortFarmer));
   }
 
   @Operation(summary = "Добавление фермера")

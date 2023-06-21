@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
+import ru.farmersregister.farmersregister.entity.SortRegion;
 import ru.farmersregister.farmersregister.entity.Status;
 import ru.farmersregister.farmersregister.mapper.RegionMapper;
 import ru.farmersregister.farmersregister.repository.RegionRepository;
@@ -27,18 +28,19 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public Collection<RegionDTO> findAll() {
-    Collection<Region> collection = regionRepository.findAll(Sort.by(Direction.DESC, "codeRegion"));
-    return new ArrayList<>(regionMapper.toDTOList(collection.stream()
-        .filter(region -> region.getStatus().equals(active)).collect(Collectors.toList())));
+  public Collection<RegionDTO> findAll(SortRegion sortRegion) {
+    if (sortRegion.name().equals("NAME")) {
+      Collection<Region> collection = regionRepository.findAll(Sort.by(Direction.ASC, "name"));
+      return new ArrayList<>(regionMapper.toDTOList(collection.stream()
+          .filter(region -> region.getStatus().equals(ACTIVE)).collect(Collectors.toList())));
+    } else {
+      Collection<Region> collection = regionRepository.findAll(
+          Sort.by(Direction.ASC, "codeRegion"));
+      return new ArrayList<>(regionMapper.toDTOList(collection.stream()
+          .filter(region -> region.getStatus().equals(ACTIVE)).collect(Collectors.toList())));
+    }
+
   }
-
-//  @Override
-//  public Collection<RegionDTO> findAllByName() {
-//    Collection<Region> collection = regionRepository.findAll();
-//    return new ArrayList<>(regionMapper.toDTOList(collection));
-//  }
-
 
   @Override
   public RegionDTO addRegion(String name, Integer codeRegion, Status status) {
@@ -51,7 +53,8 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public RegionDTO patchRegion(Long id, String name, Integer codeRegion, Status status) throws Exception {
+  public RegionDTO patchRegion(Long id, String name, Integer codeRegion, Status status)
+      throws Exception {
     RegionDTO regionDTO = new RegionDTO();
     regionDTO.setId(id);
     regionDTO.setName(name);
@@ -62,8 +65,6 @@ public class RegionServiceImpl implements RegionService {
     regionRepository.save(region);
     return regionMapper.toDTO(region);
   }
-
-
 
 
 }
