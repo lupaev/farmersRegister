@@ -13,7 +13,7 @@ public interface FarmerService {
   Collection<FarmerDTO> findAll(SortFarmer sortFarmer);
 
   FarmerDTO addFarmer(String name, LegalForm legalForm, Integer inn, Integer kpp, Integer ogrn,
-      LocalDate dateRegistration, Status status, Integer registrationRegion);
+      LocalDate dateRegistration, Status status, Integer registrationRegion, Long regionId);
 
   FarmerDTO patchFarmer(Long id, String name, LegalForm legalForm, Integer inn, Integer kpp,
       Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion)

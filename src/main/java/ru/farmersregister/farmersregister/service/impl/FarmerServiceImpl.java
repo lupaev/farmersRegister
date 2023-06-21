@@ -67,10 +67,12 @@ public class FarmerServiceImpl implements FarmerService {
 
   @Override
   public FarmerDTO addFarmer(String name, LegalForm legalForm, Integer inn, Integer kpp,
-      Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion) {
+      Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion, Long regionId) {
     FarmerDTO farmerDTO = getFarmerDTO(name, legalForm, inn, kpp, ogrn, dateRegistration, status,
         registrationRegion);
     farmerRepository.save(farmerMapper.toEntity(farmerDTO));
+    Farmer farmer = farmerRepository.findByInnAndName(inn, name);
+    farmerRepository.saveFarmerFieldInOtherRegions(farmer.getId(), regionId);
     return farmerDTO;
   }
 

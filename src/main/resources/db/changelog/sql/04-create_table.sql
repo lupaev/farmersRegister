@@ -16,10 +16,10 @@ create table farmer_regions
     regions_id bigint not null
 );
 alter table farmer_regions
-    add constraint FKq7l8q39dcodojvpvdtwb01k2m foreign key (regions_id) references region;
+    add constraint fk_regions_id foreign key (regions_id) references region on delete cascade;
 
 alter table farmer_regions
-    add constraint FKggmkncr3omth46bpv1kppq64k foreign key (farmer_id) references farmer;
+    add constraint fk_farmer_id foreign key (farmer_id) references farmer on delete cascade;
 
 
 

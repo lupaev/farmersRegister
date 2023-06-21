@@ -1,5 +1,6 @@
 package ru.farmersregister.farmersregister.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -7,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -96,11 +98,12 @@ public class FarmerController {
       @RequestParam(name = "inn") Integer inn,
       @RequestParam(name = "kpp", required = false) Integer kpp,
       @RequestParam(name = "ogrn", required = false) Integer ogrn,
-      @RequestParam(name = "date registration", required = false) LocalDate dateRegistration,
+      @RequestParam(name = "date registration", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateRegistration,
       @RequestParam(name = "status", required = false) Status status,
-      @RequestParam(name = "registration region", required = false) Integer registrationRegion) {
+      @RequestParam(name = "registration region", required = false) Integer registrationRegion,
+      @RequestParam(name = "region_id", required = false) Long regionId) {
     return ResponseEntity.ok(farmerService.addFarmer(name, legalForm, inn, kpp, ogrn,
-        dateRegistration, status, registrationRegion));
+        dateRegistration, status, registrationRegion, regionId));
   }
 
   @Operation(summary = "Изменение данных фермера. Отправка в архив(сделать неактивным)")
