@@ -11,11 +11,14 @@ import ru.farmersregister.farmersregister.entity.Status;
 public interface FarmerService {
 
   Collection<FarmerDTO> findAll(SortFarmer sortFarmer);
+
   FarmerDTO addFarmer(String name, LegalForm legalForm, Integer inn, Integer kpp, Integer ogrn,
       LocalDate dateRegistration, Status status, Integer registrationRegion);
 
   FarmerDTO patchFarmer(Long id, String name, LegalForm legalForm, Integer inn, Integer kpp,
       Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion)
       throws Exception;
+
+  FarmerDTO getFarmer(Long id);
 
 }

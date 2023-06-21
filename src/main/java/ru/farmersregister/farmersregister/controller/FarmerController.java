@@ -54,6 +54,26 @@ public class FarmerController {
     return ResponseEntity.ok(farmerService.findAll(sortFarmer));
   }
 
+  @Operation(summary = "Данные фермера")
+  @ApiResponses({
+      @ApiResponse(
+          responseCode = "200",
+          description = "OK"
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "bad request"
+      ),
+      @ApiResponse(
+          responseCode = "500",
+          description = "Internal Server Error"
+      ),
+  })
+  @GetMapping(value = "/{id}")
+  public ResponseEntity<FarmerDTO> getFarmer(@PathVariable(name = "id") Long id) {
+    return ResponseEntity.ok(farmerService.getFarmer(id));
+  }
+
   @Operation(summary = "Добавление фермера")
   @ApiResponses({
       @ApiResponse(
@@ -73,7 +93,7 @@ public class FarmerController {
   public ResponseEntity<FarmerDTO> addFarmer(
       @RequestParam(name = "name") String name,
       @RequestParam(name = "legal form", required = false) LegalForm legalForm,
-      @RequestParam(name = "inn", required = false) Integer inn,
+      @RequestParam(name = "inn") Integer inn,
       @RequestParam(name = "kpp", required = false) Integer kpp,
       @RequestParam(name = "ogrn", required = false) Integer ogrn,
       @RequestParam(name = "date registration", required = false) LocalDate dateRegistration,

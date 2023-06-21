@@ -33,11 +33,15 @@ public class RegionServiceImpl implements RegionService {
       Collection<Region> collection = regionRepository.findAll(Sort.by(Direction.ASC, "name"));
       return new ArrayList<>(regionMapper.toDTOList(collection.stream()
           .filter(region -> region.getStatus().equals(ACTIVE)).collect(Collectors.toList())));
-    } else {
+    } else if (sortRegion.name().equals("CODE")) {
       Collection<Region> collection = regionRepository.findAll(
           Sort.by(Direction.ASC, "codeRegion"));
       return new ArrayList<>(regionMapper.toDTOList(collection.stream()
           .filter(region -> region.getStatus().equals(ACTIVE)).collect(Collectors.toList())));
+    } else {
+      Collection<Region> collection = regionRepository.findAll();
+      return new ArrayList<>(regionMapper.toDTOList(collection.stream()
+          .filter(region -> region.getStatus().equals(NONACTIVE)).collect(Collectors.toList())));
     }
 
   }

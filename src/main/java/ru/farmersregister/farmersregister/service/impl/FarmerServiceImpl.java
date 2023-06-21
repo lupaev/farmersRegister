@@ -1,6 +1,7 @@
 package ru.farmersregister.farmersregister.service.impl;
 
 import static ru.farmersregister.farmersregister.entity.Status.ACTIVE;
+import static ru.farmersregister.farmersregister.entity.Status.NONACTIVE;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,10 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
-import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.LegalForm;
-import ru.farmersregister.farmersregister.entity.Region;
 import ru.farmersregister.farmersregister.entity.SortFarmer;
 import ru.farmersregister.farmersregister.entity.Status;
 import ru.farmersregister.farmersregister.mapper.FarmerMapper;
@@ -36,36 +35,63 @@ public class FarmerServiceImpl implements FarmerService {
 
     switch (sortFarmer.name()) {
       case ("NAME"):
-        Collection<Farmer> collection = farmerRepository.findAll();
+        Collection<Farmer> collection = farmerRepository.findAll(Sort.by(Direction.ASC, "name"));
         return new ArrayList<>(farmerMapper.toDTOList(collection.stream()
             .filter(farmer -> farmer.getStatus().equals(ACTIVE)).collect(Collectors.toList())));
       case ("INN"):
-        Collection<Farmer> collection1 = farmerRepository.findAll();
+        Collection<Farmer> collection1 = farmerRepository.findAll(Sort.by(Direction.ASC, "inn"));
         return new ArrayList<>(farmerMapper.toDTOList(collection1.stream()
             .filter(farmer -> farmer.getStatus().equals(ACTIVE)).collect(Collectors.toList())));
       case ("REGISTRATION"):
-        Collection<Farmer> collection2 = farmerRepository.findAll();
+        Collection<Farmer> collection2 = farmerRepository.findAll(
+            Sort.by(Direction.ASC, "registrationRegion"));
         return new ArrayList<>(farmerMapper.toDTOList(collection2.stream()
             .filter(farmer -> farmer.getStatus().equals(ACTIVE)).collect(Collectors.toList())));
       case ("DATE"):
-        Collection<Farmer> collection3 = farmerRepository.findAll();
+        Collection<Farmer> collection3 = farmerRepository.findAll(
+            Sort.by(Direction.ASC, "dateRegistration"));
         return new ArrayList<>(farmerMapper.toDTOList(collection3.stream()
             .filter(farmer -> farmer.getStatus().equals(ACTIVE)).collect(Collectors.toList())));
-      case ("STATUS"):
+      case ("ACTIVE"):
         Collection<Farmer> collection4 = farmerRepository.findAll();
         return new ArrayList<>(farmerMapper.toDTOList(collection4.stream()
             .filter(farmer -> farmer.getStatus().equals(ACTIVE)).collect(Collectors.toList())));
+      case ("NONACTIVE"):
+        Collection<Farmer> collection5 = farmerRepository.findAll();
+        return new ArrayList<>(farmerMapper.toDTOList(collection5.stream()
+            .filter(farmer -> farmer.getStatus().equals(NONACTIVE)).collect(Collectors.toList())));
       default:
-
+        return farmerMapper.toDTOList(farmerRepository.findAll());
     }
-
-    Collection<Farmer> collection = farmerRepository.findAll();
-    return new ArrayList<>(farmerMapper.toDTOList(collection.stream()
-        .filter(farmer -> farmer.getStatus().equals(ACTIVE)).collect(Collectors.toList())));
   }
 
   @Override
   public FarmerDTO addFarmer(String name, LegalForm legalForm, Integer inn, Integer kpp,
+      Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion) {
+    FarmerDTO farmerDTO = getFarmerDTO(name, legalForm, inn, kpp, ogrn, dateRegistration, status,
+        registrationRegion);
+    farmerRepository.save(farmerMapper.toEntity(farmerDTO));
+    return farmerDTO;
+  }
+
+  @Override
+  public FarmerDTO patchFarmer(Long id, String name, LegalForm legalForm, Integer inn, Integer kpp,
+      Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion)
+      throws Exception {
+    FarmerDTO farmerDTO = getFarmerDTO(name, legalForm, inn, kpp, ogrn, dateRegistration, status,
+        registrationRegion);
+    Farmer farmer = farmerRepository.findById(id).orElseThrow(Exception::new);
+    farmerMapper.updateEntity(farmerDTO, farmer);
+    farmerRepository.save(farmer);
+    return farmerMapper.toDTO(farmer);
+  }
+
+  @Override
+  public FarmerDTO getFarmer(Long id) {
+    return farmerMapper.toDTO(farmerRepository.findById(id).get());
+  }
+
+  private FarmerDTO getFarmerDTO(String name, LegalForm legalForm, Integer inn, Integer kpp,
       Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion) {
     FarmerDTO farmerDTO = new FarmerDTO();
     farmerDTO.setName(name);
@@ -76,28 +102,7 @@ public class FarmerServiceImpl implements FarmerService {
     farmerDTO.setDateRegistration(dateRegistration);
     farmerDTO.setStatus(status);
     farmerDTO.setRegistrationRegion(registrationRegion);
-    farmerRepository.save(farmerMapper.toEntity(farmerDTO));
     return farmerDTO;
-  }
-
-  @Override
-  public FarmerDTO patchFarmer(Long id, String name, LegalForm legalForm, Integer inn, Integer kpp,
-      Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion)
-      throws Exception {
-    FarmerDTO farmerDTO = new FarmerDTO();
-    farmerDTO.setId(id);
-    farmerDTO.setName(name);
-    farmerDTO.setLegalForm(legalForm);
-    farmerDTO.setInn(inn);
-    farmerDTO.setKpp(kpp);
-    farmerDTO.setOgrn(ogrn);
-    farmerDTO.setDateRegistration(dateRegistration);
-    farmerDTO.setStatus(status);
-    farmerDTO.setRegistrationRegion(registrationRegion);
-    Farmer farmer = farmerRepository.findById(id).orElseThrow(Exception::new);
-    farmerMapper.updateEntity(farmerDTO, farmer);
-    farmerRepository.save(farmer);
-    return farmerMapper.toDTO(farmer);
   }
 
 
