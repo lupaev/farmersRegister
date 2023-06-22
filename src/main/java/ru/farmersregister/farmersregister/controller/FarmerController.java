@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
+import ru.farmersregister.farmersregister.dto.FarmerFullDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.SortFarmer;
@@ -72,7 +73,7 @@ public class FarmerController {
       ),
   })
   @GetMapping(value = "/{id}")
-  public ResponseEntity<FarmerDTO> getFarmer(@PathVariable(name = "id") Long id) {
+  public ResponseEntity<FarmerFullDTO> getFarmer(@PathVariable(name = "id") Long id) {
     return ResponseEntity.ok(farmerService.getFarmer(id));
   }
 
