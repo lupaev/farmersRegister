@@ -1,6 +1,5 @@
 package ru.farmersregister.farmersregister.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerFullDTO;
-import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.SortFarmer;
 import ru.farmersregister.farmersregister.entity.Status;

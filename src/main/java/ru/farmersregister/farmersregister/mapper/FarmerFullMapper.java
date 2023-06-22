@@ -1,7 +1,6 @@
 package ru.farmersregister.farmersregister.mapper;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,6 +10,7 @@ import ru.farmersregister.farmersregister.entity.Region;
 
 @Mapper
 public interface FarmerFullMapper {
+
   @Mapping(target = "id", source = "id")
   @Mapping(target = "name", source = "name")
   @Mapping(target = "legalForm", source = "legalForm")

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.Collection;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerFullDTO;
-import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.SortFarmer;
 import ru.farmersregister.farmersregister.entity.Status;
