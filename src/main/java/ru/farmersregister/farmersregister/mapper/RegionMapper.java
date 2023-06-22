@@ -2,6 +2,7 @@ package ru.farmersregister.farmersregister.mapper;
 
 import java.util.Collection;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
@@ -13,6 +14,9 @@ public interface RegionMapper {
 
   RegionDTO toDTO(Region region);
 
-  Collection<RegionDTO> toDTOList(Collection<RegionDTO> list);
+  Collection<RegionDTO> toDTOList(Collection<Region> list);
+  Collection<Region> toEntityList(Collection<RegionDTO> list);
+
+  void updateEntity(RegionDTO regionDTO, @MappingTarget Region region);
 
 }

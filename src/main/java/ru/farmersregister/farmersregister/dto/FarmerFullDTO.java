@@ -1,6 +1,6 @@
 package ru.farmersregister.farmersregister.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDate;
 import java.util.Collection;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -8,8 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.farmersregister.farmersregister.entity.Farmer;
+import org.springframework.format.annotation.DateTimeFormat;
+import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.Status;
+
 
 @Getter
 @Setter
@@ -17,14 +19,24 @@ import ru.farmersregister.farmersregister.entity.Status;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class RegionDTO {
+public class FarmerFullDTO {
 
-//  @JsonIgnore
   private Long id;
 
   private String name;
 
-  private Integer codeRegion;
+  private LegalForm legalForm;
+
+  private Integer inn;
+
+  private Integer kpp;
+
+  private Integer ogrn;
+
+  private String registrationRegionName;
+
+  @DateTimeFormat(pattern= "yyyy-MM-dd")
+  private LocalDate dateRegistration;
 
   private Status status;
 

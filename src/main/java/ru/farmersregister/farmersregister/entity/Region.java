@@ -1,9 +1,7 @@
 package ru.farmersregister.farmersregister.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,10 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -36,23 +33,17 @@ public class Region {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Long id;
 
   @Column(name = "name")
   private String name;
 
   @Column(name = "code_region")
-  private int codeRegion;
+  private Integer codeRegion;
 
   @Column(name = "status")
   @Enumerated(EnumType.STRING)
   private Status status;
-
-  @OneToMany(mappedBy = "region", fetch = FetchType.EAGER)
-  private Collection<Farmer> farmers;
-
-  @ManyToMany(mappedBy = "regionCollection")
-  private Collection<Farmer> farmerCollection;
 
 
 }

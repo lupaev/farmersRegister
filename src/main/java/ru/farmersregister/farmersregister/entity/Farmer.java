@@ -1,10 +1,9 @@
 package ru.farmersregister.farmersregister.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,11 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -27,6 +22,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -40,7 +36,7 @@ public class Farmer {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Long id;
 
   @Column(name = "name")
   private String name;
@@ -50,26 +46,26 @@ public class Farmer {
   private LegalForm legalForm;
 
   @Column(name = "inn")
-  private int inn;
+  private Integer inn;
 
   @Column(name = "kpp")
-  private int kpp;
+  private Integer kpp;
 
   @Column(name = "ogrn")
-  private int ogrn;
-
-  @JoinColumn(name = "registration_region_id")
-  @ManyToOne
-  private Region region;
-
-  @ManyToMany
-  private Collection<Region> regionCollection;
+  private Integer ogrn;
 
   @Column(name = "date_registration")
+  @DateTimeFormat(pattern= "yyyy-MM-dd")
   private LocalDate dateRegistration;
 
   @Column(name = "status")
   @Enumerated(EnumType.STRING)
   private Status status;
+
+  @Column(name = "registration_region_id")
+  private Integer registrationRegion;
+
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  private Collection<Region> regions;
 
 }

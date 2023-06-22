@@ -1,6 +1,5 @@
 package ru.farmersregister.farmersregister.entity;
 
-public enum Status {
-  ACTIVE, NONACTIVE
-
+public enum SortRegion {
+  NAME, CODE, NONACTIVE
 }
