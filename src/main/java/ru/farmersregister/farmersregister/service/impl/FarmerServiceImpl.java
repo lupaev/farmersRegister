@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,14 @@ import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.SortFarmer;
 import ru.farmersregister.farmersregister.entity.Status;
+import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.FarmerFullMapper;
 import ru.farmersregister.farmersregister.mapper.FarmerMapper;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
 import ru.farmersregister.farmersregister.service.FarmerService;
 
 @Service
+@Slf4j
 public class FarmerServiceImpl implements FarmerService {
 
   private final FarmerRepository farmerRepository;
@@ -38,7 +41,7 @@ public class FarmerServiceImpl implements FarmerService {
 
 
   public Collection<FarmerDTO> findAll(SortFarmer sortFarmer) {
-
+    log.info(FormLogInfo.getInfo());
     switch (sortFarmer.name()) {
       case ("NAME"):
         Collection<Farmer> collection = farmerRepository.findAll(Sort.by(Direction.ASC, "name"));
@@ -74,6 +77,7 @@ public class FarmerServiceImpl implements FarmerService {
   @Override
   public FarmerDTO addFarmer(String name, LegalForm legalForm, Integer inn, Integer kpp,
       Integer ogrn, LocalDate dateRegistration, Status status, Long registrationRegion, Long regionId) {
+    log.info(FormLogInfo.getInfo());
     FarmerDTO farmerDTO = getFarmerDTO(name, legalForm, inn, kpp, ogrn, dateRegistration, status,
         registrationRegion);
     farmerRepository.save(farmerMapper.toEntity(farmerDTO));
@@ -86,6 +90,7 @@ public class FarmerServiceImpl implements FarmerService {
   public FarmerDTO patchFarmer(Long id, String name, LegalForm legalForm, Integer inn, Integer kpp,
       Integer ogrn, LocalDate dateRegistration, Status status, Long registrationRegion)
       throws Exception {
+    log.info(FormLogInfo.getInfo());
     FarmerDTO farmerDTO = getFarmerDTO(name, legalForm, inn, kpp, ogrn, dateRegistration, status,
         registrationRegion);
     Farmer farmer = farmerRepository.findById(id).orElseThrow(Exception::new);
@@ -96,12 +101,14 @@ public class FarmerServiceImpl implements FarmerService {
 
   @Override
   public FarmerFullDTO getFarmer(Long id) {
+    log.info(FormLogInfo.getInfo());
     Farmer farmer = farmerRepository.findById(id).get();
     return farmerFullMapper.toFullDTO(farmer);
   }
 
   private FarmerDTO getFarmerDTO(String name, LegalForm legalForm, Integer inn, Integer kpp,
       Integer ogrn, LocalDate dateRegistration, Status status, Long registrationRegion) {
+    log.info(FormLogInfo.getInfo());
     FarmerDTO farmerDTO = new FarmerDTO();
     farmerDTO.setName(name);
     farmerDTO.setLegalForm(legalForm);
