@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -62,8 +63,10 @@ public class Farmer {
   @Enumerated(EnumType.STRING)
   private Status status;
 
-  @Column(name = "registration_region_id")
-  private Integer registrationRegion;
+//  @Column(name = "registration_region_id")
+  @ManyToOne()
+  @JoinColumn(name = "registration_region_id")
+  private Region region;
 
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Collection<Region> regions;
