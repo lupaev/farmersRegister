@@ -14,10 +14,10 @@ public interface FarmerService {
   Collection<FarmerDTO> findAll(SortFarmer sortFarmer);
 
   FarmerDTO addFarmer(String name, LegalForm legalForm, Integer inn, Integer kpp, Integer ogrn,
-      LocalDate dateRegistration, Status status, Integer registrationRegion, Long regionId);
+      LocalDate dateRegistration, Status status, Long registrationRegion, Long regionId);
 
   FarmerDTO patchFarmer(Long id, String name, LegalForm legalForm, Integer inn, Integer kpp,
-      Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion)
+      Integer ogrn, LocalDate dateRegistration, Status status, Long registrationRegion)
       throws Exception;
 
   FarmerFullDTO getFarmer(Long id);

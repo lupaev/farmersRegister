@@ -40,4 +40,6 @@ public class FarmerFullDTO {
 
   private Status status;
 
+  private Collection<Long> fields;
+
 }

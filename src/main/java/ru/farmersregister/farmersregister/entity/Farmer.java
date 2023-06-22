@@ -63,7 +63,6 @@ public class Farmer {
   @Enumerated(EnumType.STRING)
   private Status status;
 
-//  @Column(name = "registration_region_id")
   @ManyToOne()
   @JoinColumn(name = "registration_region_id")
   private Region region;

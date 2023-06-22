@@ -73,7 +73,7 @@ public class FarmerServiceImpl implements FarmerService {
 
   @Override
   public FarmerDTO addFarmer(String name, LegalForm legalForm, Integer inn, Integer kpp,
-      Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion, Long regionId) {
+      Integer ogrn, LocalDate dateRegistration, Status status, Long registrationRegion, Long regionId) {
     FarmerDTO farmerDTO = getFarmerDTO(name, legalForm, inn, kpp, ogrn, dateRegistration, status,
         registrationRegion);
     farmerRepository.save(farmerMapper.toEntity(farmerDTO));
@@ -84,7 +84,7 @@ public class FarmerServiceImpl implements FarmerService {
 
   @Override
   public FarmerDTO patchFarmer(Long id, String name, LegalForm legalForm, Integer inn, Integer kpp,
-      Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion)
+      Integer ogrn, LocalDate dateRegistration, Status status, Long registrationRegion)
       throws Exception {
     FarmerDTO farmerDTO = getFarmerDTO(name, legalForm, inn, kpp, ogrn, dateRegistration, status,
         registrationRegion);
@@ -101,7 +101,7 @@ public class FarmerServiceImpl implements FarmerService {
   }
 
   private FarmerDTO getFarmerDTO(String name, LegalForm legalForm, Integer inn, Integer kpp,
-      Integer ogrn, LocalDate dateRegistration, Status status, Integer registrationRegion) {
+      Integer ogrn, LocalDate dateRegistration, Status status, Long registrationRegion) {
     FarmerDTO farmerDTO = new FarmerDTO();
     farmerDTO.setName(name);
     farmerDTO.setLegalForm(legalForm);

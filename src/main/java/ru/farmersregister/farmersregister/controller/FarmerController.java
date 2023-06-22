@@ -101,7 +101,7 @@ public class FarmerController {
       @RequestParam(name = "ogrn", required = false) Integer ogrn,
       @RequestParam(name = "date registration", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateRegistration,
       @RequestParam(name = "status", required = false) Status status,
-      @RequestParam(name = "registration region", required = false) Integer registrationRegion,
+      @RequestParam(name = "registration region", required = false) Long registrationRegion,
       @RequestParam(name = "region_id", required = false) Long regionId) {
     return ResponseEntity.ok(farmerService.addFarmer(name, legalForm, inn, kpp, ogrn,
         dateRegistration, status, registrationRegion, regionId));
@@ -132,7 +132,7 @@ public class FarmerController {
       @RequestParam(name = "ogrn", required = false) Integer ogrn,
       @RequestParam(name = "date registration", required = false) LocalDate dateRegistration,
       @RequestParam(name = "status", required = false) Status status,
-      @RequestParam(name = "registration region", required = false) Integer registrationRegion)
+      @RequestParam(name = "registration region", required = false) Long registrationRegion)
       throws Exception {
     return ResponseEntity.ok(farmerService.patchFarmer(id, name, legalForm, inn, kpp, ogrn,
         dateRegistration, status, registrationRegion));
