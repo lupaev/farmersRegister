@@ -14,7 +14,8 @@ public interface FarmerRepository extends JpaRepository<Farmer, Long> {
   //  @Modifying
   @Transactional
   @Modifying
-  @Query(nativeQuery = true, value = "insert into farmer_regions (farmer_id, regions_id) values (:farmerId, :regionId)")
+  @Query(nativeQuery = true, value = "insert into farmer_regions (farmer_id, regions_id) "
+      + "values (:farmerId, :regionId)")
   void saveFarmerFieldInOtherRegions(@Param("farmerId") Long farmerId,
       @Param("regionId") Long regionId);
 

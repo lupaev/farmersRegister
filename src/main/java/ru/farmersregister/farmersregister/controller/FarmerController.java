@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +30,8 @@ import ru.farmersregister.farmersregister.service.FarmerService;
 @Slf4j
 public class FarmerController {
 
-  private final FarmerService farmerService;
-
-  public FarmerController(FarmerService farmerService) {
-    this.farmerService = farmerService;
-  }
+  @Autowired
+  private FarmerService farmerService;
 
   @Operation(summary = "Список всех фермеров")
   @ApiResponses({

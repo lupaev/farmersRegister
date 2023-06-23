@@ -1,5 +1,5 @@
 package ru.farmersregister.farmersregister.entity;
 
 public enum SortRegion {
-  NAME, CODE, NONACTIVE
+  NAME, CODE, NONACTIVE, ALL
 }

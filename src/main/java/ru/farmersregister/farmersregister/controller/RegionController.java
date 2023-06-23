@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,11 +27,8 @@ import ru.farmersregister.farmersregister.service.RegionService;
 @Slf4j
 public class RegionController {
 
-  private final RegionService regionService;
-
-  public RegionController(RegionService regionService) {
-    this.regionService = regionService;
-  }
+  @Autowired
+  private RegionService regionService;
 
   @Operation(summary = "Список всех районов")
   @ApiResponses({

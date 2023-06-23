@@ -6,6 +6,4 @@ import ru.farmersregister.farmersregister.entity.Region;
 
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Long> {
-
-
 }
