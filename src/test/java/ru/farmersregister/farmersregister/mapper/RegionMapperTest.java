@@ -124,7 +124,6 @@ class RegionMapperTest {
     Collection<RegionDTO> dtos = mapper.toDTOList(regions);
     assertNotNull(dtos);
     assertFalse(dtos.contains(mapper.toDTO(region)));
-
   }
 
   @Test
