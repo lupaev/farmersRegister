@@ -7,6 +7,7 @@ import ru.farmersregister.farmersregister.dto.FarmerFullDTO;
 import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.SortFarmer;
 import ru.farmersregister.farmersregister.entity.Status;
+import ru.farmersregister.farmersregister.exception.ElemNotFound;
 
 public interface FarmerService {
 
@@ -17,7 +18,7 @@ public interface FarmerService {
 
   FarmerDTO patchFarmer(Long id, String name, LegalForm legalForm, Integer inn, Integer kpp,
       Integer ogrn, LocalDate dateRegistration, Status status, Long registrationRegion)
-      throws Exception;
+      throws ElemNotFound;
 
   FarmerFullDTO getFarmer(Long id);
 
