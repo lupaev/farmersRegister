@@ -10,7 +10,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.farmersregister.farmersregister.entity.LegalForm;
-import ru.farmersregister.farmersregister.entity.Region;
 import ru.farmersregister.farmersregister.entity.Status;
 
 
@@ -34,14 +33,14 @@ public class FarmerDTO {
 
   private Integer ogrn;
 
-  private Integer registrationRegion;
+  private Long registrationRegion;
 
-  @DateTimeFormat(pattern= "yyyy-MM-dd")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate dateRegistration;
 
   private Status status;
 
-  private Collection<Region> fields;
+  private Collection<Long> fields;
 
 
 }

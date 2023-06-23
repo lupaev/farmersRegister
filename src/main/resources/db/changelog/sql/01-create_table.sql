@@ -16,7 +16,7 @@ create table farmer
     inn integer not null ,
     kpp integer ,
     ogrn integer ,
-    registration_region_id integer ,
+    registration_region_id bigint ,
     date_registration date ,
     status varchar ,
     constraint fk_region_id foreign key (registration_region_id) references region (id)

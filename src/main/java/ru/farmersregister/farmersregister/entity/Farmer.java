@@ -8,13 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -55,15 +54,16 @@ public class Farmer {
   private Integer ogrn;
 
   @Column(name = "date_registration")
-  @DateTimeFormat(pattern= "yyyy-MM-dd")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate dateRegistration;
 
   @Column(name = "status")
   @Enumerated(EnumType.STRING)
   private Status status;
 
-  @Column(name = "registration_region_id")
-  private Integer registrationRegion;
+  @ManyToOne()
+  @JoinColumn(name = "registration_region_id")
+  private Region region;
 
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Collection<Region> regions;

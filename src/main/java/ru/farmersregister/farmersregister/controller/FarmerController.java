@@ -1,6 +1,5 @@
 package ru.farmersregister.farmersregister.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -8,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerFullDTO;
-import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.SortFarmer;
 import ru.farmersregister.farmersregister.entity.Status;
@@ -31,11 +30,8 @@ import ru.farmersregister.farmersregister.service.FarmerService;
 @Slf4j
 public class FarmerController {
 
-  private final FarmerService farmerService;
-
-  public FarmerController(FarmerService farmerService) {
-    this.farmerService = farmerService;
-  }
+  @Autowired
+  private FarmerService farmerService;
 
   @Operation(summary = "Список всех фермеров")
   @ApiResponses({
@@ -101,7 +97,7 @@ public class FarmerController {
       @RequestParam(name = "ogrn", required = false) Integer ogrn,
       @RequestParam(name = "date registration", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateRegistration,
       @RequestParam(name = "status", required = false) Status status,
-      @RequestParam(name = "registration region", required = false) Integer registrationRegion,
+      @RequestParam(name = "registration region", required = false) Long registrationRegion,
       @RequestParam(name = "region_id", required = false) Long regionId) {
     return ResponseEntity.ok(farmerService.addFarmer(name, legalForm, inn, kpp, ogrn,
         dateRegistration, status, registrationRegion, regionId));
@@ -132,7 +128,7 @@ public class FarmerController {
       @RequestParam(name = "ogrn", required = false) Integer ogrn,
       @RequestParam(name = "date registration", required = false) LocalDate dateRegistration,
       @RequestParam(name = "status", required = false) Status status,
-      @RequestParam(name = "registration region", required = false) Integer registrationRegion)
+      @RequestParam(name = "registration region", required = false) Long registrationRegion)
       throws Exception {
     return ResponseEntity.ok(farmerService.patchFarmer(id, name, legalForm, inn, kpp, ogrn,
         dateRegistration, status, registrationRegion));

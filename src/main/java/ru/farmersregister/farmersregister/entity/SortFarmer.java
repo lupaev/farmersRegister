@@ -1,5 +1,5 @@
 package ru.farmersregister.farmersregister.entity;
 
 public enum SortFarmer {
-  NAME, INN, REGISTRATION, DATE, ACTIVE, NONACTIVE
+  NAME, INN, REGISTRATION, DATE, ACTIVE, NONACTIVE, ALL
 }

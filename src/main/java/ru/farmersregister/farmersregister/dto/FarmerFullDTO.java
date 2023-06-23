@@ -35,9 +35,11 @@ public class FarmerFullDTO {
 
   private String registrationRegionName;
 
-  @DateTimeFormat(pattern= "yyyy-MM-dd")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate dateRegistration;
 
   private Status status;
+
+  private Collection<Long> fields;
 
 }

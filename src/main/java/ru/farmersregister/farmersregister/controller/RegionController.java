@@ -5,9 +5,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.awt.print.Pageable;
 import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -27,10 +27,8 @@ import ru.farmersregister.farmersregister.service.RegionService;
 @Slf4j
 public class RegionController {
 
-  private final RegionService regionService;
-  public RegionController(RegionService regionService) {
-    this.regionService = regionService;
-  }
+  @Autowired
+  private RegionService regionService;
 
   @Operation(summary = "Список всех районов")
   @ApiResponses({
@@ -48,7 +46,8 @@ public class RegionController {
       ),
   })
   @GetMapping
-  public ResponseEntity<Collection<RegionDTO>> findAll(@RequestParam(name = "sort by") SortRegion sortRegion) {
+  public ResponseEntity<Collection<RegionDTO>> findAll(
+      @RequestParam(name = "sort by") SortRegion sortRegion) {
     return ResponseEntity.ok(regionService.findAll(sortRegion));
   }
 
@@ -96,8 +95,6 @@ public class RegionController {
       @RequestParam(name = "status", required = false) Status status) throws Exception {
     return ResponseEntity.ok(regionService.patchRegion(id, name, codeRegion, status));
   }
-
-
 
 
 }

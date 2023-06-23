@@ -15,7 +15,6 @@ public interface RegionMapper {
   RegionDTO toDTO(Region region);
 
   Collection<RegionDTO> toDTOList(Collection<Region> list);
-  Collection<Region> toEntityList(Collection<RegionDTO> list);
 
   void updateEntity(RegionDTO regionDTO, @MappingTarget Region region);
 
