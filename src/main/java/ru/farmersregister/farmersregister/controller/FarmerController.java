@@ -1,6 +1,10 @@
 package ru.farmersregister.farmersregister.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,109 +30,170 @@ import ru.farmersregister.farmersregister.service.FarmerService;
 
 @RestController
 @RequestMapping("/farmer")
-@Tag(name = "Фермеры")
+@Tag(name = "Фермеры", description = "Контроллер для операций с фермерами")
 @Slf4j
 public class FarmerController {
 
   @Autowired
   private FarmerService farmerService;
 
-  @Operation(summary = "Список всех фермеров")
+  @Operation(summary = "Список всех фермеров",
+      description = "Получение списка всех фермеров по выбранному фильтру."
+          + "NAME - возвращает список отсортированный по имени. "
+          + "INN - возвращает список отсортированный по ИНН. "
+          + "REGISTRATION - возвращает список отсортированный по идентификатору района. "
+          + "DATE - возвращает список отсортированный по дате регистрации. "
+          + "ACTIVE - возвращает список актуальных фермеров. "
+          + "NONACTIVE - возвращает список фермеров в архиве. "
+          + "ALL - возвращает список всех фермеров вне зависимости от статуса")
   @ApiResponses({
       @ApiResponse(
           responseCode = "200",
-          description = "OK"
+          description = "OK",
+          content = @Content(
+              array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
       ),
       @ApiResponse(
           responseCode = "400",
-          description = "bad request"
+          description = "bad request",
+          content = @Content(schema = @Schema())
       ),
       @ApiResponse(
           responseCode = "500",
-          description = "Internal Server Error"
+          description = "Internal Server Error",
+          content = @Content(schema = @Schema())
       ),
   })
   @GetMapping
-  public ResponseEntity<Collection<FarmerDTO>> findAll(SortFarmer sortFarmer) {
+  public ResponseEntity<Collection<FarmerDTO>> findAll
+      (
+          @RequestParam("sort")
+          @Parameter(description = "Выбор способа сортировки",
+              example = "NAME") SortFarmer sortFarmer
+      ) {
     return ResponseEntity.ok(farmerService.findAll(sortFarmer));
   }
 
-  @Operation(summary = "Данные фермера")
+  @Operation(summary = "Получение данных фермера по идентификатору")
   @ApiResponses({
       @ApiResponse(
           responseCode = "200",
-          description = "OK"
+          description = "OK",
+          content = @Content(
+              array = @ArraySchema(schema = @Schema(implementation = FarmerFullDTO.class)))
       ),
       @ApiResponse(
           responseCode = "400",
-          description = "bad request"
+          description = "bad request",
+          content = @Content(schema = @Schema())
       ),
       @ApiResponse(
           responseCode = "500",
-          description = "Internal Server Error"
+          description = "Internal Server Error",
+          content = @Content(schema = @Schema())
       ),
   })
   @GetMapping(value = "/{id}")
-  public ResponseEntity<FarmerFullDTO> getFarmer(@PathVariable(name = "id") Long id) {
+  public ResponseEntity<FarmerFullDTO> getFarmer
+      (
+          @PathVariable(name = "id")
+          @Parameter(description = "Идентификатор", example = "1") Long id
+      ) {
     return ResponseEntity.ok(farmerService.getFarmer(id));
   }
 
-  @Operation(summary = "Добавление фермера")
+  @Operation(summary = "Добавление в БД нового фермера",
+      description = "Для отправки в архив необходимо изменить статус на NONACTIVE.")
   @ApiResponses({
       @ApiResponse(
           responseCode = "200",
-          description = "OK"
+          description = "OK",
+          content = @Content(
+              array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
       ),
       @ApiResponse(
           responseCode = "400",
-          description = "bad request"
+          description = "bad request",
+          content = @Content(schema = @Schema())
       ),
       @ApiResponse(
           responseCode = "500",
-          description = "Internal Server Error"
+          description = "Internal Server Error",
+          content = @Content(schema = @Schema())
       ),
   })
   @PostMapping(value = "/add")
-  public ResponseEntity<FarmerDTO> addFarmer(
-      @RequestParam(name = "name") String name,
-      @RequestParam(name = "legal form", required = false) LegalForm legalForm,
-      @RequestParam(name = "inn") Integer inn,
-      @RequestParam(name = "kpp", required = false) Integer kpp,
-      @RequestParam(name = "ogrn", required = false) Integer ogrn,
-      @RequestParam(name = "date registration", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateRegistration,
-      @RequestParam(name = "status", required = false) Status status,
-      @RequestParam(name = "registration region", required = false) Long registrationRegion,
-      @RequestParam(name = "region_id", required = false) Long regionId) {
+  public ResponseEntity<FarmerDTO> addFarmer
+      (
+          @RequestParam(name = "name") @Parameter(description = "Наименование организации") String name,
+          @RequestParam(name = "legal form", required = false)
+          @Parameter(description = "Организационно-правовая форма") LegalForm legalForm,
+          @RequestParam(name = "inn") @Parameter(description = "ИНН") Integer inn,
+          @RequestParam(name = "kpp", required = false) @Parameter(description = "КПП") Integer kpp,
+          @RequestParam(name = "ogrn", required = false) @Parameter(description = "ОГРН") Integer ogrn,
+          @RequestParam(name = "date registration", required = false)
+          @Parameter(description = "Дата регистрации")
+          @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateRegistration,
+          @RequestParam(name = "status", required = false)
+          @Parameter(description = "Статус активности/архивности") Status status,
+          @RequestParam(name = "registration region", required = false)
+          @Parameter(description = "Идентификатор района регистрации") Long registrationRegion,
+          @RequestParam(name = "region_id", required = false)
+          @Parameter(description = "Районы посевных полей") Long regionId) {
     return ResponseEntity.ok(farmerService.addFarmer(name, legalForm, inn, kpp, ogrn,
         dateRegistration, status, registrationRegion, regionId));
   }
 
-  @Operation(summary = "Изменение данных фермера. Отправка в архив(сделать неактивным)")
+  @Operation(summary = "Изменение данных фермера.",
+      description = "Изменение данных фермера. "
+          + "id - Идентификатор. "
+          + "name - Наименование. "
+          + "legal form - Организационно-правовая форма. "
+          + "inn - ИНН. "
+          + "kpp - КПП. "
+          + "ogrn - ОГРН. "
+          + "date registration - Дата регистрации. "
+          + "status - Статус активности/архивности. Для отправки в архив необходимо изменить "
+          + "статус на NONACTIVE. "
+          + "registration region - Районы посевных полей. ")
   @ApiResponses({
       @ApiResponse(
           responseCode = "200",
-          description = "OK"
+          description = "OK",
+          content = @Content(
+              array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
       ),
       @ApiResponse(
           responseCode = "400",
-          description = "bad request"
+          description = "bad request",
+          content = @Content(schema = @Schema())
       ),
       @ApiResponse(
           responseCode = "500",
-          description = "Internal Server Error"
+          description = "Internal Server Error",
+          content = @Content(schema = @Schema())
       ),
   })
   @PatchMapping(value = "/patch/{id}")
   public ResponseEntity<FarmerDTO> patchFarmer(
-      @PathVariable(name = "id") long id,
-      @RequestParam(name = "name", required = false) String name,
-      @RequestParam(name = "legal form", required = false) LegalForm legalForm,
-      @RequestParam(name = "inn", required = false) Integer inn,
-      @RequestParam(name = "kpp", required = false) Integer kpp,
-      @RequestParam(name = "ogrn", required = false) Integer ogrn,
-      @RequestParam(name = "date registration", required = false) LocalDate dateRegistration,
-      @RequestParam(name = "status", required = false) Status status,
-      @RequestParam(name = "registration region", required = false) Long registrationRegion) {
+      @PathVariable(name = "id")
+      @Parameter(description = "Идентификатор") long id,
+      @RequestParam(name = "name", required = false)
+      @Parameter(description = "Наименование организации") String name,
+      @RequestParam(name = "legal form", required = false)
+      @Parameter(description = "Организационно-правовая форма") LegalForm legalForm,
+      @RequestParam(name = "inn", required = false)
+      @Parameter(description = "ИНН") Integer inn,
+      @RequestParam(name = "kpp", required = false)
+      @Parameter(description = "КПП") Integer kpp,
+      @RequestParam(name = "ogrn", required = false)
+      @Parameter(description = "ОГРН") Integer ogrn,
+      @RequestParam(name = "date registration", required = false)
+      @Parameter(description = "Дата регистрации") LocalDate dateRegistration,
+      @RequestParam(name = "status", required = false)
+      @Parameter(description = "Статус активности/архивности") Status status,
+      @RequestParam(name = "registration region", required = false)
+      @Parameter(description = "Идентификатор района регистрации") Long registrationRegion) {
     return ResponseEntity.ok(farmerService.patchFarmer(id, name, legalForm, inn, kpp, ogrn,
         dateRegistration, status, registrationRegion));
   }
