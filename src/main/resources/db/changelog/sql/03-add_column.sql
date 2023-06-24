@@ -1,7 +1,12 @@
 --liquibase formatted sql
 
 --changeset sergej:3
--- alter table region add column farmer_id bigint;
+--Создание вспомогательной таблицы
+create table farmer_regions
+(
+    farmer_id  bigint not null,
+    regions_id bigint not null
+);
 
 
 

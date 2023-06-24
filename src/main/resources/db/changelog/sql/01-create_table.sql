@@ -1,6 +1,7 @@
 --liquibase formatted sql
 
 --changeset sergej:1
+--Создание таблицы Регион и Фермер
 create table region
 (
     id bigserial primary key ,
