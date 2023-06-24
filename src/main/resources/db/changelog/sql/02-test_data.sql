@@ -1,6 +1,7 @@
 --liquibase formatted sql
 
 --changeset sergej:2
+--Наполнение таблиц тестовыми данными
 insert into region (name, code_region, status) values ( 'region1', 1, 'ACTIVE' ),
                                                       ( 'region2', 2, 'ACTIVE' ),
                                                       ( 'region3', 3, 'ACTIVE' );

@@ -89,7 +89,8 @@ public class FarmerServiceImpl implements FarmerService {
     log.info(FormLogInfo.getInfo());
     FarmerDTO farmerDTO = getFarmerDTO(name, legalForm, inn, kpp, ogrn, dateRegistration, status,
         registrationRegion);
-    Farmer farmer = farmerRepository.findById(id).orElseThrow(ElemNotFound::new);
+    Farmer farmer = farmerRepository.findById(id)
+        .orElseThrow(() -> new ElemNotFound("Farmer not found on :: " + id));
     farmerMapper.updateEntity(farmerDTO, farmer);
     farmerRepository.save(farmer);
     return farmerMapper.toDTO(farmer);
@@ -98,7 +99,8 @@ public class FarmerServiceImpl implements FarmerService {
   @Override
   public FarmerFullDTO getFarmer(Long id) {
     log.info(FormLogInfo.getInfo());
-    Farmer farmer = farmerRepository.findById(id).orElseThrow(ElemNotFound::new);
+    Farmer farmer = farmerRepository.findById(id)
+        .orElseThrow(() -> new ElemNotFound("Farmer not found on :: " + id));
     return farmerFullMapper.toFullDTO(farmer);
   }
 

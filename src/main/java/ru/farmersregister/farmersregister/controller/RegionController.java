@@ -67,7 +67,8 @@ public class RegionController {
       ),
   })
   @PostMapping(value = "/add")
-  public ResponseEntity<RegionDTO> addRegion(@RequestParam(name = "name") String name,
+  public ResponseEntity<RegionDTO> addRegion(
+      @RequestParam(name = "name") String name,
       @RequestParam(name = "code", required = false) Integer codeRegion,
       @RequestParam(name = "status", required = false) Status status) {
     return ResponseEntity.ok(regionService.addRegion(name, codeRegion, status));
@@ -89,7 +90,8 @@ public class RegionController {
       ),
   })
   @PatchMapping(value = "/patch/{id}")
-  public ResponseEntity<RegionDTO> patchRegion(@PathVariable(name = "id") Long id,
+  public ResponseEntity<RegionDTO> patchRegion(
+      @PathVariable(name = "id") Long id,
       @RequestParam(name = "name", required = false) String name,
       @RequestParam(name = "code", required = false) Integer codeRegion,
       @RequestParam(name = "status", required = false) Status status) throws Exception {

@@ -63,7 +63,8 @@ public class RegionServiceImpl implements RegionService {
       throws ElemNotFound {
     log.info(FormLogInfo.getInfo());
     RegionDTO regionDTO = getRegionDTO(name, codeRegion, status);
-    Region region = regionRepository.findById(id).orElseThrow(ElemNotFound::new);
+    Region region = regionRepository.findById(id)
+        .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
     regionMapper.updateEntity(regionDTO, region);
     regionRepository.save(region);
     return regionMapper.toDTO(region);
