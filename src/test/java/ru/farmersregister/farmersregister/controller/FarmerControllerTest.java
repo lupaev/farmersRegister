@@ -149,6 +149,7 @@ class FarmerControllerTest {
     when(service.findAll(SortFarmer.ALL)).thenReturn(farmerDTOS);
 
     mockMvc.perform(get(url)
+            .param("sort", "ALL")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
