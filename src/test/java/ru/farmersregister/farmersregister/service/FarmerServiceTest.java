@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static ru.farmersregister.farmersregister.entity.Status.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,12 +27,13 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
+import ru.farmersregister.farmersregister.dto.FarmerFullDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.Region;
 import ru.farmersregister.farmersregister.entity.SortFarmer;
-import ru.farmersregister.farmersregister.entity.Status;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
+import ru.farmersregister.farmersregister.mapper.FarmerFullMapper;
 import ru.farmersregister.farmersregister.mapper.FarmerMapper;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
 import ru.farmersregister.farmersregister.service.impl.FarmerServiceImpl;
@@ -48,9 +50,14 @@ class FarmerServiceTest {
   @Spy
   private FarmerMapper mapper;
 
+  @Spy
+  private FarmerFullMapper fullMapper;
+
   private Farmer entity;
 
   private FarmerDTO dto;
+
+  private FarmerFullDTO fullDTO;
 
   @BeforeEach
   void setUp() {
@@ -59,13 +66,13 @@ class FarmerServiceTest {
     region.setId(1L);
     region.setName("TestRegion");
     region.setCodeRegion(11);
-    region.setStatus(Status.ACTIVE);
+    region.setStatus(ACTIVE);
 
     Region regionField = new Region();
     regionField.setId(3L);
     regionField.setName("TestRegion3");
     regionField.setCodeRegion(33);
-    regionField.setStatus(Status.ACTIVE);
+    regionField.setStatus(ACTIVE);
 
     Collection<Region> regions = new ArrayList<>();
     regions.add(regionField);
@@ -79,7 +86,7 @@ class FarmerServiceTest {
     entity.setLegalForm(LegalForm.FL);
     entity.setInn(123456);
     entity.setKpp(654321);
-    entity.setStatus(Status.ACTIVE);
+    entity.setStatus(ACTIVE);
     entity.setRegion(region);
     entity.setOgrn(654789);
     entity.setDateRegistration(LocalDate.parse("2013-12-20"));
@@ -92,16 +99,29 @@ class FarmerServiceTest {
     dto.setInn(123456);
     dto.setKpp(654321);
     dto.setOgrn(654789);
-    dto.setStatus(Status.ACTIVE);
+    dto.setStatus(ACTIVE);
     dto.setRegistrationRegion(region.getId());
     dto.setDateRegistration(LocalDate.parse("2013-12-20"));
     dto.setFields(fields);
+
+    fullDTO = new FarmerFullDTO();
+    fullDTO.setId(1L);
+    fullDTO.setName("TestName");
+    fullDTO.setLegalForm(LegalForm.FL);
+    fullDTO.setInn(123456);
+    fullDTO.setKpp(654321);
+    fullDTO.setOgrn(654789);
+    fullDTO.setRegistrationRegionName(region.getName());
+    fullDTO.setDateRegistration(LocalDate.parse("2013-12-20"));
+    fullDTO.setStatus(ACTIVE);
+    fullDTO.setFields(fields);
   }
 
   @AfterEach
   void afterEach() {
     entity = null;
     dto = null;
+    fullDTO = null;
   }
 
   @Test
@@ -273,6 +293,44 @@ class FarmerServiceTest {
     verify(service, times(1)).patchFarmer(entity.getId(), entity.getName(),
         entity.getLegalForm(), entity.getInn(), entity.getKpp(), entity.getOgrn(),
         entity.getDateRegistration(), entity.getStatus(), entity.getRegion().getId());
+  }
+
+  @Test
+  void getFarmerPositive() {
+    FarmerServiceImpl service = mock(FarmerServiceImpl.class);
+    FarmerFullMapper fullMapper = mock(FarmerFullMapper.class);
+
+    when(repository.findById(anyLong())).thenReturn(Optional.ofNullable(entity));
+    when(fullMapper.toFullDTO(entity)).thenReturn(fullDTO);
+    when(service.getFarmer(anyLong())).thenReturn(fullDTO);
+
+    assertThat(repository.findById(anyLong())).isNotNull();
+    assertThat(fullMapper.toFullDTO(entity)).isNotNull().isEqualTo(fullDTO)
+        .isExactlyInstanceOf(FarmerFullDTO.class);
+    assertThat(service.getFarmer(anyLong())).isNotNull().isEqualTo(fullDTO)
+        .isExactlyInstanceOf(FarmerFullDTO.class);
+
+    verify(repository, times(1)).findById(anyLong());
+    verify(fullMapper, times(1)).toFullDTO(any(Farmer.class));
+    verify(service, times(1)).getFarmer(anyLong());
+  }
+
+  @Test
+  void getFarmerNegative() {
+    FarmerServiceImpl service = mock(FarmerServiceImpl.class);
+    FarmerFullMapper fullMapper = mock(FarmerFullMapper.class);
+
+    when(repository.findById(anyLong())).thenThrow(ElemNotFound.class);
+    when(fullMapper.toFullDTO(entity)).thenThrow(NullPointerException.class);
+    when(service.getFarmer(anyLong())).thenThrow(ElemNotFound.class);
+
+    assertThrows(ElemNotFound.class, () -> repository.findById(anyLong()));
+    assertThrows(NullPointerException.class, () -> fullMapper.toFullDTO(entity));
+    assertThrows(ElemNotFound.class, () -> service.getFarmer(anyLong()));
+
+    verify(repository, times(1)).findById(anyLong());
+    verify(fullMapper, times(1)).toFullDTO(entity);
+    verify(service, times(1)).getFarmer(anyLong());
   }
 
 
