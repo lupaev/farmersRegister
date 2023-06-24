@@ -15,6 +15,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Сущность района
+ */
+
 @Getter
 @Setter
 @ToString
@@ -25,16 +29,28 @@ import lombok.ToString;
 @Entity
 public class Region {
 
+  /**
+   * Идентификатор
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  /**
+   * Наименование
+   */
   @Column(name = "name")
   private String name;
 
+  /**
+   * Код района
+   */
   @Column(name = "code_region")
   private Integer codeRegion;
 
+  /**
+   * Статус активности/архивности
+   */
   @Column(name = "status")
   @Enumerated(EnumType.STRING)
   private Status status;

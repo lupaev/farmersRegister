@@ -8,9 +8,17 @@ import ru.farmersregister.farmersregister.dto.FarmerFullDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.Region;
 
+/**
+ * Маппер для фермера
+ */
 @Mapper
 public interface FarmerFullMapper {
 
+  /**
+   * Маппинг сущности фермера в DTO
+   * @param farmer
+   * @return
+   */
   @Mapping(target = "id", source = "id")
   @Mapping(target = "name", source = "name")
   @Mapping(target = "legalForm", source = "legalForm")
@@ -23,6 +31,11 @@ public interface FarmerFullMapper {
   @Mapping(target = "fields", expression = "java(getRegionsIds(farmer.getRegions()))")
   FarmerFullDTO toFullDTO(Farmer farmer);
 
+  /**
+   * Вспомогательный метод получения наименования района регистрации
+   * @param regions
+   * @return
+   */
   default Collection<Long> getRegionsIds(Collection<Region> regions) {
     return regions.stream().map(region -> region.getId()).collect(Collectors.toList());
   }

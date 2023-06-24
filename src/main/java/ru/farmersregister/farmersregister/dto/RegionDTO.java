@@ -17,12 +17,16 @@ import ru.farmersregister.farmersregister.entity.Status;
 @EqualsAndHashCode
 @Schema(description = "Сущность района")
 public class RegionDTO {
+
   @Schema(description = "Идентификатор", accessMode = Schema.AccessMode.READ_ONLY)
   private Long id;
+
   @Schema(description = "Наименование")
   private String name;
+
   @Schema(description = "Код региона")
   private Integer codeRegion;
+
   @Schema(description = "Статус активности/архивности")
   private Status status;
 
