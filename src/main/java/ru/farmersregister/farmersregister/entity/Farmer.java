@@ -23,6 +23,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * Сущность фермера
+ */
+
 @Getter
 @Setter
 @ToString
@@ -33,38 +37,68 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Farmer {
 
+  /**
+   * Идентификатор
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  /**
+   * Наименование организации
+   */
   @Column(name = "name")
   private String name;
 
+  /**
+   * Организационно-правовая форма
+   */
   @Column(name = "legal_form")
   @Enumerated(EnumType.STRING)
   private LegalForm legalForm;
 
+  /**
+   * ИНН
+   */
   @Column(name = "inn")
   private Integer inn;
 
+  /**
+   * КПП
+   */
   @Column(name = "kpp")
   private Integer kpp;
 
+  /**
+   * ОГРН
+   */
   @Column(name = "ogrn")
   private Integer ogrn;
 
+  /**
+   * Дата регистрации
+   */
   @Column(name = "date_registration")
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate dateRegistration;
 
+  /**
+   * Статус активности/архивности
+   */
   @Column(name = "status")
   @Enumerated(EnumType.STRING)
   private Status status;
 
+  /**
+   * Район регистрации фермера
+   */
   @ManyToOne()
   @JoinColumn(name = "registration_region_id")
   private Region region;
 
+  /**
+   * Районы посевных полей
+   */
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Collection<Region> regions;
 

@@ -1,5 +1,8 @@
 package ru.farmersregister.farmersregister.loger;
 
+/**
+ * Логгер
+ */
 public class FormLogInfo {
 
 

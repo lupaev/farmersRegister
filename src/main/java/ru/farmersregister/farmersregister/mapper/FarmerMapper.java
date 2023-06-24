@@ -10,12 +10,25 @@ import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.Region;
 
+/**
+ * Маппер для фермера
+ */
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface FarmerMapper {
 
+  /**
+   * Преобразование DTO в сущность фермера
+   * @param farmerDTO
+   * @return
+   */
   @Mapping(target = "region.id", source = "registrationRegion")
   Farmer toEntity(FarmerDTO farmerDTO);
 
+  /**
+   * Преобразование сущности фермера в DTO
+   * @param farmer
+   * @return
+   */
   default FarmerDTO toDTO(Farmer farmer) {
     FarmerDTO farmerDTO = new FarmerDTO();
     farmerDTO.setId(farmer.getId());
@@ -32,8 +45,18 @@ public interface FarmerMapper {
     return farmerDTO;
   }
 
+  /**
+   * Преобразование коллекции фермеров в коллекцию  DTO
+   * @param list
+   * @return
+   */
   Collection<FarmerDTO> toDTOList(Collection<Farmer> list);
 
+  /**
+   * Обновление сущности фермера из данных DTO
+   * @param farmerDTO
+   * @param farmer
+   */
   void updateEntity(FarmerDTO farmerDTO, @MappingTarget Farmer farmer);
 
 
