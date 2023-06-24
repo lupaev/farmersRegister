@@ -1,13 +1,13 @@
 version: "3.10"
 services:
   backend:
-    image: 'farmer_register:latest'
+    image: 'farmer:latest'
     container_name: app
     depends_on:
       - db
     build: .
     environment:
-    - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5433/register
+    - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/register
     - SPRING_DATASOURCE_USERNAME=postgres
     - SPRING_DATASOURCE_PASSWORD=postgres
     ports:
@@ -22,5 +22,5 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: register
     ports:
-      - "5433:5433"
+      - "5432:5432"
 

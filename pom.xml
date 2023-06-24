@@ -76,7 +76,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>ru.farmersregister.FarmersRegisterApplication</mainClass>
+          <mainClass>ru.farmersregister.farmersregister.FarmersRegisterApplication</mainClass>
           <layout>JAR</layout>
         </configuration>
         <executions>
