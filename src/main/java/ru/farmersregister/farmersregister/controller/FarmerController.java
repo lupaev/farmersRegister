@@ -133,7 +133,7 @@ public class FarmerController {
           @RequestParam(name = "kpp", required = false) @Parameter(description = "КПП") Integer kpp,
           @RequestParam(name = "ogrn", required = false) @Parameter(description = "ОГРН") Integer ogrn,
           @RequestParam(name = "date registration", required = false)
-          @Parameter(description = "Дата регистрации")
+          @Parameter(description = "Дата регистрации", example = "2022-02-22")
           @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateRegistration,
           @RequestParam(name = "status", required = false)
           @Parameter(description = "Статус активности/архивности") Status status,
@@ -190,7 +190,7 @@ public class FarmerController {
       @RequestParam(name = "ogrn", required = false)
       @Parameter(description = "ОГРН") Integer ogrn,
       @RequestParam(name = "date registration", required = false)
-      @Parameter(description = "Дата регистрации") LocalDate dateRegistration,
+      @Parameter(description = "Дата регистрации", example = "2022-02-22") LocalDate dateRegistration,
       @RequestParam(name = "status", required = false)
       @Parameter(description = "Статус активности/архивности") Status status,
       @RequestParam(name = "registration region", required = false)
