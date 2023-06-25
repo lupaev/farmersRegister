@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerFullDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.LegalForm;
