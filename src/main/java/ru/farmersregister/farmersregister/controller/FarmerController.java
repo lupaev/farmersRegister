@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.util.Collection;
+import javax.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -97,7 +98,7 @@ public class FarmerController {
   public ResponseEntity<FarmerFullDTO> getFarmer
       (
           @PathVariable(name = "id")
-          @Parameter(description = "Идентификатор", example = "1") Long id
+          @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id
       ) {
     return ResponseEntity.ok(farmerService.getFarmer(id));
   }
