@@ -28,14 +28,18 @@ import ru.farmersregister.farmersregister.service.FarmerService;
 @Slf4j
 public class FarmerServiceImpl implements FarmerService {
 
-  @Autowired
-  private FarmerRepository farmerRepository;
+  private final FarmerRepository farmerRepository;
 
-  @Autowired
-  private FarmerMapper farmerMapper;
+  private final FarmerMapper farmerMapper;
 
-  @Autowired
-  private FarmerFullMapper farmerFullMapper;
+  private final FarmerFullMapper farmerFullMapper;
+
+  public FarmerServiceImpl(FarmerRepository farmerRepository, FarmerMapper farmerMapper,
+      FarmerFullMapper farmerFullMapper) {
+    this.farmerRepository = farmerRepository;
+    this.farmerMapper = farmerMapper;
+    this.farmerFullMapper = farmerFullMapper;
+  }
 
   public Collection<FarmerDTO> findAll(SortFarmer sortFarmer) {
     log.info(FormLogInfo.getInfo());

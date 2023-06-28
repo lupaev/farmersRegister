@@ -32,8 +32,11 @@ import ru.farmersregister.farmersregister.service.RegionService;
 @Slf4j
 public class RegionController {
 
-  @Autowired
-  private RegionService regionService;
+  private final RegionService regionService;
+
+  public RegionController(RegionService regionService) {
+    this.regionService = regionService;
+  }
 
   @Operation(summary = "Список всех районов",
       description = "Получение списка всех районов по выбранному фильтру."

@@ -35,8 +35,11 @@ import ru.farmersregister.farmersregister.service.FarmerService;
 @Slf4j
 public class FarmerController {
 
-  @Autowired
-  private FarmerService farmerService;
+  private final FarmerService farmerService;
+
+  public FarmerController(FarmerService farmerService) {
+    this.farmerService = farmerService;
+  }
 
   @Operation(summary = "Список всех фермеров",
       description = "Получение списка всех фермеров по выбранному фильтру."

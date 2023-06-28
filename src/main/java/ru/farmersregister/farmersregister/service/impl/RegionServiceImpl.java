@@ -23,10 +23,13 @@ import ru.farmersregister.farmersregister.service.RegionService;
 @Slf4j
 public class RegionServiceImpl implements RegionService {
 
-  @Autowired
-  private RegionRepository regionRepository;
-  @Autowired
-  private RegionMapper regionMapper;
+  private final RegionRepository regionRepository;
+  private final RegionMapper regionMapper;
+
+  public RegionServiceImpl(RegionRepository regionRepository, RegionMapper regionMapper) {
+    this.regionRepository = regionRepository;
+    this.regionMapper = regionMapper;
+  }
 
   @Override
   public Collection<RegionDTO> findAll(SortRegion sortRegion) {
