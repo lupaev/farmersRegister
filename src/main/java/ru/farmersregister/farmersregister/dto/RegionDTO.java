@@ -1,12 +1,7 @@
 package ru.farmersregister.farmersregister.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import ru.farmersregister.farmersregister.entity.Status;
 
 @Getter
@@ -18,7 +13,7 @@ import ru.farmersregister.farmersregister.entity.Status;
 @Schema(description = "Сущность района")
 public class RegionDTO {
 
-  @Schema(description = "Идентификатор", accessMode = Schema.AccessMode.READ_ONLY)
+  @Schema(description = "Идентификатор")
   private Long id;
 
   @Schema(description = "Наименование")
@@ -29,5 +24,6 @@ public class RegionDTO {
 
   @Schema(description = "Статус активности/архивности")
   private Status status;
+
 
 }

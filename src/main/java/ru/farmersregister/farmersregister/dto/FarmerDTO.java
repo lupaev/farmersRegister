@@ -1,17 +1,13 @@
 package ru.farmersregister.farmersregister.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.LocalDate;
-import java.util.Collection;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.Status;
+
+import java.time.LocalDate;
+import java.util.Collection;
 
 
 @Getter
@@ -23,7 +19,7 @@ import ru.farmersregister.farmersregister.entity.Status;
 @Schema(description = "Сущность фермера")
 public class FarmerDTO {
 
-  @Schema(description = "Идентификатор", accessMode = Schema.AccessMode.READ_ONLY)
+  @Schema(description = "Идентификатор")
   private Long id;
 
   @Schema(description = "Наименование")
@@ -33,13 +29,13 @@ public class FarmerDTO {
   private LegalForm legalForm;
 
   @Schema(description = "ИНН")
-  private Integer inn;
+  private long inn;
 
   @Schema(description = "КПП")
-  private Integer kpp;
+  private long kpp;
 
   @Schema(description = "ОГРН")
-  private Integer ogrn;
+  private long ogrn;
 
   @Schema(description = "Район регистрации фермера")
   private Long registrationRegion;
@@ -52,6 +48,6 @@ public class FarmerDTO {
   private Status status;
 
   @Schema(description = "Районы посевных полей")
-  private Collection<Long> fields;
+  private Collection<RegionDTO> fields;
 
 }

@@ -1,17 +1,13 @@
 package ru.farmersregister.farmersregister.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.LocalDate;
-import java.util.Collection;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.Status;
+
+import java.time.LocalDate;
+import java.util.Collection;
 
 
 @Getter
@@ -33,13 +29,13 @@ public class FarmerFullDTO {
   private LegalForm legalForm;
 
   @Schema(description = "ИНН")
-  private Integer inn;
+  private long inn;
 
   @Schema(description = "КПП")
-  private Integer kpp;
+  private long kpp;
 
   @Schema(description = "ОГРН")
-  private Integer ogrn;
+  private long ogrn;
 
   @Schema(description = "Наименование района регистрации фермера")
   private String registrationRegionName;
