@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
 import ru.farmersregister.farmersregister.entity.SortRegion;
@@ -32,55 +33,30 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public Collection<RegionDTO> findAll(SortRegion sortRegion) {
-    log.info(FormLogInfo.getInfo());
-    Collection<RegionDTO> collection = regionMapper.toDTOList(regionRepository.findAll());
-    Comparator<RegionDTO> comparatorByName = Comparator.comparing(RegionDTO::getName);
-    Comparator<RegionDTO> comparatorByCode = Comparator.comparing(RegionDTO::getCodeRegion);
-    switch (sortRegion.name()) {
-      case ("NAME"):
-        return collection.stream().sorted(comparatorByName)
-            .filter(regionDTO -> regionDTO.getStatus().equals(ACTIVE)).collect(Collectors.toList());
-      case ("CODE"):
-        return collection.stream().sorted(comparatorByCode)
-            .filter(regionDTO -> regionDTO.getStatus().equals(ACTIVE)).collect(Collectors.toList());
-      case ("NONACTIVE"):
-        return collection.stream().sorted(comparatorByCode)
-            .filter(regionDTO -> regionDTO.getStatus().equals(NONACTIVE)).collect(
-                Collectors.toList());
-      default:
-        return new ArrayList<>(collection);
-    }
+  public Collection<RegionDTO> findAll() {
+    return new ArrayList<>(regionMapper.toDTOList(regionRepository.findAll()));
+
   }
 
   @Override
-  public RegionDTO addRegion(String name, Integer codeRegion, Status status) {
+  public RegionDTO addRegion(RegionDTO regionDTO) {
     log.info(FormLogInfo.getInfo());
-    RegionDTO regionDTO = getRegionDTO(name, codeRegion, status);
     regionRepository.save(regionMapper.toEntity(regionDTO));
     return regionDTO;
   }
 
   @Override
-  public RegionDTO patchRegion(Long id, String name, Integer codeRegion, Status status)
+  public RegionDTO patchRegion(RegionDTO regionDTO)
       throws ElemNotFound {
     log.info(FormLogInfo.getInfo());
-    RegionDTO regionDTO = getRegionDTO(name, codeRegion, status);
-    Region region = regionRepository.findById(id)
-        .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
+    Region region = regionRepository.findById(regionDTO.getId())
+        .orElseThrow(() -> new ElemNotFound("Region not found on :: " + regionDTO.getId()));
     regionMapper.updateEntity(regionDTO, region);
     regionRepository.save(region);
     return regionMapper.toDTO(region);
   }
 
-  private RegionDTO getRegionDTO(String name, Integer codeRegion, Status status) {
-    log.info(FormLogInfo.getInfo());
-    RegionDTO regionDTO = new RegionDTO();
-    regionDTO.setName(name);
-    regionDTO.setCodeRegion(codeRegion);
-    regionDTO.setStatus(status);
-    return regionDTO;
-  }
+
 
 
 }

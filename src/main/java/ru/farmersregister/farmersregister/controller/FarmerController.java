@@ -38,7 +38,7 @@ public class FarmerController {
   }
 
   @PostMapping(value = "/add")
-  public ResponseEntity<FarmerDTO> addFarmer(FarmerDTO farmerDTO) {
+  public ResponseEntity<FarmerDTO> addFarmer(@RequestBody FarmerDTO farmerDTO) {
     return ResponseEntity.ok(farmerService.addFarmer(farmerDTO));
   }
 

@@ -19,35 +19,35 @@ import java.util.Collection;
 @Schema(description = "Полная сущность фермера")
 public class FarmerFullDTO {
 
-  @Schema(description = "Идентификатор", accessMode = Schema.AccessMode.READ_ONLY)
+//  @Schema(description = "Идентификатор", accessMode = Schema.AccessMode.READ_ONLY)
   private Long id;
 
-  @Schema(description = "Наименование")
+//  @Schema(description = "Наименование")
   private String name;
 
-  @Schema(description = "Организационно-правовая форма")
+//  @Schema(description = "Организационно-правовая форма")
   private LegalForm legalForm;
 
-  @Schema(description = "ИНН")
+//  @Schema(description = "ИНН")
   private long inn;
 
-  @Schema(description = "КПП")
+//  @Schema(description = "КПП")
   private long kpp;
 
-  @Schema(description = "ОГРН")
+//  @Schema(description = "ОГРН")
   private long ogrn;
 
-  @Schema(description = "Наименование района регистрации фермера")
+//  @Schema(description = "Наименование района регистрации фермера")
   private String registrationRegionName;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
-  @Schema(description = "Дата регистрации")
+//  @Schema(description = "Дата регистрации")
   private LocalDate dateRegistration;
 
-  @Schema(description = "Статус активности/архивности")
+//  @Schema(description = "Статус активности/архивности")
   private Status status;
 
-  @Schema(description = "Районы посевных полей")
+//  @Schema(description = "Районы посевных полей")
   private Collection<Long> fields;
 
 }

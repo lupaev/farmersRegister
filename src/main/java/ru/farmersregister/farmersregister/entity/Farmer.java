@@ -46,19 +46,19 @@ public class Farmer {
    * ИНН
    */
   @Column(name = "inn")
-  private long inn;
+  private Long inn;
 
   /**
    * КПП
    */
   @Column(name = "kpp")
-  private long kpp;
+  private Long kpp;
 
   /**
    * ОГРН
    */
   @Column(name = "ogrn")
-  private long ogrn;
+  private Long ogrn;
 
   /**
    * Дата регистрации

@@ -11,31 +11,13 @@ import ru.farmersregister.farmersregister.exception.ElemNotFound;
  */
 public interface RegionService {
 
-  /**
-   * Метод получения из БД всех активных районов
-   * @param sortRegion
-   * @return
-   */
-  Collection<RegionDTO> findAll(SortRegion sortRegion);
 
-  /**
-   * Метод добавления нового района в БД
-   * @param name
-   * @param codeRegion
-   * @param status
-   * @return
-   */
-  RegionDTO addRegion(String name, Integer codeRegion, Status status);
+  Collection<RegionDTO> findAll();
 
-  /**
-   * Изменение данных района в БД
-   * @param id
-   * @param name
-   * @param codeRegion
-   * @param status
-   * @return
-   * @throws ElemNotFound
-   */
-  RegionDTO patchRegion(Long id, String name, Integer codeRegion, Status status) throws ElemNotFound;
+
+  RegionDTO addRegion(RegionDTO regionDTO);
+
+
+  RegionDTO patchRegion(RegionDTO regionDTO) throws ElemNotFound;
 
 }

@@ -2,6 +2,7 @@ package ru.farmersregister.farmersregister.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.SortFarmer;
@@ -45,8 +46,9 @@ public class FarmerServiceImpl implements FarmerService {
   @Override
   public FarmerDTO addFarmer(FarmerDTO farmerDTO) {
     log.info(FormLogInfo.getInfo());
-    farmerRepository.save(farmerMapper.toEntity(farmerDTO));
-    return farmerDTO;
+    Farmer farmer = farmerMapper.toEntity(farmerDTO);
+    farmerRepository.save(farmer);
+    return farmerMapper.toDTO(farmer);
   }
 
 
