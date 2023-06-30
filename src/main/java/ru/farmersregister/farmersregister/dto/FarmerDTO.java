@@ -16,38 +16,38 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-//@Schema(description = "Сущность фермера")
+@Schema(description = "Сущность фермера")
 public class FarmerDTO {
 
-//  @Schema(description = "Идентификатор")
+  @Schema(description = "Идентификатор")
   private Long id;
 
-//  @Schema(description = "Наименование")
+  @Schema(description = "Наименование")
   private String name;
 
-//  @Schema(description = "Организационно-правовая форма")
+  @Schema(description = "Организационно-правовая форма")
   private LegalForm legalForm;
 
-//  @Schema(description = "ИНН")
+  @Schema(description = "ИНН")
   private Long inn;
 
-//  @Schema(description = "КПП")
+  @Schema(description = "КПП")
   private Long kpp;
 
-//  @Schema(description = "ОГРН")
+  @Schema(description = "ОГРН")
   private Long ogrn;
 
-//  @Schema(description = "Район регистрации фермера")
+  @Schema(description = "Район регистрации фермера")
   private Long registrationRegion;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
-//  @Schema(description = "Дата регистрации")
+  @Schema(description = "Дата регистрации")
   private LocalDate dateRegistration;
 
-//  @Schema(description = "Статус активности/архивности")
+  @Schema(description = "Статус активности/архивности")
   private Status status;
 
-//  @Schema(description = "Районы посевных полей")
+  @Schema(description = "Районы посевных полей")
   private Collection<RegionDTO> fields;
 
 }
