@@ -2,10 +2,8 @@ package ru.farmersregister.farmersregister.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
-import ru.farmersregister.farmersregister.entity.SortFarmer;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
 import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.FarmerFullMapper;
@@ -15,11 +13,6 @@ import ru.farmersregister.farmersregister.service.FarmerService;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.stream.Collectors;
-
-import static ru.farmersregister.farmersregister.entity.Status.ACTIVE;
-import static ru.farmersregister.farmersregister.entity.Status.NONACTIVE;
 
 @Service
 @Slf4j
@@ -59,7 +52,15 @@ public class FarmerServiceImpl implements FarmerService {
         .orElseThrow(() -> new ElemNotFound("Farmer not found on :: " + id));
     return farmerMapper.toDTO(farmer);  }
 
-
+  @Override
+  public FarmerDTO patchFarmer(FarmerDTO farmerDTO) {
+    log.info(FormLogInfo.getInfo());
+    Farmer farmer = farmerRepository.findById(farmerDTO.getId())
+            .orElseThrow(() -> new ElemNotFound("Farmer not found on :: " + farmerDTO.getId()));
+    farmerMapper.updateEntity(farmerDTO, farmer);
+    farmerRepository.save(farmer);
+    return farmerMapper.toDTO(farmer);
+  }
 
 
 }

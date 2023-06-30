@@ -19,4 +19,5 @@ public interface FarmerService {
 
   FarmerDTO getFarmer(Long id);
 
+  FarmerDTO patchFarmer(FarmerDTO farmerDTO);
 }

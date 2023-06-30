@@ -42,5 +42,10 @@ public class FarmerController {
     return ResponseEntity.ok(farmerService.addFarmer(farmerDTO));
   }
 
+  @PatchMapping(value = "/patch")
+  public ResponseEntity<FarmerDTO> patchFarmer(@RequestBody FarmerDTO farmerDTO) {
+    return ResponseEntity.ok(farmerService.patchFarmer(farmerDTO));
+  }
+
 
 }
