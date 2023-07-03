@@ -46,19 +46,19 @@ public class Farmer {
    * ИНН
    */
   @Column(name = "inn")
-  private Long inn;
+  private String inn;
 
   /**
    * КПП
    */
   @Column(name = "kpp")
-  private Long kpp;
+  private String kpp;
 
   /**
    * ОГРН
    */
   @Column(name = "ogrn")
-  private Long ogrn;
+  private String ogrn;
 
   /**
    * Дата регистрации
@@ -77,7 +77,7 @@ public class Farmer {
   /**
    * Район регистрации фермера
    */
-  @ManyToOne()
+  @ManyToOne
   @JoinColumn(name = "registration_region_id")
   private Region region;
 

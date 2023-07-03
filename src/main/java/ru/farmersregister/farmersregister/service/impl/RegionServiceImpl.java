@@ -1,24 +1,17 @@
 package ru.farmersregister.farmersregister.service.impl;
 
-import static ru.farmersregister.farmersregister.entity.Status.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.entity.SortRegion;
-import ru.farmersregister.farmersregister.entity.Status;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
 import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.RegionMapper;
 import ru.farmersregister.farmersregister.repository.RegionRepository;
 import ru.farmersregister.farmersregister.service.RegionService;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 @Slf4j
@@ -46,8 +39,7 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public RegionDTO patchRegion(RegionDTO regionDTO)
-      throws ElemNotFound {
+  public RegionDTO patchRegion(RegionDTO regionDTO) throws ElemNotFound {
     log.info(FormLogInfo.getInfo());
     Region region = regionRepository.findById(regionDTO.getId())
         .orElseThrow(() -> new ElemNotFound("Region not found on :: " + regionDTO.getId()));
