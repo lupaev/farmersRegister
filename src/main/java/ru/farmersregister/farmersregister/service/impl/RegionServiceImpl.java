@@ -35,7 +35,7 @@ public class RegionServiceImpl implements RegionService {
   public RegionDTO addRegion(RegionDTO regionDTO) {
     log.info(FormLogInfo.getInfo());
     regionRepository.save(regionMapper.toEntity(regionDTO));
-    return regionDTO;
+    return regionMapper.toDTO(regionRepository.findByNameAndCodeRegion(regionDTO.getName(), regionDTO.getCodeRegion()));
   }
 
   @Override

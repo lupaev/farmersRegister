@@ -29,7 +29,7 @@ public interface FarmerRepository extends JpaRepository<Farmer, Long> {
    * @param name
    * @return
    */
-  Farmer findByInnAndName(long inn, String name);
+  Farmer findByInnAndName(String inn, String name);
 
 }
 

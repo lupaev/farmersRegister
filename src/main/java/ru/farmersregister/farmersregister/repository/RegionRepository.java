@@ -9,4 +9,6 @@ import ru.farmersregister.farmersregister.entity.Region;
  */
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Long> {
+
+  Region findByNameAndCodeRegion(String name, Integer code);
 }

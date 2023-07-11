@@ -41,7 +41,8 @@ public class FarmerServiceImpl implements FarmerService {
     log.info(FormLogInfo.getInfo());
     Farmer farmer = farmerMapper.toEntity(farmerDTO);
     farmerRepository.save(farmer);
-    return farmerMapper.toDTO(farmer);
+    return farmerMapper.toDTO(farmerRepository.findByInnAndName(farmerDTO.getInn(),
+        farmerDTO.getName()));
   }
 
 
