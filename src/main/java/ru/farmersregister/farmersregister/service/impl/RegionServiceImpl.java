@@ -39,10 +39,10 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public RegionDTO patchRegion(RegionDTO regionDTO) throws ElemNotFound {
+  public RegionDTO patchRegion(Long id, RegionDTO regionDTO) throws ElemNotFound {
     log.info(FormLogInfo.getInfo());
-    Region region = regionRepository.findById(regionDTO.getId())
-        .orElseThrow(() -> new ElemNotFound("Region not found on :: " + regionDTO.getId()));
+    Region region = regionRepository.findById(id)
+        .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
     regionMapper.updateEntity(regionDTO, region);
     regionRepository.save(region);
     return regionMapper.toDTO(region);

@@ -54,10 +54,10 @@ public class FarmerServiceImpl implements FarmerService {
     return farmerMapper.toDTO(farmer);  }
 
   @Override
-  public FarmerDTO patchFarmer(FarmerDTO farmerDTO) {
+  public FarmerDTO patchFarmer(Long id, FarmerDTO farmerDTO) {
     log.info(FormLogInfo.getInfo());
-    Farmer farmer = farmerRepository.findById(farmerDTO.getId())
-            .orElseThrow(() -> new ElemNotFound("Farmer not found on :: " + farmerDTO.getId()));
+    Farmer farmer = farmerRepository.findById(id)
+            .orElseThrow(() -> new ElemNotFound("Farmer not found on :: " + id));
     farmerMapper.updateEntity(farmerDTO, farmer);
     farmerRepository.save(farmer);
     return farmerMapper.toDTO(farmer);

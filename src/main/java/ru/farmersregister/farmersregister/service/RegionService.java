@@ -18,6 +18,6 @@ public interface RegionService {
   RegionDTO addRegion(RegionDTO regionDTO);
 
 
-  RegionDTO patchRegion(RegionDTO regionDTO) throws ElemNotFound;
+  RegionDTO patchRegion(Long id, RegionDTO regionDTO) throws ElemNotFound;
 
 }
