@@ -4,8 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-import ru.farmersregister.farmersregister.entity.LegalForm;
-import ru.farmersregister.farmersregister.entity.Status;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -30,7 +28,7 @@ public class FarmerDTO {
 
   @Schema(description = "Организационно-правовая форма")
   @Nullable
-  private LegalForm legalForm;
+  private String legalForm;
 
   @Schema(description = "ИНН")
   @Nullable
@@ -53,9 +51,9 @@ public class FarmerDTO {
   @Nullable
   private LocalDate dateRegistration;
 
-  @Schema(description = "Статус активности/архивности")
-  @Nullable
-  private Status status;
+//  @Schema(description = "Статус активности/архивности")
+//  @Nullable
+//  private Status status;
 
   @Schema(description = "Районы посевных полей")
   @Nullable

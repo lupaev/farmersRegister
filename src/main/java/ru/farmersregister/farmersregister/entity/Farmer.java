@@ -39,8 +39,8 @@ public class Farmer {
    * Организационно-правовая форма
    */
   @Column(name = "legal_form")
-  @Enumerated(EnumType.STRING)
-  private LegalForm legalForm;
+//  @Enumerated(EnumType.STRING)
+  private String legalForm;
 
   /**
    * ИНН
@@ -67,12 +67,12 @@ public class Farmer {
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate dateRegistration;
 
-  /**
-   * Статус активности/архивности
-   */
-  @Column(name = "status")
-  @Enumerated(EnumType.STRING)
-  private Status status;
+//  /**
+//   * Статус активности/архивности
+//   */
+//  @Column(name = "status")
+//  @Enumerated(EnumType.STRING)
+//  private Status status;
 
   /**
    * Район регистрации фермера

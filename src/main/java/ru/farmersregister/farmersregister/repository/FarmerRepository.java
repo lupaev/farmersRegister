@@ -10,17 +10,6 @@ import ru.farmersregister.farmersregister.entity.Farmer;
 @Repository
 public interface FarmerRepository extends JpaRepository<Farmer, Long> {
 
-//  /**
-//   * Сохранение в БД районы посевных полей фермера
-//   * @param farmerId
-//   * @param regionId
-//   */
-//  @Transactional
-//  @Modifying
-//  @Query(nativeQuery = true, value = "insert into farmer_regions (farmer_id, regions_id) "
-//      + "values (:farmerId, :regionId)")
-//  void saveFarmerFieldInOtherRegions(@Param("farmerId") Long farmerId,
-//      @Param("regionId") Long regionId);
 
 
   /**

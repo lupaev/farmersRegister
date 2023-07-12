@@ -37,12 +37,12 @@ public class Region {
   @Column(name = "code_region")
   private Integer codeRegion;
 
-  /**
-   * Статус активности/архивности
-   */
-  @Column(name = "status")
-  @Enumerated(EnumType.STRING)
-  private Status status;
+//  /**
+//   * Статус активности/архивности
+//   */
+//  @Column(name = "status")
+//  @Enumerated(EnumType.STRING)
+//  private Status status;
 
 
 

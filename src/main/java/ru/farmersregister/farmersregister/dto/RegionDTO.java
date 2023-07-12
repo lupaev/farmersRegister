@@ -2,7 +2,6 @@ package ru.farmersregister.farmersregister.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import ru.farmersregister.farmersregister.entity.Status;
 
 @Getter
 @Setter
@@ -22,8 +21,8 @@ public class RegionDTO {
   @Schema(description = "Код региона")
   private Integer codeRegion;
 
-  @Schema(description = "Статус активности/архивности")
-  private Status status;
+//  @Schema(description = "Статус активности/архивности")
+//  private Status status;
 
 
 }
