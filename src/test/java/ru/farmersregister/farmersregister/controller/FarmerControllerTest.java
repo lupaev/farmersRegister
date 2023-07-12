@@ -32,7 +32,6 @@ class FarmerControllerTest {
 
   private FarmerDTO dto;
 
-  private FarmerFullDTO fullDTO;
 
 
 //  @Test
