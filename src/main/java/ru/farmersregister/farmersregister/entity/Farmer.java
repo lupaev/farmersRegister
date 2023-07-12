@@ -19,6 +19,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "farmer")
+@SecondaryTable(name = "farmer_archive")
 @Entity
 public class Farmer {
 

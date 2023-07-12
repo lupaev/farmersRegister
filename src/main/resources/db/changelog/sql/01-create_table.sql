@@ -8,7 +8,27 @@ create table region
     name varchar unique not null ,
     code_region integer unique
 );
+create table region_archive
+(
+    id bigserial primary key ,
+    name varchar unique not null ,
+    code_region integer unique
+);
+
 create table farmer
+(
+    id bigserial primary key ,
+    name varchar unique not null ,
+    legal_form varchar ,
+    inn varchar unique not null ,
+    kpp varchar ,
+    ogrn varchar ,
+    registration_region_id bigint ,
+    date_registration date ,
+    constraint fk_region_id foreign key (registration_region_id) references region (id)
+);
+
+create table farmer_archive
 (
     id bigserial primary key ,
     name varchar unique not null ,
