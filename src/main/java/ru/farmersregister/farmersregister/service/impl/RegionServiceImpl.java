@@ -1,5 +1,6 @@
 package ru.farmersregister.farmersregister.service.impl;
 
+import java.sql.SQLException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
@@ -48,7 +49,18 @@ public class RegionServiceImpl implements RegionService {
     return regionMapper.toDTO(region);
   }
 
-
+  @Override
+  public RegionDTO delRegion(Long id) throws SQLException {
+    Region region = regionRepository.findById(id)
+        .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
+    try {
+      regionRepository.saveToArchive(id);
+      regionRepository.deleteById(id);
+    } catch (Exception exception) {
+      throw new SQLException("В данном регионе есть зарегистрированные фермеры");
+    }
+    return regionMapper.toDTO(region);
+  }
 
 
 }

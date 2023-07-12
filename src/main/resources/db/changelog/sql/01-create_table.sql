@@ -23,7 +23,7 @@ create table farmer
     inn varchar unique not null ,
     kpp varchar ,
     ogrn varchar ,
-    registration_region_id bigint ,
+    registration_region_id bigserial ,
     date_registration date ,
     constraint fk_region_id foreign key (registration_region_id) references region (id)
 );
@@ -36,7 +36,7 @@ create table farmer_archive
     inn varchar unique not null ,
     kpp varchar ,
     ogrn varchar ,
-    registration_region_id bigint ,
+    registration_region_id bigserial ,
     date_registration date ,
     constraint fk_region_id foreign key (registration_region_id) references region (id)
 );

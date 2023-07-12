@@ -1,5 +1,6 @@
 package ru.farmersregister.farmersregister.service;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
@@ -17,5 +18,7 @@ public interface RegionService {
 
 
   RegionDTO patchRegion(Long id, RegionDTO regionDTO) throws ElemNotFound;
+
+  RegionDTO delRegion(Long id) throws SQLException;
 
 }
