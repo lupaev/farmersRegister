@@ -7,6 +7,7 @@ import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import ru.farmersregister.farmersregister.entity.Region;
 
 
 @Getter
@@ -44,7 +45,7 @@ public class FarmerDTO {
 
   @Schema(description = "Район регистрации фермера")
   @Nullable
-  private Long registrationRegion;
+  private Region region;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   @Schema(description = "Дата регистрации")

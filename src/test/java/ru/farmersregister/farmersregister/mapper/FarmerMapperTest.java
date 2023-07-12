@@ -38,6 +38,11 @@ class FarmerMapperTest {
     region.setName("TestRegion");
     region.setCodeRegion(11);
 
+    Region region2 = new Region();
+    region.setId(2L);
+    region.setName("TestRegion2");
+    region.setCodeRegion(22);
+
     Region regionField = new Region();
     regionField.setId(3L);
     regionField.setName("TestRegion3");
@@ -147,6 +152,7 @@ class FarmerMapperTest {
     assertThat(entity.getKpp()).isEqualTo(dto1.getKpp());
     assertThat(entity.getOgrn()).isEqualTo(dto1.getOgrn());
     assertThat(entity.getDateRegistration()).isEqualTo(dto1.getDateRegistration());
+    dto1.setId(3L);
     assertNotEquals(dto, dto1);
   }
 
@@ -176,8 +182,10 @@ class FarmerMapperTest {
     assertNotNull(entity);
     assertNotNull(dto);
     dto.setName("RegionTest");
+    dto.setRegistrationRegion(2L);
     mapper.updateEntity(dto, entity);
     assertEquals(dto.getName(), entity.getName());
+    assertEquals(dto.getRegistrationRegion(), entity.getRegion());
   }
 
   @Test

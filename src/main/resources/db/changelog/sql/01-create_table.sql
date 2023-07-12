@@ -38,7 +38,7 @@ create table farmer_archive
     ogrn varchar ,
     registration_region_id bigserial ,
     date_registration date ,
-    constraint fk_region_id foreign key (registration_region_id) references region (id)
+    constraint fk_region_id_archive foreign key (registration_region_id) references region (id)
 );
 
 create table farmer_regions

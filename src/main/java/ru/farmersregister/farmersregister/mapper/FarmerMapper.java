@@ -20,7 +20,7 @@ public interface FarmerMapper {
    * @param farmerDTO
    * @return
    */
-  @Mapping(source = "registrationRegion", target = "region.id")
+//  @Mapping(source = "registrationRegion", target = "region.id")
   Farmer toEntity(FarmerDTO farmerDTO);
 
   /**
@@ -28,7 +28,7 @@ public interface FarmerMapper {
    * @param farmer
    * @return
    */
-  @Mapping(source = "region.id", target = "registrationRegion")
+//  @Mapping(source = "region.id", target = "registrationRegion")
   FarmerDTO toDTO(Farmer farmer);
 
   /**
