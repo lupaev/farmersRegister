@@ -60,7 +60,8 @@ public class RegionController {
       ),
   })
   @GetMapping
-  public ResponseEntity<Page<RegionDTO>> findAll(@RequestBody RequestDTO requestDTO, Pageable pageable) {
+  public ResponseEntity<Page<RegionDTO>> findAll(@RequestBody RequestDTO requestDTO,
+      Pageable pageable) {
     return ResponseEntity.ok(regionService.findAll(requestDTO, pageable));
   }
 
@@ -134,7 +135,9 @@ public class RegionController {
       ),
   })
   @PatchMapping(value = "/patch/{id}")
-  public ResponseEntity<RegionDTO> patchRegion(@PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id, @RequestBody RegionDTO regionDTO){
+  public ResponseEntity<RegionDTO> patchRegion(
+      @PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
+      @RequestBody RegionDTO regionDTO) {
     return ResponseEntity.ok(regionService.patchRegion(id, regionDTO));
   }
 
@@ -158,7 +161,8 @@ public class RegionController {
       ),
   })
   @DeleteMapping(value = "/del/{id}")
-  public ResponseEntity<RegionDTO> delRegion(@PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id)
+  public ResponseEntity<RegionDTO> delRegion(
+      @PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id)
       throws SQLException {
     return ResponseEntity.ok(regionService.delRegion(id));
   }

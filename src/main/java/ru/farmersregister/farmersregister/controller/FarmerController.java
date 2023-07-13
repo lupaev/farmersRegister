@@ -59,7 +59,7 @@ public class FarmerController {
   })
   @GetMapping
   public ResponseEntity<Page<FarmerDTO>> findAll(@RequestBody RequestDTO requestDTO,
-                                                 Pageable pageable) {
+      Pageable pageable) {
     return ResponseEntity.ok(farmerService.findAll(requestDTO, pageable));
   }
 
@@ -161,7 +161,7 @@ public class FarmerController {
   @PatchMapping(value = "/patch/{id}")
   public ResponseEntity<FarmerDTO> patchFarmer(@PathVariable(name = "id")
   @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
-  @RequestBody FarmerDTO farmerDTO) {
+      @RequestBody FarmerDTO farmerDTO) {
     return ResponseEntity.ok(farmerService.patchFarmer(id, farmerDTO));
   }
 

@@ -47,5 +47,4 @@ public class Region {
   private Integer codeRegion;
 
 
-
 }

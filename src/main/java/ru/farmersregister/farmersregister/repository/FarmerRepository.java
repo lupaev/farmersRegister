@@ -20,9 +20,9 @@ public interface FarmerRepository extends JpaRepository<Farmer, Long>,
     JpaSpecificationExecutor<Farmer> {
 
 
-
   /**
    * Поиск фермера в БД по ИНН и наименованию (Обязательные поля при создании фермера)
+   *
    * @param inn
    * @param name
    * @return
@@ -31,6 +31,7 @@ public interface FarmerRepository extends JpaRepository<Farmer, Long>,
 
   /**
    * Перенесение в архив
+   *
    * @param id
    */
   @Modifying
@@ -39,6 +40,7 @@ public interface FarmerRepository extends JpaRepository<Farmer, Long>,
 
   /**
    * Получение всех архивных записей
+   *
    * @return
    */
   @Query(nativeQuery = true, value = "SELECT * FROM farmer_archive")

@@ -94,9 +94,9 @@ public class Farmer {
    * Районы посевных полей
    */
   @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
-  @JoinTable (name="farmer_regions",
-          joinColumns=@JoinColumn (name="farmer_id"),
-          inverseJoinColumns=@JoinColumn(name="regions_id"))
+  @JoinTable(name = "farmer_regions",
+      joinColumns = @JoinColumn(name = "farmer_id"),
+      inverseJoinColumns = @JoinColumn(name = "regions_id"))
   private Collection<Region> fields;
 
 }

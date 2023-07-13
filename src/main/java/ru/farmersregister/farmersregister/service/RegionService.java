@@ -14,18 +14,21 @@ public interface RegionService {
 
   /**
    * Получение всех Районов
+   *
    * @return
    */
   Page<RegionDTO> findAll(RequestDTO requestDTO, Pageable pageable);
 
   /**
    * Получение всех Районов в Архиве
+   *
    * @return
    */
   Page<RegionDTO> findAllInArchive(Pageable pageable);
 
   /**
    * Добавление нового Района в БД
+   *
    * @param regionDTO
    * @return
    */
@@ -33,6 +36,7 @@ public interface RegionService {
 
   /**
    * Изменение данных Района
+   *
    * @param id
    * @param regionDTO
    * @return
@@ -42,6 +46,7 @@ public interface RegionService {
 
   /**
    * Перемещение Района в архив
+   *
    * @param id
    * @return
    * @throws SQLException

@@ -11,7 +11,7 @@ public class SearchRequestDTO {
   String value;
   Operation operation;
 
-  public enum Operation{
+  public enum Operation {
     EQUAL, LIKE, IN, GT, LT, BT
   }
 

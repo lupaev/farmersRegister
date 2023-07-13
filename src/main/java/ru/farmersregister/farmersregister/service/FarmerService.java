@@ -13,18 +13,21 @@ public interface FarmerService {
 
   /**
    * Получение всех Фермеров
+   *
    * @return
    */
   Page<FarmerDTO> findAll(RequestDTO requestDTO, Pageable pageable);
 
   /**
    * Получение всех Фермеров в Архиве
+   *
    * @return
    */
   Page<FarmerDTO> findAllInArchive(Pageable pageable);
 
   /**
    * Добавление нового Фермера в БД
+   *
    * @param farmerDTO
    * @return
    */
@@ -32,6 +35,7 @@ public interface FarmerService {
 
   /**
    * Получение Фермера по идентификатору
+   *
    * @param id
    * @return
    */
@@ -39,6 +43,7 @@ public interface FarmerService {
 
   /**
    * Изменение данных Фермера
+   *
    * @param id
    * @param farmerDTO
    * @return
@@ -47,6 +52,7 @@ public interface FarmerService {
 
   /**
    * Перемещение Фермера в архив
+   *
    * @param id
    * @return
    * @throws SQLException

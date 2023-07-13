@@ -12,7 +12,7 @@ public class RequestDTO {
 
   private GlobalOperator globalOperator;
 
-  public enum GlobalOperator{
+  public enum GlobalOperator {
     AND, OR
   }
 

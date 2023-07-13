@@ -15,7 +15,8 @@ import ru.farmersregister.farmersregister.dto.SearchRequestDTO;
 public class SpecificationDTO<T> {
 
 
-  public Specification<T> getSearchSpecification(Collection<SearchRequestDTO> searchRequestDTOs, RequestDTO.GlobalOperator globalOperator) {
+  public Specification<T> getSearchSpecification(Collection<SearchRequestDTO> searchRequestDTOs,
+      RequestDTO.GlobalOperator globalOperator) {
     return (root, query, criteriaBuilder) -> {
       Collection<Predicate> predicates = new ArrayList<>();
       for (SearchRequestDTO requestDTO : searchRequestDTOs) {
@@ -64,11 +65,6 @@ public class SpecificationDTO<T> {
       }
     };
   }
-
-
-
-
-
 
 
 }

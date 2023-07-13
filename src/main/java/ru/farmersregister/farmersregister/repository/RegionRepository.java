@@ -21,6 +21,7 @@ public interface RegionRepository extends JpaRepository<Region, Long>,
 
   /**
    * Поиск по наименованию и ИНН
+   *
    * @param name
    * @param code
    * @return
@@ -29,6 +30,7 @@ public interface RegionRepository extends JpaRepository<Region, Long>,
 
   /**
    * Перенесение в архив
+   *
    * @param id
    */
   @Modifying
@@ -37,6 +39,7 @@ public interface RegionRepository extends JpaRepository<Region, Long>,
 
   /**
    * Получение всех архивных записей
+   *
    * @return
    */
   @Query(nativeQuery = true, value = "SELECT * FROM region_archive")

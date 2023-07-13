@@ -15,6 +15,7 @@ public interface FarmerMapper {
 
   /**
    * Преобразование DTO в сущность фермера
+   *
    * @param farmerDTO
    * @return
    */
@@ -23,6 +24,7 @@ public interface FarmerMapper {
 
   /**
    * Преобразование сущности фермера в DTO
+   *
    * @param farmer
    * @return
    */
@@ -31,6 +33,7 @@ public interface FarmerMapper {
 
   /**
    * Преобразование коллекции фермеров в коллекцию  DTO
+   *
    * @param list
    * @return
    */
@@ -38,6 +41,7 @@ public interface FarmerMapper {
 
   /**
    * Обновление сущности фермера из данных DTO
+   *
    * @param farmerDTO
    * @param farmer
    */
