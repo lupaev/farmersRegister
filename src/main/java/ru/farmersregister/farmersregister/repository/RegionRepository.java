@@ -1,5 +1,6 @@
 package ru.farmersregister.farmersregister.repository;
 
+import java.util.Collection;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -31,4 +32,10 @@ public interface RegionRepository extends JpaRepository<Region, Long> {
   @Query(value = "INSERT INTO region_archive SELECT * FROM region where region.id = :id", nativeQuery = true)
   void saveToArchive(@Param("id") Long id);
 
+  /**
+   * Получение всех архивных записей
+   * @return
+   */
+  @Query(nativeQuery = true, value = "SELECT * FROM region_archive")
+  Collection<Region> findAllInArchive();
 }

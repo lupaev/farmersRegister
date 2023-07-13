@@ -1,5 +1,6 @@
 package ru.farmersregister.farmersregister.repository;
 
+import java.util.Collection;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.farmersregister.farmersregister.entity.Farmer;
+import ru.farmersregister.farmersregister.entity.Region;
 
 /**
  * Репозиторий для сущности фермера
@@ -32,6 +34,13 @@ public interface FarmerRepository extends JpaRepository<Farmer, Long> {
   @Modifying
   @Query(value = "INSERT INTO farmer_archive SELECT * FROM farmer where farmer.id = :id", nativeQuery = true)
   void saveToArchive(@Param("id") Long id);
+
+  /**
+   * Получение всех архивных записей
+   * @return
+   */
+  @Query(nativeQuery = true, value = "SELECT * FROM farmer_archive")
+  Collection<Farmer> findAllInArchive();
 
 }
 

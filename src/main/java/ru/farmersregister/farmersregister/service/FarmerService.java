@@ -18,6 +18,12 @@ public interface FarmerService {
   Collection<FarmerDTO> findAll();
 
   /**
+   * Получение всех Фермеров в Архиве
+   * @return
+   */
+  Collection<FarmerDTO> findAllInArchive();
+
+  /**
    * Добавление нового Фермера в БД
    * @param farmerDTO
    * @return

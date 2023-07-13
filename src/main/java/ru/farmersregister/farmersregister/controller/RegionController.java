@@ -36,6 +36,11 @@ public class RegionController {
     return ResponseEntity.ok(regionService.findAll());
   }
 
+  @GetMapping(value = "/archived")
+  public ResponseEntity<Collection<RegionDTO>> findAllInArchive() {
+    return ResponseEntity.ok(regionService.findAllInArchive());
+  }
+
 
   @PostMapping(value = "/add")
   public ResponseEntity<RegionDTO> addRegion(@RequestBody RegionDTO regionDTO) {

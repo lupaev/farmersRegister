@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
+import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.service.FarmerService;
 
 @RestController
@@ -33,6 +34,11 @@ public class FarmerController {
   @GetMapping
   public ResponseEntity<Collection<FarmerDTO>> findAll() {
     return ResponseEntity.ok(farmerService.findAll());
+  }
+
+  @GetMapping(value = "/archived")
+  public ResponseEntity<Collection<FarmerDTO>> findAllInArchive() {
+    return ResponseEntity.ok(farmerService.findAllInArchive());
   }
 
   @GetMapping(value = "/{id}")
