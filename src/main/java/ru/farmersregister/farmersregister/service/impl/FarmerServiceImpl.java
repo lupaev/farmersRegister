@@ -36,6 +36,12 @@ public class FarmerServiceImpl implements FarmerService {
   }
 
   @Override
+  public Collection<FarmerDTO> findAllInArchive() {
+    return new ArrayList<>(farmerMapper.toDTOList(farmerRepository.findAllInArchive()));
+
+  }
+
+  @Override
   public FarmerDTO addFarmer(FarmerDTO farmerDTO) {
     log.info(FormLogInfo.getInfo());
     Farmer farmer = farmerMapper.toEntity(farmerDTO);

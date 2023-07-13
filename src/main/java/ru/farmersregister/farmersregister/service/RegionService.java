@@ -17,6 +17,12 @@ public interface RegionService {
   Collection<RegionDTO> findAll();
 
   /**
+   * Получение всех Районов в Архиве
+   * @return
+   */
+  Collection<RegionDTO> findAllInArchive();
+
+  /**
    * Добавление нового Района в БД
    * @param regionDTO
    * @return

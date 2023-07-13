@@ -33,6 +33,12 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
+  public Collection<RegionDTO> findAllInArchive() {
+    return new ArrayList<>(regionMapper.toDTOList(regionRepository.findAllInArchive()));
+
+  }
+
+  @Override
   public RegionDTO addRegion(RegionDTO regionDTO) {
     log.info(FormLogInfo.getInfo());
     regionRepository.save(regionMapper.toEntity(regionDTO));
