@@ -85,7 +85,7 @@ public class Farmer {
   /**
    * Районы посевных полей
    */
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable (name="farmer_regions",
           joinColumns=@JoinColumn (name="farmer_id"),
           inverseJoinColumns=@JoinColumn(name="regions_id"))

@@ -2,10 +2,12 @@ package ru.farmersregister.farmersregister.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.sql.SQLException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
+import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.service.FarmerService;
 
 import javax.validation.constraints.Min;
@@ -45,6 +47,12 @@ public class FarmerController {
   @PatchMapping(value = "/patch/{id}")
   public ResponseEntity<FarmerDTO> patchFarmer(@PathVariable(name = "id") Long id, @RequestBody FarmerDTO farmerDTO) {
     return ResponseEntity.ok(farmerService.patchFarmer(id, farmerDTO));
+  }
+
+  @DeleteMapping(value = "/del/{id}")
+  public ResponseEntity<FarmerDTO> delRegion(@PathVariable(name = "id") Long id)
+      throws SQLException {
+    return ResponseEntity.ok(farmerService.delFarmer(id));
   }
 
 
