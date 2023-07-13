@@ -3,9 +3,10 @@ package ru.farmersregister.farmersregister.controller;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.sql.SQLException;
-import java.util.Collection;
 import javax.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
-import ru.farmersregister.farmersregister.dto.RegionDTO;
+import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.service.FarmerService;
 
 @RestController
@@ -32,13 +33,13 @@ public class FarmerController {
   }
 
   @GetMapping
-  public ResponseEntity<Collection<FarmerDTO>> findAll() {
-    return ResponseEntity.ok(farmerService.findAll());
+  public ResponseEntity<Page<FarmerDTO>> findAll(@RequestBody RequestDTO requestDTO, Pageable pageable) {
+    return ResponseEntity.ok(farmerService.findAll(requestDTO, pageable));
   }
 
   @GetMapping(value = "/archived")
-  public ResponseEntity<Collection<FarmerDTO>> findAllInArchive() {
-    return ResponseEntity.ok(farmerService.findAllInArchive());
+  public ResponseEntity<Page<FarmerDTO>> findAllInArchive(Pageable pageable) {
+    return ResponseEntity.ok(farmerService.findAllInArchive(pageable));
   }
 
   @GetMapping(value = "/{id}")

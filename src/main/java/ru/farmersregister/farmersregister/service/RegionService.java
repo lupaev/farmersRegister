@@ -2,7 +2,10 @@ package ru.farmersregister.farmersregister.service;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
+import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
 
 /**
@@ -14,13 +17,13 @@ public interface RegionService {
    * Получение всех Районов
    * @return
    */
-  Collection<RegionDTO> findAll();
+  Page<RegionDTO> findAll(RequestDTO requestDTO, Pageable pageable);
 
   /**
    * Получение всех Районов в Архиве
    * @return
    */
-  Collection<RegionDTO> findAllInArchive();
+  Page<RegionDTO> findAllInArchive(Pageable pageable);
 
   /**
    * Добавление нового Района в БД
