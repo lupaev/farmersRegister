@@ -23,6 +23,7 @@ import ru.farmersregister.farmersregister.entity.Region;
 
 @SpringBootTest
 class FarmerMapperTest {
+
   private Farmer entity;
 
   private FarmerDTO dto;
@@ -43,25 +44,14 @@ class FarmerMapperTest {
     region.setName("TestRegion2");
     region.setCodeRegion(22);
 
-    Region regionField = new Region();
-    regionField.setId(3L);
-    regionField.setName("TestRegion3");
-    regionField.setCodeRegion(33);
-
-    RegionDTO regionFieldDTO = new RegionDTO();
-    regionFieldDTO.setId(3L);
-    regionFieldDTO.setName("TestRegion3");
-    regionFieldDTO.setCodeRegion(33);
-
-
+    Region region3 = new Region();
+    region3.setId(3L);
+    region3.setName("TestRegion3");
+    region3.setCodeRegion(33);
 
     Collection<Region> regions = new ArrayList<>();
-    regions.add(regionField);
-
-    Collection<RegionDTO> regionDTOS = new ArrayList<>();
-    regionDTOS.add(regionFieldDTO);
-
-
+    regions.add(region2);
+    regions.add(region3);
 
     entity = new Farmer();
     entity.setId(1L);
@@ -72,6 +62,7 @@ class FarmerMapperTest {
     entity.setOgrn("654789");
     entity.setDateRegistration(LocalDate.parse("2013-12-20"));
     entity.setFields(regions);
+    entity.setLegalForm("OOO");
 
     dto = new FarmerDTO();
     dto.setId(1L);
@@ -79,9 +70,10 @@ class FarmerMapperTest {
     dto.setInn("123456");
     dto.setKpp("654321");
     dto.setOgrn("654789");
-    dto.setRegistrationRegion(region.getId());
+    dto.setRegion(region);
     dto.setDateRegistration(LocalDate.parse("2013-12-20"));
-    dto.setFields(regionDTOS);
+    dto.setFields(regions);
+    dto.setLegalForm("OOO");
   }
 
   @AfterEach
@@ -181,11 +173,11 @@ class FarmerMapperTest {
   void updateEntityPositive() {
     assertNotNull(entity);
     assertNotNull(dto);
-    dto.setName("RegionTest");
-    dto.setRegistrationRegion(2L);
+    dto.setName("TestName_");
+    dto.setOgrn("111111111");
     mapper.updateEntity(dto, entity);
     assertEquals(dto.getName(), entity.getName());
-    assertEquals(dto.getRegistrationRegion(), entity.getRegion());
+    assertEquals(dto.getOgrn(), entity.getOgrn());
   }
 
   @Test

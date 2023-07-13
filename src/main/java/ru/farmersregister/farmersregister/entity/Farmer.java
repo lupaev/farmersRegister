@@ -54,7 +54,6 @@ public class Farmer {
    * Организационно-правовая форма
    */
   @Column(name = "legal_form")
-//  @Enumerated(EnumType.STRING)
   private String legalForm;
 
   /**
