@@ -1,40 +1,13 @@
 package ru.farmersregister.farmersregister.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anySet;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.farmersregister.farmersregister.dto.RegionDTO;
-import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.entity.SortRegion;
-import ru.farmersregister.farmersregister.entity.Status;
-import ru.farmersregister.farmersregister.exception.ElemNotFound;
-import ru.farmersregister.farmersregister.mapper.RegionMapper;
-import ru.farmersregister.farmersregister.repository.RegionRepository;
-import ru.farmersregister.farmersregister.service.impl.RegionServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class RegionServiceTest {

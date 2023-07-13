@@ -1,5 +1,8 @@
 package ru.farmersregister.farmersregister.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,13 +39,6 @@ public class Region {
    */
   @Column(name = "code_region")
   private Integer codeRegion;
-
-  /**
-   * Статус активности/архивности
-   */
-  @Column(name = "status")
-  @Enumerated(EnumType.STRING)
-  private Status status;
 
 
 

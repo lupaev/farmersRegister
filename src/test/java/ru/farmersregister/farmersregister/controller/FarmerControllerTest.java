@@ -7,7 +7,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
-import ru.farmersregister.farmersregister.dto.FarmerFullDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
 import ru.farmersregister.farmersregister.service.FarmerService;
@@ -33,7 +32,6 @@ class FarmerControllerTest {
 
   private FarmerDTO dto;
 
-  private FarmerFullDTO fullDTO;
 
 
 //  @Test

@@ -3,9 +3,11 @@ package ru.farmersregister.farmersregister.controller;
 
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.sql.SQLException;
 import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +46,12 @@ public class RegionController {
   @PatchMapping(value = "/patch/{id}")
   public ResponseEntity<RegionDTO> patchRegion(@PathVariable(name = "id") Long id, @RequestBody RegionDTO regionDTO){
     return ResponseEntity.ok(regionService.patchRegion(id, regionDTO));
+  }
+
+  @DeleteMapping(value = "/del/{id}")
+  public ResponseEntity<RegionDTO> delRegion(@PathVariable(name = "id") Long id)
+      throws SQLException {
+    return ResponseEntity.ok(regionService.delRegion(id));
   }
 
 
