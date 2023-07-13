@@ -1,13 +1,11 @@
 package ru.farmersregister.farmersregister.mapper;
 
+import java.util.Collection;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
-
-import java.util.Collection;
 
 /**
  * Маппер для фермера

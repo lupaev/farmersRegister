@@ -14,9 +14,6 @@ import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.FarmerMapper;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
 import ru.farmersregister.farmersregister.service.FarmerService;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import ru.farmersregister.farmersregister.specification.SpecificationDTO;
 
 @Service

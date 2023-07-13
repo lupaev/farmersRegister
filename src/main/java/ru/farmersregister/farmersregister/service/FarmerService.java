@@ -3,11 +3,7 @@ package ru.farmersregister.farmersregister.service;
 import java.sql.SQLException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.RequestBody;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
-
-import java.util.Collection;
-import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
 
 /**

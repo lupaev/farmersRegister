@@ -1,12 +1,15 @@
 package ru.farmersregister.farmersregister.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.Nullable;
-
 import java.time.LocalDate;
 import java.util.Collection;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.farmersregister.farmersregister.entity.Region;
 
 

@@ -1,6 +1,5 @@
 package ru.farmersregister.farmersregister.repository;
 
-import java.util.Collection;
 import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.farmersregister.farmersregister.entity.Farmer;
-import ru.farmersregister.farmersregister.entity.Region;
 
 /**
  * Репозиторий для сущности фермера
