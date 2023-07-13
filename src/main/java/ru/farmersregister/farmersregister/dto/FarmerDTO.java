@@ -20,44 +20,31 @@ import ru.farmersregister.farmersregister.entity.Region;
 public class FarmerDTO {
 
   @Schema(description = "Идентификатор")
-  @Nullable
   private Long id;
 
   @Schema(description = "Наименование")
-  @Nullable
   private String name;
 
   @Schema(description = "Организационно-правовая форма")
-  @Nullable
   private String legalForm;
 
   @Schema(description = "ИНН")
-  @Nullable
   private String inn;
 
   @Schema(description = "КПП")
-  @Nullable
   private String kpp;
 
   @Schema(description = "ОГРН")
-  @Nullable
   private String ogrn;
 
   @Schema(description = "Район регистрации фермера")
-  @Nullable
   private Region region;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   @Schema(description = "Дата регистрации")
-  @Nullable
   private LocalDate dateRegistration;
 
-//  @Schema(description = "Статус активности/архивности")
-//  @Nullable
-//  private Status status;
-
   @Schema(description = "Районы посевных полей")
-  @Nullable
-  private Collection<RegionDTO> fields;
+  private Collection<Region> fields;
 
 }

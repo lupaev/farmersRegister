@@ -19,7 +19,6 @@ import java.util.Collection;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "farmer")
-@SecondaryTable(name = "farmer_archive")
 @Entity
 public class Farmer {
 
@@ -68,24 +67,18 @@ public class Farmer {
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate dateRegistration;
 
-//  /**
-//   * Статус активности/архивности
-//   */
-//  @Column(name = "status")
-//  @Enumerated(EnumType.STRING)
-//  private Status status;
 
   /**
    * Район регистрации фермера
    */
-  @ManyToOne
+  @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
   @JoinColumn(name = "registration_region_id")
   private Region region;
 
   /**
    * Районы посевных полей
    */
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
   @JoinTable (name="farmer_regions",
           joinColumns=@JoinColumn (name="farmer_id"),
           inverseJoinColumns=@JoinColumn(name="regions_id"))

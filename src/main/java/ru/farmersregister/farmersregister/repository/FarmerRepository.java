@@ -25,9 +25,14 @@ public interface FarmerRepository extends JpaRepository<Farmer, Long> {
    */
   Farmer findByInnAndName(String inn, String name);
 
+  /**
+   * Перенесение в архив
+   * @param id
+   */
   @Modifying
   @Query(value = "INSERT INTO farmer_archive SELECT * FROM farmer where farmer.id = :id", nativeQuery = true)
   void saveToArchive(@Param("id") Long id);
+
 }
 
 

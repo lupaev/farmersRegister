@@ -15,9 +15,20 @@ import ru.farmersregister.farmersregister.entity.Region;
 @Transactional
 public interface RegionRepository extends JpaRepository<Region, Long> {
 
+  /**
+   * Поиск по наименованию и ИНН
+   * @param name
+   * @param code
+   * @return
+   */
   Region findByNameAndCodeRegion(String name, Integer code);
+
+  /**
+   * Перенесение в архив
+   * @param id
+   */
   @Modifying
-  @Query(value = "INSERT INTO region_archive (name, code_region) SELECT region.name, region.code_region FROM region where region.id = :id", nativeQuery = true)
+  @Query(value = "INSERT INTO region_archive SELECT * FROM region where region.id = :id", nativeQuery = true)
   void saveToArchive(@Param("id") Long id);
 
 }

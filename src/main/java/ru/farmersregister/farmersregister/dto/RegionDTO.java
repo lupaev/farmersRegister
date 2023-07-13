@@ -20,9 +20,4 @@ public class RegionDTO {
 
   @Schema(description = "Код региона")
   private Integer codeRegion;
-
-//  @Schema(description = "Статус активности/архивности")
-//  private Status status;
-
-
 }
