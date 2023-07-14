@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,7 @@ import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -31,6 +34,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.Region;
+import ru.farmersregister.farmersregister.mapper.FarmerMapperImpl;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
 import ru.farmersregister.farmersregister.service.FarmerService;
 
@@ -50,6 +54,9 @@ class FarmerControllerTest {
 
   @MockBean
   private FarmerRepository repository;
+
+  @SpyBean
+  private FarmerMapperImpl farmerMapper;
 
   private Farmer entity;
 
@@ -103,6 +110,7 @@ class FarmerControllerTest {
     dto.setRegion(region);
     dto.setDateRegistration(LocalDate.parse("2013-12-20"));
     dto.setFields(regions);
+    dto.setLegalForm("OOO");
 
   }
 
@@ -115,38 +123,53 @@ class FarmerControllerTest {
   @Test
   void getFarmer() throws Exception {
     MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-    String url = "/farmer/1";
+    String url = "/farmer/{id}";
+    Long id = 1L;
 
     when(service.getFarmer(anyLong())).thenReturn(dto);
-    mockMvc.perform(get(url)
+    when(repository.findById(id)).thenReturn(Optional.ofNullable(entity));
+    mockMvc.perform(get(url, id)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", Matchers.is(1)))
+        .andExpect(jsonPath("$.name", Matchers.is(dto.getName())))
+        .andExpect(jsonPath("$.inn", Matchers.is(dto.getInn())))
+        .andExpect(jsonPath("$.ogrn", Matchers.is(dto.getOgrn())))
+        .andExpect(jsonPath("$.kpp", Matchers.is(dto.getKpp())));
   }
 
   @Test
   void addFarmer() throws Exception {
     MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     String url = "/farmer/add";
+
     ObjectMapper mapper = new ObjectMapper();
     mapper.findAndRegisterModules();
     String jsonEntity = mapper.writeValueAsString(entity);
 
     when(service.addFarmer(dto)).thenReturn(dto);
     when(repository.save(entity)).thenReturn(entity);
+    when(farmerMapper.toDTO(entity)).thenReturn(dto);
     mockMvc.perform(post(url)
             .content(jsonEntity)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", Matchers.is(1)))
+        .andExpect(jsonPath("$.name", Matchers.is(dto.getName())))
+        .andExpect(jsonPath("$.inn", Matchers.is(dto.getInn())))
+        .andExpect(jsonPath("$.ogrn", Matchers.is(dto.getOgrn())))
+        .andExpect(jsonPath("$.region.id", Matchers.is(2)))
+        .andExpect(jsonPath("$.kpp", Matchers.is(dto.getKpp())));
   }
 
   @Test
   void patchFarmer() throws Exception {
     MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-    String url1 = "/farmer/patch/{id}";
+    String url = "/farmer/patch/{id}";
     Long id = 1L;
 
     ObjectMapper mapper = new ObjectMapper();
@@ -158,12 +181,19 @@ class FarmerControllerTest {
     when(service.patchFarmer(id, dto)).thenReturn(dto);
 
     mockMvc.perform(MockMvcRequestBuilders
-            .patch(url1, id)
+            .patch(url, id)
             .content(jsonEntity)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", Matchers.is(1)))
+        .andExpect(jsonPath("$.name", Matchers.is(dto.getName())))
+        .andExpect(jsonPath("$.inn", Matchers.is(dto.getInn())))
+        .andExpect(jsonPath("$.ogrn", Matchers.is(dto.getOgrn())))
+        .andExpect(jsonPath("$.region.id", Matchers.is(2)))
+        .andExpect(jsonPath("$.kpp", Matchers.is(dto.getKpp())));
+
   }
 
 
@@ -181,6 +211,12 @@ class FarmerControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", Matchers.is(1)))
+        .andExpect(jsonPath("$.name", Matchers.is(dto.getName())))
+        .andExpect(jsonPath("$.inn", Matchers.is(dto.getInn())))
+        .andExpect(jsonPath("$.ogrn", Matchers.is(dto.getOgrn())))
+        .andExpect(jsonPath("$.region.id", Matchers.is(2)))
+        .andExpect(jsonPath("$.kpp", Matchers.is(dto.getKpp())));
   }
 }

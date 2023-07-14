@@ -1,61 +1,81 @@
 package ru.farmersregister.farmersregister.controller;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Optional;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import ru.farmersregister.farmersregister.dto.RegionDTO;
+import ru.farmersregister.farmersregister.entity.Region;
+import ru.farmersregister.farmersregister.repository.RegionRepository;
+import ru.farmersregister.farmersregister.service.RegionService;
 
 @WebMvcTest(RegionController.class)
 class RegionControllerTest {
-//
-//  @Autowired
-//  private WebApplicationContext context;
-//
-//  @Autowired
-//  private MockMvc mockMvc;
-//  @InjectMocks
-//  private RegionController controller;
-//
-//  @MockBean
-//  private RegionService service;
-//
-//  @MockBean
-//  private RegionRepository repository;
-//
-//  private Region entity;
-//
-//  private RegionDTO dto;
-//
-////  private FarmerFullDTO fullDTO;
-//
-//  @Test
-//  public void contextLoads() {
-//    assertNotNull(controller);
-//  }
-//
-//  @BeforeEach
-//  void setUp() {
-//    entity = new Region();
-//    entity.setId(1L);
-//    entity.setName("TestRegion");
-//    entity.setCodeRegion(11);
-//    entity.setStatus(Status.ACTIVE);
-//
-//    dto = new RegionDTO();
-//    dto.setId(1L);
-//    dto.setName("TestRegion");
-//    dto.setCodeRegion(11);
-//    dto.setStatus(Status.ACTIVE);
-//  }
-//
-//  @AfterEach
-//  void clearTestData() {
-//    dto = null;
-//    entity = null;
-//  }
-//
+
+  @Autowired
+  private WebApplicationContext context;
+
+  @Autowired
+  private MockMvc mockMvc;
+  @InjectMocks
+  private RegionController controller;
+
+  @MockBean
+  private RegionService service;
+
+  @MockBean
+  private RegionRepository repository;
+
+  private Region entity;
+
+  private RegionDTO dto;
+
+//  private FarmerFullDTO fullDTO;
+
+  @Test
+  public void contextLoads() {
+    assertNotNull(controller);
+  }
+
+  @BeforeEach
+  void setUp() {
+    entity = new Region();
+    entity.setId(1L);
+    entity.setName("TestRegion");
+    entity.setCodeRegion(11);
+
+    dto = new RegionDTO();
+    dto.setId(1L);
+    dto.setName("TestRegion");
+    dto.setCodeRegion(11);
+  }
+
+  @AfterEach
+  void clearTestData() {
+    dto = null;
+    entity = null;
+  }
+
 //  @Test
 //  void findAll() throws Exception {
 //    MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
@@ -67,7 +87,7 @@ class RegionControllerTest {
 //    regionDTOS.add(dto);
 //
 //    when(repository.findAll()).thenReturn(regions);
-//    when(service.findAll(SortRegion.ALL)).thenReturn(regionDTOS);
+//    when(service.findAll().thenReturn(regionDTOS);
 //
 //    mockMvc.perform(get(url)
 //            .param("sort by", "ALL")
@@ -76,45 +96,52 @@ class RegionControllerTest {
 //        .andDo(print())
 //        .andExpect(status().isOk());
 //  }
-//
-//  @Test
-//  void addRegion() throws Exception {
-//    MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-//    String url = "/region/add";
-//
-//    when(
-//        service.addRegion(entity.getName(), entity.getCodeRegion(), entity.getStatus()))
-//        .thenReturn(dto);
-//    when(repository.save(any(Region.class))).thenReturn(entity);
-//    mockMvc.perform(post(url)
-//            .param("name", "TestRegion")
-//            .param("code", "11")
-//            .param("status", "ACTIVE")
-//            .contentType(MediaType.APPLICATION_JSON_VALUE)
-//            .accept(MediaType.APPLICATION_JSON))
-//        .andDo(print())
-//        .andExpect(status().isOk());
-//  }
-//
-//  @Test
-//  void patchRegion() throws Exception {
-//    MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-//    String url1 = "/region/patch/{id}";
-//    Long id = 1L;
-//
-//    when(repository.findById(anyLong())).thenReturn(Optional.ofNullable(entity));
-//    when(repository.save(any(Region.class))).thenReturn(entity);
-//    when(service.patchRegion(entity.getId(), entity.getName(), entity.getCodeRegion(),
-//        entity.getStatus())).thenReturn(dto);
-//
-//    mockMvc.perform(MockMvcRequestBuilders
-//            .patch(url1, id)
-//            .param("name", "TestRegion")
-//            .param("code", "11")
-//            .param("status", "ACTIVE")
-//            .contentType(MediaType.APPLICATION_JSON)
-//            .accept(MediaType.APPLICATION_JSON))
-//        .andDo(print())
-//        .andExpect(status().isOk());
-//  }
+
+  @Test
+  void addRegion() throws Exception {
+    MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    String url = "/region/add";
+
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.findAndRegisterModules();
+    String jsonEntity = mapper.writeValueAsString(entity);
+
+    when(service.addRegion(dto)).thenReturn(dto);
+    when(repository.save(any(Region.class))).thenReturn(entity);
+    mockMvc.perform(post(url)
+            .content(jsonEntity)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .accept(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", Matchers.is(1)))
+        .andExpect(jsonPath("$.name", Matchers.is("TestRegion")))
+        .andExpect(jsonPath("$.codeRegion", Matchers.is(11)));
+  }
+
+  @Test
+  void patchRegion() throws Exception {
+    MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    String url1 = "/region/patch/{id}";
+    Long id = 1L;
+
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.findAndRegisterModules();
+    String jsonEntity = mapper.writeValueAsString(entity);
+
+    when(repository.findById(anyLong())).thenReturn(Optional.ofNullable(entity));
+    when(repository.save(entity)).thenReturn(entity);
+    when(service.patchRegion(id, dto)).thenReturn(dto);
+
+    mockMvc.perform(MockMvcRequestBuilders
+            .patch(url1, id)
+            .content(jsonEntity)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", Matchers.is(1)))
+        .andExpect(jsonPath("$.name", Matchers.is("TestRegion")))
+        .andExpect(jsonPath("$.codeRegion", Matchers.is(11)));
+  }
 }
