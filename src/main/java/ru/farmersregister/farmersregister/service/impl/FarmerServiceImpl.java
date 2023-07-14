@@ -10,6 +10,7 @@ import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
+import ru.farmersregister.farmersregister.exception.MoveToAchive;
 import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.FarmerMapper;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
@@ -81,12 +82,8 @@ public class FarmerServiceImpl implements FarmerService {
   public FarmerDTO delFarmer(Long id) throws SQLException {
     Farmer farmer = farmerRepository.findById(id)
         .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
-    try {
-      farmerRepository.saveToArchive(id);
-      farmerRepository.deleteById(id);
-    } catch (Exception exception) {
-      throw new SQLException("В данном регионе есть зарегистрированные фермеры");
-    }
+    farmerRepository.saveToArchive(id);
+    farmerRepository.deleteById(id);
     return farmerMapper.toDTO(farmer);
   }
 

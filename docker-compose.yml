@@ -7,9 +7,9 @@ services:
       - db
     build: .
     environment:
-    - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/register
-    - SPRING_DATASOURCE_USERNAME=postgres
-    - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5433/register
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
     ports:
       - "8080:8080"
 
@@ -22,5 +22,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: register
     ports:
-      - "5432:5432"
+      - "5433:5433"
+    command:
+      - "postgres"
+      - "-c"
+      - "port=5433"
 
