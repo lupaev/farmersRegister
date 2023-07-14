@@ -76,26 +76,6 @@ class RegionControllerTest {
     entity = null;
   }
 
-//  @Test
-//  void findAll() throws Exception {
-//    MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-//    String url = "/region";
-//
-//    List<Region> regions = new ArrayList<>();
-//    regions.add(entity);
-//    List<RegionDTO> regionDTOS = new ArrayList<>();
-//    regionDTOS.add(dto);
-//
-//    when(repository.findAll()).thenReturn(regions);
-//    when(service.findAll().thenReturn(regionDTOS);
-//
-//    mockMvc.perform(get(url)
-//            .param("sort by", "ALL")
-//            .contentType(MediaType.APPLICATION_JSON_VALUE)
-//            .accept(MediaType.APPLICATION_JSON))
-//        .andDo(print())
-//        .andExpect(status().isOk());
-//  }
 
   @Test
   void addRegion() throws Exception {
