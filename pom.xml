@@ -93,7 +93,7 @@
     <dependency>
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-apt</artifactId>
-      <version>${querydsl.version}</version>
+      <version>5.0.0</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
