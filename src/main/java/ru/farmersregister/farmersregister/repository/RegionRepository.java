@@ -1,8 +1,10 @@
 package ru.farmersregister.farmersregister.repository;
 
-import java.util.Collection;
 import javax.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,10 +16,12 @@ import ru.farmersregister.farmersregister.entity.Region;
  */
 @Repository
 @Transactional
-public interface RegionRepository extends JpaRepository<Region, Long> {
+public interface RegionRepository extends JpaRepository<Region, Long>,
+    JpaSpecificationExecutor<Region> {
 
   /**
    * Поиск по наименованию и ИНН
+   *
    * @param name
    * @param code
    * @return
@@ -26,6 +30,7 @@ public interface RegionRepository extends JpaRepository<Region, Long> {
 
   /**
    * Перенесение в архив
+   *
    * @param id
    */
   @Modifying
@@ -34,8 +39,9 @@ public interface RegionRepository extends JpaRepository<Region, Long> {
 
   /**
    * Получение всех архивных записей
+   *
    * @return
    */
   @Query(nativeQuery = true, value = "SELECT * FROM region_archive")
-  Collection<Region> findAllInArchive();
+  Page<Region> findAllInArchive(Pageable pageable);
 }

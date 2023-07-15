@@ -1,13 +1,11 @@
 package ru.farmersregister.farmersregister.mapper;
 
+import java.util.Collection;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
-
-import java.util.Collection;
 
 /**
  * Маппер для фермера
@@ -17,6 +15,7 @@ public interface FarmerMapper {
 
   /**
    * Преобразование DTO в сущность фермера
+   *
    * @param farmerDTO
    * @return
    */
@@ -25,6 +24,7 @@ public interface FarmerMapper {
 
   /**
    * Преобразование сущности фермера в DTO
+   *
    * @param farmer
    * @return
    */
@@ -33,6 +33,7 @@ public interface FarmerMapper {
 
   /**
    * Преобразование коллекции фермеров в коллекцию  DTO
+   *
    * @param list
    * @return
    */
@@ -40,6 +41,7 @@ public interface FarmerMapper {
 
   /**
    * Обновление сущности фермера из данных DTO
+   *
    * @param farmerDTO
    * @param farmer
    */

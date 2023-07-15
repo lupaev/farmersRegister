@@ -1,12 +1,27 @@
 package ru.farmersregister.farmersregister.entity;
 
 
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Сущность фермера
@@ -39,7 +54,6 @@ public class Farmer {
    * Организационно-правовая форма
    */
   @Column(name = "legal_form")
-//  @Enumerated(EnumType.STRING)
   private String legalForm;
 
   /**
@@ -79,9 +93,9 @@ public class Farmer {
    * Районы посевных полей
    */
   @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
-  @JoinTable (name="farmer_regions",
-          joinColumns=@JoinColumn (name="farmer_id"),
-          inverseJoinColumns=@JoinColumn(name="regions_id"))
+  @JoinTable(name = "farmer_regions",
+      joinColumns = @JoinColumn(name = "farmer_id"),
+      inverseJoinColumns = @JoinColumn(name = "regions_id"))
   private Collection<Region> fields;
 
 }
