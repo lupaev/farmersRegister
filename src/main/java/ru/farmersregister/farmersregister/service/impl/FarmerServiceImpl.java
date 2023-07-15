@@ -2,6 +2,7 @@ package ru.farmersregister.farmersregister.service.impl;
 
 import com.querydsl.core.types.Predicate;
 import java.sql.SQLException;
+import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,9 +35,9 @@ public class FarmerServiceImpl implements FarmerService {
   }
 
   @Override
-  public Page<FarmerDTO> findAllInArchive(Predicate predicate, Pageable pageable) {
-    Page<Farmer> entities = farmerRepository.findAllInArchive(predicate, pageable);
-    return entities.map(farmerMapper::toDTO);
+  public Collection<FarmerDTO> findAllInArchive() {
+    Collection<Farmer> entities = farmerRepository.findAllInArchive();
+    return farmerMapper.toDTOList(entities);
   }
 
   @Override

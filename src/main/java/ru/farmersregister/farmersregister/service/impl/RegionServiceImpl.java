@@ -2,12 +2,12 @@ package ru.farmersregister.farmersregister.service.impl;
 
 import com.querydsl.core.types.Predicate;
 import java.sql.SQLException;
+import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
-import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.Region;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
 import ru.farmersregister.farmersregister.exception.MoveToAchive;
@@ -36,9 +36,8 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public Page<RegionDTO> findAllInArchive(Predicate predicate, Pageable pageable) {
-    Page<Region> entities = regionRepository.findAllInArchive(predicate, pageable);
-    return entities.map(regionMapper::toDTO);
+  public Collection<RegionDTO> findAllInArchive() {
+    return regionMapper.toDTOList(regionRepository.findAllInArchive());
   }
 
   @Override

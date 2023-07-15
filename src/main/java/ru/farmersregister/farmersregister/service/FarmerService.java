@@ -2,6 +2,7 @@ package ru.farmersregister.farmersregister.service;
 
 import com.querydsl.core.types.Predicate;
 import java.sql.SQLException;
+import java.util.Collection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
@@ -23,7 +24,7 @@ public interface FarmerService {
    *
    * @return
    */
-  Page<FarmerDTO> findAllInArchive(Predicate predicate, Pageable pageable);
+  Collection<FarmerDTO> findAllInArchive();
 
   /**
    * Добавление нового Фермера в БД

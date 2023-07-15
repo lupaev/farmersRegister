@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.sql.SQLException;
+import java.util.Collection;
 import javax.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
-import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.Region;
 import ru.farmersregister.farmersregister.repository.RegionRepository;
 import ru.farmersregister.farmersregister.service.RegionService;
@@ -90,10 +90,8 @@ public class RegionController {
       ),
   })
   @GetMapping(value = "/archived")
-  public ResponseEntity<Page<RegionDTO>> findAllInArchive(
-      @QuerydslPredicate(root = Region.class, bindings = RegionRepository.class)
-      Predicate predicate, Pageable pageable) {
-    return ResponseEntity.ok(regionService.findAllInArchive(predicate, pageable));
+  public ResponseEntity<Collection<RegionDTO>> findAllInArchive() {
+    return ResponseEntity.ok(regionService.findAllInArchive());
   }
 
 

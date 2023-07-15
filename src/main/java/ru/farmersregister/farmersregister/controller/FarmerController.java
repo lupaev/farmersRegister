@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.sql.SQLException;
+import java.util.Collection;
 import javax.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
-import ru.farmersregister.farmersregister.repository.RegionRepository;
 import ru.farmersregister.farmersregister.service.FarmerService;
 
 @RestController
@@ -88,10 +88,8 @@ public class FarmerController {
       ),
   })
   @GetMapping(value = "/archived")
-  public ResponseEntity<Page<FarmerDTO>> findAllInArchive(
-      @QuerydslPredicate(root = Farmer.class, bindings = FarmerRepository.class)
-      Predicate predicate, Pageable pageable) {
-    return ResponseEntity.ok(farmerService.findAllInArchive(predicate, pageable));
+  public ResponseEntity<Collection<FarmerDTO>> findAllInArchive() {
+    return ResponseEntity.ok(farmerService.findAllInArchive());
   }
 
   @Operation(summary = "Получение данных фермера по идентификатору")

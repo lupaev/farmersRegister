@@ -2,6 +2,7 @@ package ru.farmersregister.farmersregister.service;
 
 import com.querydsl.core.types.Predicate;
 import java.sql.SQLException;
+import java.util.Collection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
@@ -24,7 +25,7 @@ public interface RegionService {
    *
    * @return
    */
-  Page<RegionDTO> findAllInArchive(Predicate predicate, Pageable pageable);
+  Collection<RegionDTO> findAllInArchive();
 
   /**
    * Добавление нового Района в БД
