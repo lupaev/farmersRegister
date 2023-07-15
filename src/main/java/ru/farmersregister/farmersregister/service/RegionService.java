@@ -1,10 +1,10 @@
 package ru.farmersregister.farmersregister.service;
 
+import com.querydsl.core.types.Predicate;
 import java.sql.SQLException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
-import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
 
 /**
@@ -17,14 +17,14 @@ public interface RegionService {
    *
    * @return
    */
-  Page<RegionDTO> findAll(RequestDTO requestDTO, Pageable pageable);
+  Page<RegionDTO> findAll(Predicate predicate, Pageable pageable);
 
   /**
    * Получение всех Районов в Архиве
    *
    * @return
    */
-  Page<RegionDTO> findAllInArchive(Pageable pageable);
+  Page<RegionDTO> findAllInArchive(Predicate predicate, Pageable pageable);
 
   /**
    * Добавление нового Района в БД

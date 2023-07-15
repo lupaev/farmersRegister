@@ -1,6 +1,7 @@
 package ru.farmersregister.farmersregister.controller;
 
 
+import com.querydsl.core.types.Predicate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
-import ru.farmersregister.farmersregister.dto.RequestDTO;
+import ru.farmersregister.farmersregister.entity.Farmer;
+import ru.farmersregister.farmersregister.entity.Region;
+import ru.farmersregister.farmersregister.repository.RegionRepository;
 import ru.farmersregister.farmersregister.service.RegionService;
 
 @RestController
@@ -60,9 +64,10 @@ public class RegionController {
       ),
   })
   @GetMapping
-  public ResponseEntity<Page<RegionDTO>> findAll(@RequestBody RequestDTO requestDTO,
-      Pageable pageable) {
-    return ResponseEntity.ok(regionService.findAll(requestDTO, pageable));
+  public ResponseEntity<Page<RegionDTO>> findAll(
+      @QuerydslPredicate(root = Region.class, bindings = RegionRepository.class)
+      Predicate predicate, Pageable pageable) {
+    return ResponseEntity.ok(regionService.findAll(predicate, pageable));
   }
 
   @Operation(summary = "Список всех районов в архиве")
@@ -85,8 +90,10 @@ public class RegionController {
       ),
   })
   @GetMapping(value = "/archived")
-  public ResponseEntity<Page<RegionDTO>> findAllInArchive(Pageable pageable) {
-    return ResponseEntity.ok(regionService.findAllInArchive(pageable));
+  public ResponseEntity<Page<RegionDTO>> findAllInArchive(
+      @QuerydslPredicate(root = Region.class, bindings = RegionRepository.class)
+      Predicate predicate, Pageable pageable) {
+    return ResponseEntity.ok(regionService.findAllInArchive(predicate, pageable));
   }
 
 

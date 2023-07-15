@@ -1,5 +1,6 @@
 package ru.farmersregister.farmersregister.controller;
 
+import com.querydsl.core.types.Predicate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
-import ru.farmersregister.farmersregister.dto.RequestDTO;
+import ru.farmersregister.farmersregister.entity.Farmer;
+import ru.farmersregister.farmersregister.repository.FarmerRepository;
+import ru.farmersregister.farmersregister.repository.RegionRepository;
 import ru.farmersregister.farmersregister.service.FarmerService;
 
 @RestController
@@ -58,9 +62,10 @@ public class FarmerController {
       ),
   })
   @GetMapping
-  public ResponseEntity<Page<FarmerDTO>> findAll(@RequestBody RequestDTO requestDTO,
-      Pageable pageable) {
-    return ResponseEntity.ok(farmerService.findAll(requestDTO, pageable));
+  public ResponseEntity<Page<FarmerDTO>> findAll(
+      @QuerydslPredicate(root = Farmer.class, bindings = FarmerRepository.class)
+      Predicate predicate, Pageable pageable) {
+    return ResponseEntity.ok(farmerService.findAll(predicate, pageable));
   }
 
   @Operation(summary = "Список всех фермеров в архиве")
@@ -83,8 +88,10 @@ public class FarmerController {
       ),
   })
   @GetMapping(value = "/archived")
-  public ResponseEntity<Page<FarmerDTO>> findAllInArchive(Pageable pageable) {
-    return ResponseEntity.ok(farmerService.findAllInArchive(pageable));
+  public ResponseEntity<Page<FarmerDTO>> findAllInArchive(
+      @QuerydslPredicate(root = Farmer.class, bindings = FarmerRepository.class)
+      Predicate predicate, Pageable pageable) {
+    return ResponseEntity.ok(farmerService.findAllInArchive(predicate, pageable));
   }
 
   @Operation(summary = "Получение данных фермера по идентификатору")

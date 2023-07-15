@@ -1,10 +1,10 @@
 package ru.farmersregister.farmersregister.service;
 
+import com.querydsl.core.types.Predicate;
 import java.sql.SQLException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
-import ru.farmersregister.farmersregister.dto.RequestDTO;
 
 /**
  * Сервис для сущности фермеров
@@ -16,14 +16,14 @@ public interface FarmerService {
    *
    * @return
    */
-  Page<FarmerDTO> findAll(RequestDTO requestDTO, Pageable pageable);
+  Page<FarmerDTO> findAll(Predicate predicate, Pageable pageable);
 
   /**
    * Получение всех Фермеров в Архиве
    *
    * @return
    */
-  Page<FarmerDTO> findAllInArchive(Pageable pageable);
+  Page<FarmerDTO> findAllInArchive(Predicate predicate, Pageable pageable);
 
   /**
    * Добавление нового Фермера в БД
