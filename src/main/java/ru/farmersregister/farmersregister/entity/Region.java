@@ -2,8 +2,6 @@ package ru.farmersregister.farmersregister.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,13 +45,6 @@ public class Region {
    */
   @Column(name = "code_region")
   private Integer codeRegion;
-
-  /**
-   * Статус активности/архивности
-   */
-  @Column(name = "status")
-  @Enumerated(EnumType.STRING)
-  private Status status;
 
 
 }

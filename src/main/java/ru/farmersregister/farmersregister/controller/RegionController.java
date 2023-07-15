@@ -1,6 +1,7 @@
 package ru.farmersregister.farmersregister.controller;
 
 
+import com.querydsl.core.types.Predicate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -9,21 +10,25 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.sql.SQLException;
 import java.util.Collection;
+import javax.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
-import ru.farmersregister.farmersregister.entity.SortRegion;
-import ru.farmersregister.farmersregister.entity.Status;
+import ru.farmersregister.farmersregister.entity.Region;
+import ru.farmersregister.farmersregister.repository.RegionRepository;
 import ru.farmersregister.farmersregister.service.RegionService;
 
 @RestController
@@ -32,15 +37,14 @@ import ru.farmersregister.farmersregister.service.RegionService;
 @Slf4j
 public class RegionController {
 
-  @Autowired
-  private RegionService regionService;
+  private final RegionService regionService;
 
-  @Operation(summary = "Список всех районов",
-      description = "Получение списка всех районов по выбранному фильтру."
-      + "NAME - возвращает список отсортированный по имени. "
-      + "CODE - возвращает список отсортированный по коду районов. "
-      + "NONACTIVE - возвращает список районов в архиве. "
-      + "ALL - возвращает список всех районов вне зависимости от статуса")
+  public RegionController(RegionService regionService) {
+    this.regionService = regionService;
+  }
+
+
+  @Operation(summary = "Список всех районов")
   @ApiResponses({
       @ApiResponse(
           responseCode = "200",
@@ -60,12 +64,38 @@ public class RegionController {
       ),
   })
   @GetMapping
-  public ResponseEntity<Collection<RegionDTO>> findAll(
-      @RequestParam(name = "sort by") SortRegion sortRegion) {
-    return ResponseEntity.ok(regionService.findAll(sortRegion));
+  public ResponseEntity<Page<RegionDTO>> findAll(
+      @QuerydslPredicate(root = Region.class, bindings = RegionRepository.class)
+      Predicate predicate, Pageable pageable) {
+    return ResponseEntity.ok(regionService.findAll(predicate, pageable));
   }
 
-  @Operation(summary = "Добавление района")
+  @Operation(summary = "Список всех районов в архиве")
+  @ApiResponses({
+      @ApiResponse(
+          responseCode = "200",
+          description = "OK",
+          content = @Content(
+              array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "bad request",
+          content = @Content(schema = @Schema())
+      ),
+      @ApiResponse(
+          responseCode = "500",
+          description = "Internal Server Error",
+          content = @Content(schema = @Schema())
+      ),
+  })
+  @GetMapping(value = "/archived")
+  public ResponseEntity<Collection<RegionDTO>> findAllInArchive() {
+    return ResponseEntity.ok(regionService.findAllInArchive());
+  }
+
+
+  @Operation(summary = "Добавление в БД нового района")
   @ApiResponses({
       @ApiResponse(
           responseCode = "200",
@@ -85,18 +115,12 @@ public class RegionController {
       ),
   })
   @PostMapping(value = "/add")
-  public ResponseEntity<RegionDTO> addRegion(
-      @RequestParam(name = "name")
-      @Parameter(description = "Наименование района") String name,
-      @RequestParam(name = "code", required = false)
-      @Parameter(description = "Код района") Integer codeRegion,
-      @RequestParam(name = "status", required = false)
-      @Parameter(description = "Статус активности/архивности") Status status) {
-    return ResponseEntity.ok(regionService.addRegion(name, codeRegion, status));
+  public ResponseEntity<RegionDTO> addRegion(@RequestBody RegionDTO regionDTO) {
+    return ResponseEntity.ok(regionService.addRegion(regionDTO));
   }
 
-  @Operation(summary = "Изменение данных района. ",
-      description = "Для отправки в архив необходимо изменить статус на NONACTIVE.")
+
+  @Operation(summary = "Изменение данных района.")
   @ApiResponses({
       @ApiResponse(
           responseCode = "200",
@@ -117,14 +141,35 @@ public class RegionController {
   })
   @PatchMapping(value = "/patch/{id}")
   public ResponseEntity<RegionDTO> patchRegion(
-      @PathVariable(name = "id") @Parameter(description = "Идентификатор") Long id,
-      @RequestParam(name = "name", required = false)
-      @Parameter(description = "Наименование района") String name,
-      @RequestParam(name = "code", required = false)
-      @Parameter(description = "Код района") Integer codeRegion,
-      @RequestParam(name = "status", required = false)
-      @Parameter(description = "Статус активности/архивности") Status status){
-    return ResponseEntity.ok(regionService.patchRegion(id, name, codeRegion, status));
+      @PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
+      @RequestBody RegionDTO regionDTO) {
+    return ResponseEntity.ok(regionService.patchRegion(id, regionDTO));
+  }
+
+  @Operation(summary = "Отправка в ахив")
+  @ApiResponses({
+      @ApiResponse(
+          responseCode = "200",
+          description = "OK",
+          content = @Content(
+              array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "bad request",
+          content = @Content(schema = @Schema())
+      ),
+      @ApiResponse(
+          responseCode = "500",
+          description = "Internal Server Error",
+          content = @Content(schema = @Schema())
+      ),
+  })
+  @DeleteMapping(value = "/del/{id}")
+  public ResponseEntity<RegionDTO> delRegion(
+      @PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id)
+      throws SQLException {
+    return ResponseEntity.ok(regionService.delRegion(id));
   }
 
 

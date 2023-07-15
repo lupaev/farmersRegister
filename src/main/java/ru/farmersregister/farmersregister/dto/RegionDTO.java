@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.farmersregister.farmersregister.entity.Status;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ import ru.farmersregister.farmersregister.entity.Status;
 @Schema(description = "Сущность района")
 public class RegionDTO {
 
-  @Schema(description = "Идентификатор", accessMode = Schema.AccessMode.READ_ONLY)
+  @Schema(description = "Идентификатор")
   private Long id;
 
   @Schema(description = "Наименование")
@@ -26,8 +25,4 @@ public class RegionDTO {
 
   @Schema(description = "Код региона")
   private Integer codeRegion;
-
-  @Schema(description = "Статус активности/архивности")
-  private Status status;
-
 }

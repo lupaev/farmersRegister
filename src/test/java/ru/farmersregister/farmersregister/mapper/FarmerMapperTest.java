@@ -1,7 +1,11 @@
 package ru.farmersregister.farmersregister.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,13 +17,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
+import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
-import ru.farmersregister.farmersregister.entity.LegalForm;
 import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.entity.Status;
 
 @SpringBootTest
 class FarmerMapperTest {
+
   private Farmer entity;
 
   private FarmerDTO dto;
@@ -34,43 +38,42 @@ class FarmerMapperTest {
     region.setId(1L);
     region.setName("TestRegion");
     region.setCodeRegion(11);
-    region.setStatus(Status.ACTIVE);
 
-    Region regionField = new Region();
-    regionField.setId(3L);
-    regionField.setName("TestRegion3");
-    regionField.setCodeRegion(33);
-    regionField.setStatus(Status.ACTIVE);
+    Region region2 = new Region();
+    region.setId(2L);
+    region.setName("TestRegion2");
+    region.setCodeRegion(22);
+
+    Region region3 = new Region();
+    region3.setId(3L);
+    region3.setName("TestRegion3");
+    region3.setCodeRegion(33);
 
     Collection<Region> regions = new ArrayList<>();
-    regions.add(regionField);
-
-    Collection<Long> fields = new ArrayList<>();
-    fields.add(regionField.getId());
+    regions.add(region2);
+    regions.add(region3);
 
     entity = new Farmer();
     entity.setId(1L);
     entity.setName("TestName");
-    entity.setLegalForm(LegalForm.FL);
-    entity.setInn(123456);
-    entity.setKpp(654321);
-    entity.setStatus(Status.ACTIVE);
+    entity.setInn("123456");
+    entity.setKpp("654321");
     entity.setRegion(region);
-    entity.setOgrn(654789);
+    entity.setOgrn("654789");
     entity.setDateRegistration(LocalDate.parse("2013-12-20"));
-    entity.setRegions(regions);
+    entity.setFields(regions);
+    entity.setLegalForm("OOO");
 
     dto = new FarmerDTO();
     dto.setId(1L);
     dto.setName("TestName");
-    dto.setLegalForm(LegalForm.FL);
-    dto.setInn(123456);
-    dto.setKpp(654321);
-    dto.setOgrn(654789);
-    dto.setStatus(Status.ACTIVE);
-    dto.setRegistrationRegion(region.getId());
+    dto.setInn("123456");
+    dto.setKpp("654321");
+    dto.setOgrn("654789");
+    dto.setRegion(region);
     dto.setDateRegistration(LocalDate.parse("2013-12-20"));
-    dto.setFields(fields);
+    dto.setFields(regions);
+    dto.setLegalForm("OOO");
   }
 
   @AfterEach
@@ -96,7 +99,6 @@ class FarmerMapperTest {
     assertThat(entity.getKpp()).isEqualTo(entity1.getKpp());
     assertThat(entity.getOgrn()).isEqualTo(entity1.getOgrn());
     assertThat(entity.getDateRegistration()).isEqualTo(entity1.getDateRegistration());
-    assertThat(entity.getStatus()).isEqualTo(entity1.getStatus());
   }
 
   @Test
@@ -111,7 +113,6 @@ class FarmerMapperTest {
     assertThat(entity.getKpp()).isEqualTo(entity1.getKpp());
     assertThat(entity.getOgrn()).isEqualTo(entity1.getOgrn());
     assertThat(entity.getDateRegistration()).isEqualTo(entity1.getDateRegistration());
-    assertThat(entity.getStatus()).isEqualTo(entity1.getStatus());
     entity1.setId(3L);
     assertNotEquals(entity, entity1);
   }
@@ -128,7 +129,6 @@ class FarmerMapperTest {
     assertThat(entity.getKpp()).isEqualTo(dto1.getKpp());
     assertThat(entity.getOgrn()).isEqualTo(dto1.getOgrn());
     assertThat(entity.getDateRegistration()).isEqualTo(dto1.getDateRegistration());
-    assertThat(entity.getStatus()).isEqualTo(dto1.getStatus());
   }
 
   @Test
@@ -144,8 +144,7 @@ class FarmerMapperTest {
     assertThat(entity.getKpp()).isEqualTo(dto1.getKpp());
     assertThat(entity.getOgrn()).isEqualTo(dto1.getOgrn());
     assertThat(entity.getDateRegistration()).isEqualTo(dto1.getDateRegistration());
-    assertThat(entity.getStatus()).isEqualTo(dto1.getStatus());
-    dto1.setStatus(Status.NONACTIVE);
+    dto1.setId(3L);
     assertNotEquals(dto, dto1);
   }
 
@@ -174,9 +173,11 @@ class FarmerMapperTest {
   void updateEntityPositive() {
     assertNotNull(entity);
     assertNotNull(dto);
-    dto.setName("RegionTest");
+    dto.setName("TestName_");
+    dto.setOgrn("111111111");
     mapper.updateEntity(dto, entity);
     assertEquals(dto.getName(), entity.getName());
+    assertEquals(dto.getOgrn(), entity.getOgrn());
   }
 
   @Test

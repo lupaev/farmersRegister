@@ -15,6 +15,7 @@ public interface RegionMapper {
 
   /**
    * Преобразование DTO в сущность района
+   *
    * @param regionDTO
    * @return
    */
@@ -22,6 +23,7 @@ public interface RegionMapper {
 
   /**
    * Преобразование сущности района в DTO
+   *
    * @param region
    * @return
    */
@@ -29,6 +31,7 @@ public interface RegionMapper {
 
   /**
    * Преобразование коллекции районов в коллекцию  DTO
+   *
    * @param list
    * @return
    */
@@ -36,6 +39,7 @@ public interface RegionMapper {
 
   /**
    * Обновление сущности района из данных DTO
+   *
    * @param regionDTO
    * @param region
    */

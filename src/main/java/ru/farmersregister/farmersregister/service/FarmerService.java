@@ -1,13 +1,11 @@
 package ru.farmersregister.farmersregister.service;
 
-import java.time.LocalDate;
+import com.querydsl.core.types.Predicate;
+import java.sql.SQLException;
 import java.util.Collection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
-import ru.farmersregister.farmersregister.dto.FarmerFullDTO;
-import ru.farmersregister.farmersregister.entity.LegalForm;
-import ru.farmersregister.farmersregister.entity.SortFarmer;
-import ru.farmersregister.farmersregister.entity.Status;
-import ru.farmersregister.farmersregister.exception.ElemNotFound;
 
 /**
  * Сервис для сущности фермеров
@@ -15,51 +13,50 @@ import ru.farmersregister.farmersregister.exception.ElemNotFound;
 public interface FarmerService {
 
   /**
-   * Метод получения из БД всех активных фермеров
-   * @param sortFarmer
+   * Получение всех Фермеров
+   *
    * @return
    */
-  Collection<FarmerDTO> findAll(SortFarmer sortFarmer);
+  Page<FarmerDTO> findAll(Predicate predicate, Pageable pageable);
 
   /**
-   * Добавление в БД нового фермера
-   * @param name
-   * @param legalForm
-   * @param inn
-   * @param kpp
-   * @param ogrn
-   * @param dateRegistration
-   * @param status
-   * @param registrationRegion
-   * @param regionId
+   * Получение всех Фермеров в Архиве
+   *
    * @return
    */
-  FarmerDTO addFarmer(String name, LegalForm legalForm, Integer inn, Integer kpp, Integer ogrn,
-      LocalDate dateRegistration, Status status, Long registrationRegion, Long regionId);
+  Collection<FarmerDTO> findAllInArchive();
 
   /**
-   * Изменение данных фермера в БД
-   * @param id
-   * @param name
-   * @param legalForm
-   * @param inn
-   * @param kpp
-   * @param ogrn
-   * @param dateRegistration
-   * @param status
-   * @param registrationRegion
+   * Добавление нового Фермера в БД
+   *
+   * @param farmerDTO
    * @return
-   * @throws ElemNotFound
    */
-  FarmerDTO patchFarmer(Long id, String name, LegalForm legalForm, Integer inn, Integer kpp,
-      Integer ogrn, LocalDate dateRegistration, Status status, Long registrationRegion)
-      throws ElemNotFound;
+  FarmerDTO addFarmer(FarmerDTO farmerDTO);
 
   /**
-   * Метод получения полных данных о фермере
+   * Получение Фермера по идентификатору
+   *
    * @param id
    * @return
    */
-  FarmerFullDTO getFarmer(Long id);
+  FarmerDTO getFarmer(Long id);
 
+  /**
+   * Изменение данных Фермера
+   *
+   * @param id
+   * @param farmerDTO
+   * @return
+   */
+  FarmerDTO patchFarmer(Long id, FarmerDTO farmerDTO);
+
+  /**
+   * Перемещение Фермера в архив
+   *
+   * @param id
+   * @return
+   * @throws SQLException
+   */
+  FarmerDTO delFarmer(Long id) throws SQLException;
 }

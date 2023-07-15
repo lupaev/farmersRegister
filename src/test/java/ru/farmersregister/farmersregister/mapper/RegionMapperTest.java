@@ -1,7 +1,11 @@
 package ru.farmersregister.farmersregister.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.entity.Status;
 
 @SpringBootTest
 class RegionMapperTest {
@@ -33,13 +36,11 @@ class RegionMapperTest {
     entity.setId(1L);
     entity.setName("TestRegion");
     entity.setCodeRegion(11);
-    entity.setStatus(Status.ACTIVE);
 
     dto = new RegionDTO();
     dto.setId(1L);
     dto.setName("TestRegion");
     dto.setCodeRegion(11);
-    dto.setStatus(Status.ACTIVE);
   }
 
   @AfterEach
@@ -61,7 +62,6 @@ class RegionMapperTest {
     assertThat(entity.getId()).isEqualTo(entity1.getId());
     assertThat(entity.getName()).isEqualTo(entity1.getName());
     assertThat(entity.getCodeRegion()).isEqualTo(entity1.getCodeRegion());
-    assertThat(entity.getStatus()).isEqualTo(entity1.getStatus());
   }
 
   @Test
@@ -73,7 +73,6 @@ class RegionMapperTest {
     assertThat(entity.getId()).isEqualTo(entity1.getId());
     assertThat(entity.getName()).isEqualTo(entity1.getName());
     assertThat(entity.getCodeRegion()).isEqualTo(entity1.getCodeRegion());
-    assertThat(entity.getStatus()).isEqualTo(entity1.getStatus());
     entity1.setId(3L);
     assertNotEquals(entity, entity1);
   }
@@ -87,7 +86,6 @@ class RegionMapperTest {
     assertThat(dto.getId()).isEqualTo(dto1.getId());
     assertThat(dto.getName()).isEqualTo(dto1.getName());
     assertThat(dto.getCodeRegion()).isEqualTo(dto1.getCodeRegion());
-    assertThat(dto.getStatus()).isEqualTo(dto1.getStatus());
   }
 
   @Test
@@ -99,8 +97,7 @@ class RegionMapperTest {
     assertThat(dto.getId()).isEqualTo(dto1.getId());
     assertThat(dto.getName()).isEqualTo(dto1.getName());
     assertThat(dto.getCodeRegion()).isEqualTo(dto1.getCodeRegion());
-    assertThat(dto.getStatus()).isEqualTo(dto1.getStatus());
-    dto1.setStatus(Status.NONACTIVE);
+    dto1.setCodeRegion(123123);
     assertNotEquals(dto, dto1);
   }
 

@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.farmersregister.farmersregister.entity.LegalForm;
-import ru.farmersregister.farmersregister.entity.Status;
+import ru.farmersregister.farmersregister.entity.Region;
 
 
 @Getter
@@ -23,35 +22,32 @@ import ru.farmersregister.farmersregister.entity.Status;
 @Schema(description = "Сущность фермера")
 public class FarmerDTO {
 
-  @Schema(description = "Идентификатор", accessMode = Schema.AccessMode.READ_ONLY)
+  @Schema(description = "Идентификатор")
   private Long id;
 
   @Schema(description = "Наименование")
   private String name;
 
   @Schema(description = "Организационно-правовая форма")
-  private LegalForm legalForm;
+  private String legalForm;
 
   @Schema(description = "ИНН")
-  private Integer inn;
+  private String inn;
 
   @Schema(description = "КПП")
-  private Integer kpp;
+  private String kpp;
 
   @Schema(description = "ОГРН")
-  private Integer ogrn;
+  private String ogrn;
 
   @Schema(description = "Район регистрации фермера")
-  private Long registrationRegion;
+  private Region region;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   @Schema(description = "Дата регистрации")
   private LocalDate dateRegistration;
 
-  @Schema(description = "Статус активности/архивности")
-  private Status status;
-
   @Schema(description = "Районы посевных полей")
-  private Collection<Long> fields;
+  private Collection<Region> fields;
 
 }

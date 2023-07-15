@@ -1,14 +1,11 @@
 package ru.farmersregister.farmersregister.service;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anySet;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -29,8 +26,6 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.entity.SortRegion;
-import ru.farmersregister.farmersregister.entity.Status;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
 import ru.farmersregister.farmersregister.mapper.RegionMapper;
 import ru.farmersregister.farmersregister.repository.RegionRepository;
@@ -58,13 +53,11 @@ class RegionServiceTest {
     entity.setId(1L);
     entity.setName("TestRegion");
     entity.setCodeRegion(11);
-    entity.setStatus(Status.ACTIVE);
 
     dto = new RegionDTO();
     dto.setId(1L);
     dto.setName("TestRegion");
     dto.setCodeRegion(11);
-    dto.setStatus(Status.ACTIVE);
   }
 
   @AfterEach
@@ -85,14 +78,11 @@ class RegionServiceTest {
 
     when(repository.findAll()).thenReturn(regions);
     when(mapper.toDTOList(regions)).thenReturn(regionDTOS);
-    when(service.findAll(SortRegion.ALL)).thenReturn(regionDTOS);
 
     assertThat(repository.findAll()).isNotNull().isEqualTo(regions);
     assertThat(mapper.toDTOList(regions)).isNotNull().isEqualTo(regionDTOS);
-    assertThat(service.findAll(SortRegion.ALL)).isNotNull().isEqualTo(regionDTOS);
 
     verify(repository, times(1)).findAll();
-    verify(service, times(1)).findAll(SortRegion.ALL);
     verify(mapper, times(1)).toDTOList(regions);
   }
 
@@ -106,13 +96,10 @@ class RegionServiceTest {
     regionDTOS.add(dto);
 
     when(repository.findAll()).thenThrow(ElemNotFound.class);
-    when(service.findAll(SortRegion.CODE)).thenThrow(RuntimeException.class);
 
     assertThrows(ElemNotFound.class, () -> repository.findAll());
-    assertThrows(RuntimeException.class, () -> service.findAll(SortRegion.CODE));
 
     verify(repository, times(1)).findAll();
-    verify(service, times(1)).findAll(SortRegion.CODE);
   }
 
   @Test
@@ -122,19 +109,16 @@ class RegionServiceTest {
 
     when(mapper.toEntity(dto)).thenReturn(entity);
     when(
-        service.addRegion(entity.getName(), entity.getCodeRegion(), entity.getStatus())).thenReturn(
-        dto);
+        service.addRegion(dto)).thenReturn(dto);
     when(repository.save(any(Region.class))).thenReturn(entity);
-    assertThat(
-        service.addRegion(entity.getName(), entity.getCodeRegion(), entity.getStatus())).isNotNull()
+    assertThat(service.addRegion(dto)).isNotNull()
         .isEqualTo(dto).isExactlyInstanceOf(RegionDTO.class);
     assertThat(mapper.toEntity(dto)).isNotNull().isEqualTo(entity)
         .isExactlyInstanceOf(ru.farmersregister.farmersregister.entity.Region.class);
     assertThat(repository.save(entity)).isNotNull().isExactlyInstanceOf(Region.class);
 
     verify(repository, times(1)).save(entity);
-    verify(service, times(1)).addRegion(entity.getName(), entity.getCodeRegion(),
-        entity.getStatus());
+    verify(service, times(1)).addRegion(dto);
     verify(mapper, times(1)).toEntity(dto);
   }
 
@@ -145,15 +129,15 @@ class RegionServiceTest {
 
     when(mapper.toEntity(any())).thenThrow(NullPointerException.class);
     when(repository.save(any())).thenThrow(RuntimeException.class);
-    when(service.addRegion(entity.getName(), entity.getCodeRegion(), entity.getStatus())).thenThrow(
+    when(service.addRegion(dto)).thenThrow(
         RuntimeException.class);
     assertThrows(NullPointerException.class, () -> mapper.toEntity(any()));
     assertThrows(RuntimeException.class, () -> repository.save(any(Region.class)));
     assertThatExceptionOfType(RuntimeException.class).isThrownBy(
-        () -> service.addRegion(entity.getName(), entity.getCodeRegion(), entity.getStatus()));
+        () -> service.addRegion(dto));
 
     verify(repository, times(1)).save(any());
-    verify(service, times(1)).addRegion(any(), any(), any());
+    verify(service, times(1)).addRegion(dto);
     verify(mapper, times(1)).toEntity(any());
   }
 
@@ -161,13 +145,13 @@ class RegionServiceTest {
   void patchRegionPositive() {
     RegionServiceImpl service = mock(RegionServiceImpl.class);
     RegionMapper mapper = mock(RegionMapper.class);
+    Long id = 1L;
 
     when(repository.findById(anyLong())).thenReturn(Optional.ofNullable(entity));
     when(mapper.toDTO(entity)).thenReturn(dto);
     doNothing().when(mapper).updateEntity(dto, entity);
     when(repository.save(any(Region.class))).thenReturn(entity);
-    when(service.patchRegion(entity.getId(), entity.getName(), entity.getCodeRegion(),
-        entity.getStatus())).thenReturn(dto);
+    when(service.patchRegion(id, dto)).thenReturn(dto);
 
     assertThat(repository.findById(anyLong())).isNotNull();
     assertThat(mapper.toDTO(entity)).isNotNull().isEqualTo(dto)
@@ -177,8 +161,7 @@ class RegionServiceTest {
     assertThat(repository.save(entity)).isNotNull().isExactlyInstanceOf(Region.class);
 
     assertThat(
-        service.patchRegion(entity.getId(), entity.getName(), entity.getCodeRegion(),
-            entity.getStatus())).isNotNull().isEqualTo(dto)
+        service.patchRegion(id, dto)).isNotNull().isEqualTo(dto)
         .isExactlyInstanceOf(RegionDTO.class);
 
     verify(repository, times(1)).save(entity);
@@ -186,35 +169,32 @@ class RegionServiceTest {
     verify(mapper, times(1)).toDTO(any(Region.class));
     verify(mapper, times(1)).updateEntity(any(RegionDTO.class), any(Region.class));
 
-    verify(service, times(1)).patchRegion(entity.getId(), entity.getName(), entity.getCodeRegion(),
-        entity.getStatus());
+    verify(service, times(1)).patchRegion(id, dto);
   }
 
   @Test
   void patchRegionNegative() {
     RegionServiceImpl service = mock(RegionServiceImpl.class);
     RegionMapper mapper = mock(RegionMapper.class);
+    Long id = 1L;
 
     when(repository.findById(anyLong())).thenThrow(ElemNotFound.class);
     when(mapper.toDTO(any())).thenThrow(NullPointerException.class);
     doThrow(NullPointerException.class).when(mapper).updateEntity(any(), any());
     when(repository.save(any())).thenThrow(RuntimeException.class);
-    when(service.patchRegion(entity.getId(), entity.getName(), entity.getCodeRegion(),
-        entity.getStatus())).thenThrow(RuntimeException.class);
+    when(service.patchRegion(id, dto)).thenThrow(RuntimeException.class);
     assertThrows(ElemNotFound.class, () -> repository.findById(anyLong()));
     assertThrows(NullPointerException.class, () -> mapper.toDTO(any()));
     assertThrows(NullPointerException.class, () -> mapper.updateEntity(any(), any()));
     assertThrows(RuntimeException.class, () -> repository.save(any()));
     assertThatExceptionOfType(RuntimeException.class).isThrownBy(
-        () -> service.patchRegion(entity.getId(), entity.getName(), entity.getCodeRegion(),
-            entity.getStatus()));
+        () -> service.patchRegion(id, dto));
 
     verify(repository, times(1)).save(any());
     verify(repository, times(1)).findById(anyLong());
     verify(mapper, times(1)).toDTO(any());
     verify(mapper, times(1)).updateEntity(any(), any());
 
-    verify(service, times(1)).patchRegion(entity.getId(), entity.getName(), entity.getCodeRegion(),
-        entity.getStatus());
+    verify(service, times(1)).patchRegion(id, dto);
   }
 }

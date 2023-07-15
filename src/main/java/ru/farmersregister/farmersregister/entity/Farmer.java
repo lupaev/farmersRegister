@@ -6,12 +6,12 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -54,26 +54,25 @@ public class Farmer {
    * Организационно-правовая форма
    */
   @Column(name = "legal_form")
-  @Enumerated(EnumType.STRING)
-  private LegalForm legalForm;
+  private String legalForm;
 
   /**
    * ИНН
    */
   @Column(name = "inn")
-  private Integer inn;
+  private String inn;
 
   /**
    * КПП
    */
   @Column(name = "kpp")
-  private Integer kpp;
+  private String kpp;
 
   /**
    * ОГРН
    */
   @Column(name = "ogrn")
-  private Integer ogrn;
+  private String ogrn;
 
   /**
    * Дата регистрации
@@ -82,24 +81,21 @@ public class Farmer {
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate dateRegistration;
 
-  /**
-   * Статус активности/архивности
-   */
-  @Column(name = "status")
-  @Enumerated(EnumType.STRING)
-  private Status status;
 
   /**
    * Район регистрации фермера
    */
-  @ManyToOne()
+  @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
   @JoinColumn(name = "registration_region_id")
   private Region region;
 
   /**
    * Районы посевных полей
    */
-  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  private Collection<Region> regions;
+  @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+  @JoinTable(name = "farmer_regions",
+      joinColumns = @JoinColumn(name = "farmer_id"),
+      inverseJoinColumns = @JoinColumn(name = "regions_id"))
+  private Collection<Region> fields;
 
 }
