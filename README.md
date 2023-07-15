@@ -19,6 +19,7 @@
 - Lombok 1.18.28
 - Maven
 - Swagger
+- QueryDSL 5.0
 
 
 ### Установка и запуск Docker
@@ -35,4 +36,4 @@
 
 Api через swagger: http://localhost:8080/swagger-ui/index.html
 
-PostgreSQL работает на стандартном порте 5432
+PostgreSQL работает на стандартном порте 5433
