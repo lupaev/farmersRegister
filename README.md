@@ -36,4 +36,4 @@
 
 Api через swagger: http://localhost:8080/swagger-ui/index.html
 
-PostgreSQL работает на стандартном порте 5433
+PostgreSQL работает на порте 5433
