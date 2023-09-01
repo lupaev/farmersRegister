@@ -1,25 +1,22 @@
 package ru.farmersregister.farmersregister.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
-import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.Region;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class FarmerMapperTest {
@@ -49,9 +46,14 @@ class FarmerMapperTest {
     region3.setName("TestRegion3");
     region3.setCodeRegion(33);
 
-    Collection<Region> regions = new ArrayList<>();
+    List<Region> regions = new ArrayList<>();
     regions.add(region2);
     regions.add(region3);
+
+    Long[] arrLongs = new Long[]{1L, 2L, 3L};
+
+    List<Long> ids = new ArrayList<>();
+    ids.addAll(Arrays.asList(arrLongs));
 
     entity = new Farmer();
     entity.setId(1L);
@@ -70,9 +72,9 @@ class FarmerMapperTest {
     dto.setInn("123456");
     dto.setKpp("654321");
     dto.setOgrn("654789");
-    dto.setRegion(region);
+    dto.setRegistrationRegion(region.getId());
     dto.setDateRegistration(LocalDate.parse("2013-12-20"));
-    dto.setFields(regions);
+    dto.setRegionIds(ids);
     dto.setLegalForm("OOO");
   }
 

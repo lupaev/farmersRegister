@@ -1,24 +1,5 @@
 package ru.farmersregister.farmersregister.service;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,6 +15,16 @@ import ru.farmersregister.farmersregister.exception.ElemNotFound;
 import ru.farmersregister.farmersregister.mapper.FarmerMapper;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
 import ru.farmersregister.farmersregister.service.impl.FarmerServiceImpl;
+
+import java.time.LocalDate;
+import java.util.*;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FarmerServiceTest {
@@ -74,6 +65,11 @@ class FarmerServiceTest {
     regions.add(region2);
     regions.add(region3);
 
+    Long[] arrLongs = new Long[]{1L, 2L, 3L};
+
+    List<Long> ids = new ArrayList<>();
+    ids.addAll(Arrays.asList(arrLongs));
+
     entity = new Farmer();
     entity.setId(1L);
     entity.setName("TestName");
@@ -91,9 +87,9 @@ class FarmerServiceTest {
     dto.setInn("123456");
     dto.setKpp("654321");
     dto.setOgrn("654789");
-    dto.setRegion(region);
+    dto.setRegistrationRegion(region.getId());
     dto.setDateRegistration(LocalDate.parse("2013-12-20"));
-    dto.setFields(regions);
+    dto.setRegionIds(ids);
     dto.setLegalForm("OOO");
   }
 

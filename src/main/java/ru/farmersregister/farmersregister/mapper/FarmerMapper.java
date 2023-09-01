@@ -1,20 +1,18 @@
 package ru.farmersregister.farmersregister.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
-import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.repository.RegionRepository;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Маппер для фермера
  */
-@Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, uses = RegionRepository.class)
+@Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, uses = RegionToLong.class)
 public interface FarmerMapper {
 
 
@@ -25,24 +23,8 @@ public interface FarmerMapper {
      * @return
      */
     @Mapping(source = "registrationRegion", target = "region.id")
-    @Mapping(source = "regionIds", target = "fields", qualifiedByName = "idToRegion")
+    @Mapping(source = "regionIds", target = "fields")
     Farmer toEntity(FarmerDTO farmerDTO);
-
-    @Named("idToRegion")
-    static List<Region> idToRegion(List<Long> ids) {
-        if ((ids == null) || ids.isEmpty()) {
-            return Collections.emptyList();
-        }
-        List<Region> regionList = new ArrayList<>(ids.size());
-        for (Long id:ids) {
-            Region region = new Region();
-            region.setId(id);
-            regionList.add(region);
-        }
-//        return ids.stream().map(() -> new Region().setId(ids.get())).collect(Collectors.toList());
-        return regionList;
-
-    }
 
 
     /**
@@ -52,17 +34,9 @@ public interface FarmerMapper {
      * @return
      */
     @Mapping(source = "region.id", target = "registrationRegion")
-    @Mapping(source = "fields", target = "regionIds", qualifiedByName = "RegionToId")
+    @Mapping(source = "fields", target = "regionIds")
     FarmerDTO toDTO(Farmer farmer);
 
-    @Named("RegionToId")
-    static List<Long> RegionToId(List<Region> regions) {
-        List<Long> ids = new ArrayList<>(regions.size());
-        for (Region region : regions) {
-            ids.add(region.getId());
-        }
-        return ids;
-    }
 
     /**
      * Преобразование коллекции фермеров в коллекцию  DTO
