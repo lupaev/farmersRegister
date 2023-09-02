@@ -1,6 +1,5 @@
 package ru.farmersregister.farmersregister.service.impl;
 
-import java.sql.SQLException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,12 +9,13 @@ import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
-import ru.farmersregister.farmersregister.exception.MoveToAchive;
 import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.FarmerMapper;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
 import ru.farmersregister.farmersregister.service.FarmerService;
 import ru.farmersregister.farmersregister.specification.SpecificationDTO;
+
+import java.sql.SQLException;
 
 @Service
 @Slf4j
@@ -83,6 +83,7 @@ public class FarmerServiceImpl implements FarmerService {
     Farmer farmer = farmerRepository.findById(id)
         .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
     farmerRepository.saveToArchive(id);
+    farmerRepository.saveFarmerFieldsToArchive(id);
     farmerRepository.deleteById(id);
     return farmerMapper.toDTO(farmer);
   }

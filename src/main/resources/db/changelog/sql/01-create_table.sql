@@ -51,4 +51,14 @@ create table farmer_regions
         REFERENCES region (id) on delete cascade
 );
 
+create table farmer_regions_archive
+(
+    farmer_id  bigint not null,
+    regions_id bigint not null,
+    CONSTRAINT fk_farmer_id_farmer_regions_archive FOREIGN KEY (farmer_id)
+        REFERENCES farmer_archive (id) on delete cascade,
+    CONSTRAINT fk_regions_id_farmer_regions_archive FOREIGN KEY (regions_id)
+        REFERENCES region (id) on delete cascade
+);
+
 
