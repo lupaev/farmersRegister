@@ -28,167 +28,167 @@ import java.sql.SQLException;
 @Slf4j
 public class FarmerController {
 
-  private final FarmerService farmerService;
-  private final FarmerInArchiveService farmerInArchiveService;
+    private final FarmerService farmerService;
+    private final FarmerInArchiveService farmerInArchiveService;
 
-  public FarmerController(FarmerService farmerService, FarmerInArchiveService farmerInArchiveService) {
-    this.farmerService = farmerService;
-      this.farmerInArchiveService = farmerInArchiveService;
-  }
+    public FarmerController(FarmerService farmerService, FarmerInArchiveService farmerInArchiveService) {
+        this.farmerService = farmerService;
+        this.farmerInArchiveService = farmerInArchiveService;
+    }
 
-  @Operation(summary = "Список всех фермеров")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @PostMapping
-  public ResponseEntity<Page<FarmerDTO>> findAll(@RequestBody RequestDTO requestDTO,
-      Pageable pageable) {
-    return ResponseEntity.ok(farmerService.findAll(requestDTO, pageable));
-  }
+    @Operation(summary = "Список всех фермеров")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @PostMapping
+    public ResponseEntity<Page<FarmerDTO>> findAll(@RequestBody RequestDTO requestDTO,
+                                                   Pageable pageable) {
+        return ResponseEntity.ok(farmerService.findAll(requestDTO, pageable));
+    }
 
-  @Operation(summary = "Список всех фермеров в архиве")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @GetMapping(value = "/archived")
-  public ResponseEntity<Page<FarmerDTO>> findAllInArchive(Pageable pageable) {
-    return ResponseEntity.ok(farmerInArchiveService.findAll(pageable));
-  }
+    @Operation(summary = "Список всех фермеров в архиве")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @GetMapping(value = "/archived")
+    public ResponseEntity<Page<FarmerDTO>> findAllInArchive(Pageable pageable) {
+        return ResponseEntity.ok(farmerInArchiveService.findAll(pageable));
+    }
 
-  @Operation(summary = "Получение данных фермера по идентификатору")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @GetMapping(value = "/{id}")
-  public ResponseEntity<FarmerDTO> getFarmer
-      (
-          @PathVariable(name = "id")
-          @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id
-      ) {
-    return ResponseEntity.ok(farmerService.getFarmer(id));
-  }
+    @Operation(summary = "Получение данных фермера по идентификатору")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<FarmerDTO> getFarmer
+            (
+                    @PathVariable(name = "id")
+                    @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id
+            ) {
+        return ResponseEntity.ok(farmerService.getFarmer(id));
+    }
 
-  @Operation(summary = "Добавление в БД нового фермера")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = CreateFarmerDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @PostMapping(value = "/add")
-  public ResponseEntity<FarmerDTO> addFarmer(@RequestBody CreateFarmerDTO farmerDTO) {
-    return ResponseEntity.ok(farmerService.addFarmer(farmerDTO));
-  }
+    @Operation(summary = "Добавление в БД нового фермера")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = CreateFarmerDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @PostMapping(value = "/add")
+    public ResponseEntity<FarmerDTO> addFarmer(@RequestBody CreateFarmerDTO farmerDTO) {
+        return ResponseEntity.ok(farmerService.addFarmer(farmerDTO));
+    }
 
-  @Operation(summary = "Изменение данных фермера.")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @PatchMapping(value = "/patch/{id}")
-  public ResponseEntity<FarmerDTO> patchFarmer(@PathVariable(name = "id")
-  @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
-      @RequestBody CreateFarmerDTO farmerDTO) {
-    return ResponseEntity.ok(farmerService.patchFarmer(id, farmerDTO));
-  }
+    @Operation(summary = "Изменение данных фермера.")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @PatchMapping(value = "/patch/{id}")
+    public ResponseEntity<FarmerDTO> patchFarmer(@PathVariable(name = "id")
+                                                 @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
+                                                 @RequestBody CreateFarmerDTO farmerDTO) {
+        return ResponseEntity.ok(farmerService.patchFarmer(id, farmerDTO));
+    }
 
 
-  @Operation(summary = "Отправка в ахив")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @DeleteMapping(value = "/del/{id}")
-  public ResponseEntity<FarmerDTO> delRegion(@PathVariable(name = "id")
-  @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id)
-      throws SQLException {
-    return ResponseEntity.ok(farmerService.delFarmer(id));
-  }
+    @Operation(summary = "Отправка в ахив")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @DeleteMapping(value = "/del/{id}")
+    public ResponseEntity<FarmerDTO> delRegion(@PathVariable(name = "id")
+                                               @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id)
+            throws SQLException {
+        return ResponseEntity.ok(farmerService.delFarmer(id));
+    }
 
 
 }

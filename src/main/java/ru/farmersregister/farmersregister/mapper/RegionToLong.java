@@ -15,7 +15,7 @@ public class RegionToLong {
         this.regionRepository = regionRepository;
     }
 
-    public Long entityToLong(Region region){
+    public Long entityToLong(Region region) {
         return region.getId();
     }
 

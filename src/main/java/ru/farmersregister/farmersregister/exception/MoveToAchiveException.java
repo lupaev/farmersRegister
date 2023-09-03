@@ -9,12 +9,12 @@ import ru.farmersregister.farmersregister.loger.FormLogInfo;
  * Исключение
  */
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class MoveToAchive extends RuntimeException {
+public class MoveToAchiveException extends RuntimeException {
 
-  public MoveToAchive() {
+  public MoveToAchiveException() {
   }
 
-  public MoveToAchive(String message) {
+  public MoveToAchiveException(String message) {
     super("Exception: " + message + FormLogInfo.getInfo());
     System.err.println("Exception: " + message + FormLogInfo.getException());
   }

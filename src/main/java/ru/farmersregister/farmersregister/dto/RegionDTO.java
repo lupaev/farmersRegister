@@ -17,12 +17,12 @@ import lombok.ToString;
 @Schema(description = "Сущность района")
 public class RegionDTO {
 
-  @Schema(description = "Идентификатор")
-  private Long id;
+    @Schema(description = "Идентификатор")
+    private Long id;
 
-  @Schema(description = "Наименование")
-  private String name;
+    @Schema(description = "Наименование")
+    private String name;
 
-  @Schema(description = "Код региона")
-  private Integer codeRegion;
+    @Schema(description = "Код региона")
+    private Integer codeRegion;
 }

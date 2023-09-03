@@ -28,139 +28,139 @@ import java.sql.SQLException;
 @Slf4j
 public class RegionController {
 
-  private final RegionService regionService;
+    private final RegionService regionService;
 
-  public RegionController(RegionService regionService) {
-    this.regionService = regionService;
-  }
-
-
-  @Operation(summary = "Список всех районов")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @PostMapping
-  public ResponseEntity<Page<RegionDTO>> findAll(@RequestBody RequestDTO requestDTO,
-      Pageable pageable) {
-    return ResponseEntity.ok(regionService.findAll(requestDTO, pageable));
-  }
-
-  @Operation(summary = "Список всех районов в архиве")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @GetMapping(value = "/archived")
-  public ResponseEntity<Page<RegionDTO>> findAllInArchive(Pageable pageable) {
-    return ResponseEntity.ok(regionService.findAllInArchive(pageable));
-  }
+    public RegionController(RegionService regionService) {
+        this.regionService = regionService;
+    }
 
 
-  @Operation(summary = "Добавление в БД нового района")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @PostMapping(value = "/add")
-  public ResponseEntity<RegionDTO> addRegion(@RequestBody CreateRegionDTO regionDTO) {
-    return ResponseEntity.ok(regionService.addRegion(regionDTO));
-  }
+    @Operation(summary = "Список всех районов")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @PostMapping
+    public ResponseEntity<Page<RegionDTO>> findAll(@RequestBody RequestDTO requestDTO,
+                                                   Pageable pageable) {
+        return ResponseEntity.ok(regionService.findAll(requestDTO, pageable));
+    }
+
+    @Operation(summary = "Список всех районов в архиве")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @GetMapping(value = "/archived")
+    public ResponseEntity<Page<RegionDTO>> findAllInArchive(Pageable pageable) {
+        return ResponseEntity.ok(regionService.findAllInArchive(pageable));
+    }
 
 
-  @Operation(summary = "Изменение данных района.")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @PatchMapping(value = "/patch/{id}")
-  public ResponseEntity<RegionDTO> patchRegion(
-      @PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
-      @RequestBody CreateRegionDTO regionDTO) {
-    return ResponseEntity.ok(regionService.patchRegion(id, regionDTO));
-  }
+    @Operation(summary = "Добавление в БД нового района")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @PostMapping(value = "/add")
+    public ResponseEntity<RegionDTO> addRegion(@RequestBody CreateRegionDTO regionDTO) {
+        return ResponseEntity.ok(regionService.addRegion(regionDTO));
+    }
 
-  @Operation(summary = "Отправка в ахив")
-  @ApiResponses({
-      @ApiResponse(
-          responseCode = "200",
-          description = "OK",
-          content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          description = "bad request",
-          content = @Content(schema = @Schema())
-      ),
-      @ApiResponse(
-          responseCode = "500",
-          description = "Internal Server Error",
-          content = @Content(schema = @Schema())
-      ),
-  })
-  @DeleteMapping(value = "/del/{id}")
-  public ResponseEntity<RegionDTO> delRegion(
-      @PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id)
-      throws SQLException {
-    return ResponseEntity.ok(regionService.delRegion(id));
-  }
+
+    @Operation(summary = "Изменение данных района.")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @PatchMapping(value = "/patch/{id}")
+    public ResponseEntity<RegionDTO> patchRegion(
+            @PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
+            @RequestBody CreateRegionDTO regionDTO) {
+        return ResponseEntity.ok(regionService.patchRegion(id, regionDTO));
+    }
+
+    @Operation(summary = "Отправка в ахив")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "bad request",
+                    content = @Content(schema = @Schema())
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content(schema = @Schema())
+            ),
+    })
+    @DeleteMapping(value = "/del/{id}")
+    public ResponseEntity<RegionDTO> delRegion(
+            @PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id)
+            throws SQLException {
+        return ResponseEntity.ok(regionService.delRegion(id));
+    }
 
 
 }

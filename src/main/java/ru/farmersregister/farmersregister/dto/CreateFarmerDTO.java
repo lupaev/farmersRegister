@@ -17,29 +17,29 @@ import java.util.Collection;
 @Schema(description = "Сущность для создания фермера")
 public class CreateFarmerDTO {
 
-  @Schema(description = "Наименование")
-  private String name;
+    @Schema(description = "Наименование")
+    private String name;
 
-  @Schema(description = "Организационно-правовая форма")
-  private String legalForm;
+    @Schema(description = "Организационно-правовая форма")
+    private String legalForm;
 
-  @Schema(description = "ИНН")
-  private String inn;
+    @Schema(description = "ИНН")
+    private String inn;
 
-  @Schema(description = "КПП")
-  private String kpp;
+    @Schema(description = "КПП")
+    private String kpp;
 
-  @Schema(description = "ОГРН")
-  private String ogrn;
+    @Schema(description = "ОГРН")
+    private String ogrn;
 
-  @Schema(description = "Район регистрации фермера")
-  private Long registrationRegion;
+    @Schema(description = "Район регистрации фермера")
+    private Long registrationRegion;
 
-  @DateTimeFormat(pattern = "yyyy-MM-dd")
-  @Schema(description = "Дата регистрации")
-  private LocalDate dateRegistration;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Schema(description = "Дата регистрации")
+    private LocalDate dateRegistration;
 
-  @Schema(description = "Районы посевных полей")
-  private Collection<Long> regionIds;
+    @Schema(description = "Районы посевных полей")
+    private Collection<Long> regionIds;
 
 }

@@ -14,45 +14,45 @@ import java.sql.SQLException;
  */
 public interface RegionService {
 
-  /**
-   * Получение всех Районов
-   *
-   * @return
-   */
-  Page<RegionDTO> findAll(RequestDTO requestDTO, Pageable pageable);
+    /**
+     * Получение всех Районов
+     *
+     * @return
+     */
+    Page<RegionDTO> findAll(RequestDTO requestDTO, Pageable pageable);
 
-  /**
-   * Получение всех Районов в Архиве
-   *
-   * @return
-   */
-  Page<RegionDTO> findAllInArchive(Pageable pageable);
+    /**
+     * Получение всех Районов в Архиве
+     *
+     * @return
+     */
+    Page<RegionDTO> findAllInArchive(Pageable pageable);
 
-  /**
-   * Добавление нового Района в БД
-   *
-   * @param regionDTO
-   * @return
-   */
-  RegionDTO addRegion(CreateRegionDTO regionDTO);
+    /**
+     * Добавление нового Района в БД
+     *
+     * @param regionDTO
+     * @return
+     */
+    RegionDTO addRegion(CreateRegionDTO regionDTO);
 
-  /**
-   * Изменение данных Района
-   *
-   * @param id
-   * @param regionDTO
-   * @return
-   * @throws ElemNotFound
-   */
-  RegionDTO patchRegion(Long id, CreateRegionDTO regionDTO) throws ElemNotFound;
+    /**
+     * Изменение данных Района
+     *
+     * @param id
+     * @param regionDTO
+     * @return
+     * @throws ElemNotFound
+     */
+    RegionDTO patchRegion(Long id, CreateRegionDTO regionDTO) throws ElemNotFound;
 
-  /**
-   * Перемещение Района в архив
-   *
-   * @param id
-   * @return
-   * @throws SQLException
-   */
-  RegionDTO delRegion(Long id) throws SQLException;
+    /**
+     * Перемещение Района в архив
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    RegionDTO delRegion(Long id) throws SQLException;
 
 }

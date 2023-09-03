@@ -12,9 +12,9 @@ import lombok.*;
 @Schema(description = "Сущность для создания района")
 public class CreateRegionDTO {
 
-  @Schema(description = "Наименование")
-  private String name;
+    @Schema(description = "Наименование")
+    private String name;
 
-  @Schema(description = "Код региона")
-  private Integer codeRegion;
+    @Schema(description = "Код региона")
+    private Integer codeRegion;
 }
