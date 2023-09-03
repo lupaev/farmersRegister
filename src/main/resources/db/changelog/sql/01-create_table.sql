@@ -43,8 +43,8 @@ create table farmer_archive
 
 create table farmer_regions
 (
-    farmer_id  bigint not null,
-    regions_id bigint not null,
+    farmer_id  bigserial not null,
+    regions_id bigserial not null,
     CONSTRAINT fk_farmer_id_farmer_regions FOREIGN KEY (farmer_id)
         REFERENCES farmer (id) on delete cascade,
     CONSTRAINT fk_regions_id_farmer_regions FOREIGN KEY (regions_id)
@@ -53,8 +53,8 @@ create table farmer_regions
 
 create table farmer_regions_archive
 (
-    farmer_id  bigint not null,
-    regions_id bigint not null,
+    farmer_id  bigserial not null,
+    regions_id bigserial not null,
     CONSTRAINT fk_farmer_id_farmer_regions_archive FOREIGN KEY (farmer_id)
         REFERENCES farmer_archive (id) on delete cascade,
     CONSTRAINT fk_regions_id_farmer_regions_archive FOREIGN KEY (regions_id)

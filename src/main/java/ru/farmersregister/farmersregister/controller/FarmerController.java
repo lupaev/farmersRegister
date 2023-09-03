@@ -13,8 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.farmersregister.farmersregister.dto.CreateFarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
+import ru.farmersregister.farmersregister.service.FarmerInArchiveService;
 import ru.farmersregister.farmersregister.service.FarmerService;
 
 import javax.validation.constraints.Min;
@@ -27,9 +29,11 @@ import java.sql.SQLException;
 public class FarmerController {
 
   private final FarmerService farmerService;
+  private final FarmerInArchiveService farmerInArchiveService;
 
-  public FarmerController(FarmerService farmerService) {
+  public FarmerController(FarmerService farmerService, FarmerInArchiveService farmerInArchiveService) {
     this.farmerService = farmerService;
+      this.farmerInArchiveService = farmerInArchiveService;
   }
 
   @Operation(summary = "Список всех фермеров")
@@ -78,7 +82,7 @@ public class FarmerController {
   })
   @GetMapping(value = "/archived")
   public ResponseEntity<Page<FarmerDTO>> findAllInArchive(Pageable pageable) {
-    return ResponseEntity.ok(farmerService.findAllInArchive(pageable));
+    return ResponseEntity.ok(farmerInArchiveService.findAll(pageable));
   }
 
   @Operation(summary = "Получение данных фермера по идентификатору")
@@ -115,7 +119,7 @@ public class FarmerController {
           responseCode = "200",
           description = "OK",
           content = @Content(
-              array = @ArraySchema(schema = @Schema(implementation = FarmerDTO.class)))
+              array = @ArraySchema(schema = @Schema(implementation = CreateFarmerDTO.class)))
       ),
       @ApiResponse(
           responseCode = "400",
@@ -129,7 +133,7 @@ public class FarmerController {
       ),
   })
   @PostMapping(value = "/add")
-  public ResponseEntity<FarmerDTO> addFarmer(@RequestBody FarmerDTO farmerDTO) {
+  public ResponseEntity<FarmerDTO> addFarmer(@RequestBody CreateFarmerDTO farmerDTO) {
     return ResponseEntity.ok(farmerService.addFarmer(farmerDTO));
   }
 
@@ -155,7 +159,7 @@ public class FarmerController {
   @PatchMapping(value = "/patch/{id}")
   public ResponseEntity<FarmerDTO> patchFarmer(@PathVariable(name = "id")
   @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
-      @RequestBody FarmerDTO farmerDTO) {
+      @RequestBody CreateFarmerDTO farmerDTO) {
     return ResponseEntity.ok(farmerService.patchFarmer(id, farmerDTO));
   }
 

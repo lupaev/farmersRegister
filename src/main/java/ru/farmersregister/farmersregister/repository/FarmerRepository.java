@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.farmersregister.farmersregister.entity.Farmer;
+import ru.farmersregister.farmersregister.entity.FarmerInArchive;
 
 import javax.transaction.Transactional;
 
@@ -51,8 +52,9 @@ public interface FarmerRepository extends JpaRepository<Farmer, Long>, JpaSpecif
      *
      * @return
      */
+//    @Query(nativeQuery = true, value = "SELECT * FROM farmer_archive as fa JOIN farmer_regions_archive as fra on fa.id = fra.farmer_id")
     @Query(nativeQuery = true, value = "SELECT * FROM farmer_archive")
-    Page<Farmer> findAllInArchive(Pageable pageable);
+    Page<FarmerInArchive> findAllInArchive(Pageable pageable);
 
 }
 

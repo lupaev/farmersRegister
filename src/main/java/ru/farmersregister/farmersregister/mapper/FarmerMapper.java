@@ -4,8 +4,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import ru.farmersregister.farmersregister.dto.CreateFarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
+import ru.farmersregister.farmersregister.entity.FarmerInArchive;
 
 import java.util.Collection;
 
@@ -28,6 +30,17 @@ public interface FarmerMapper {
 
 
     /**
+     * ДТО для создания сущности фермера
+     * @param createFarmerDTO
+     * @return
+     */
+    @Mapping(source = "registrationRegion", target = "region.id")
+    @Mapping(source = "regionIds", target = "fields")
+    @Mapping(ignore = true, target = "id")
+    Farmer createEntity(CreateFarmerDTO createFarmerDTO);
+
+
+    /**
      * Преобразование сущности фермера в DTO
      *
      * @param farmer
@@ -36,6 +49,11 @@ public interface FarmerMapper {
     @Mapping(source = "region.id", target = "registrationRegion")
     @Mapping(source = "fields", target = "regionIds")
     FarmerDTO toDTO(Farmer farmer);
+
+
+    @Mapping(source = "region.id", target = "registrationRegion")
+    @Mapping(source = "fields", target = "regionIds")
+    FarmerDTO toDTO(FarmerInArchive farmer);
 
 
     /**
@@ -52,7 +70,7 @@ public interface FarmerMapper {
      * @param farmerDTO
      * @param farmer
      */
-    void updateEntity(FarmerDTO farmerDTO, @MappingTarget Farmer farmer);
+    void updateEntity(CreateFarmerDTO farmerDTO, @MappingTarget Farmer farmer);
 
 
 }

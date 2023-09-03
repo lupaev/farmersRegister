@@ -5,9 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.farmersregister.farmersregister.dto.CreateFarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
+import ru.farmersregister.farmersregister.entity.FarmerInArchive;
 import ru.farmersregister.farmersregister.exception.ElemNotFound;
 import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.FarmerMapper;
@@ -45,17 +47,15 @@ public class FarmerServiceImpl implements FarmerService {
 
   @Override
   public Page<FarmerDTO> findAllInArchive(Pageable pageable) {
-    Page<Farmer> entities = farmerRepository.findAllInArchive(pageable);
+    Page<FarmerInArchive> entities = farmerRepository.findAllInArchive(pageable);
     return entities.map(farmerMapper::toDTO);
   }
 
   @Override
-  public FarmerDTO addFarmer(FarmerDTO farmerDTO) {
+  public FarmerDTO addFarmer(CreateFarmerDTO farmerDTO) {
     log.info(FormLogInfo.getInfo());
-    Farmer farmer = farmerMapper.toEntity(farmerDTO);
-    farmerRepository.save(farmer);
-    return farmerMapper.toDTO(farmerRepository.findByInnAndName(farmerDTO.getInn(),
-        farmerDTO.getName()));
+    Farmer farmer = farmerMapper.createEntity(farmerDTO);
+    return farmerMapper.toDTO(farmerRepository.save(farmer));
   }
 
 
@@ -68,7 +68,7 @@ public class FarmerServiceImpl implements FarmerService {
   }
 
   @Override
-  public FarmerDTO patchFarmer(Long id, FarmerDTO farmerDTO) {
+  public FarmerDTO patchFarmer(Long id, CreateFarmerDTO farmerDTO) {
     log.info(FormLogInfo.getInfo());
     Farmer farmer = farmerRepository.findById(id)
         .orElseThrow(() -> new ElemNotFound("Farmer not found on :: " + id));

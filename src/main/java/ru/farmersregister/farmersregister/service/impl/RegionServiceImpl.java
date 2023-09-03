@@ -1,11 +1,11 @@
 package ru.farmersregister.farmersregister.service.impl;
 
-import java.sql.SQLException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.farmersregister.farmersregister.dto.CreateRegionDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.entity.Region;
@@ -16,6 +16,8 @@ import ru.farmersregister.farmersregister.mapper.RegionMapper;
 import ru.farmersregister.farmersregister.repository.RegionRepository;
 import ru.farmersregister.farmersregister.service.RegionService;
 import ru.farmersregister.farmersregister.specification.SpecificationDTO;
+
+import java.sql.SQLException;
 
 @Service
 @Slf4j
@@ -50,21 +52,18 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public RegionDTO addRegion(RegionDTO regionDTO) {
+  public RegionDTO addRegion(CreateRegionDTO regionDTO) {
     log.info(FormLogInfo.getInfo());
-    regionRepository.save(regionMapper.toEntity(regionDTO));
-    return regionMapper.toDTO(
-        regionRepository.findByNameAndCodeRegion(regionDTO.getName(), regionDTO.getCodeRegion()));
+    return regionMapper.toDTO(regionRepository.save(regionMapper.createEntity(regionDTO)));
   }
 
   @Override
-  public RegionDTO patchRegion(Long id, RegionDTO regionDTO) throws ElemNotFound {
+  public RegionDTO patchRegion(Long id, CreateRegionDTO regionDTO) throws ElemNotFound {
     log.info(FormLogInfo.getInfo());
     Region region = regionRepository.findById(id)
         .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
     regionMapper.updateEntity(regionDTO, region);
-    regionRepository.save(region);
-    return regionMapper.toDTO(region);
+    return regionMapper.toDTO(regionRepository.save(region));
   }
 
   @Override

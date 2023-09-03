@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.farmersregister.farmersregister.dto.CreateRegionDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.service.RegionService;
@@ -104,7 +105,7 @@ public class RegionController {
       ),
   })
   @PostMapping(value = "/add")
-  public ResponseEntity<RegionDTO> addRegion(@RequestBody RegionDTO regionDTO) {
+  public ResponseEntity<RegionDTO> addRegion(@RequestBody CreateRegionDTO regionDTO) {
     return ResponseEntity.ok(regionService.addRegion(regionDTO));
   }
 
@@ -131,7 +132,7 @@ public class RegionController {
   @PatchMapping(value = "/patch/{id}")
   public ResponseEntity<RegionDTO> patchRegion(
       @PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
-      @RequestBody RegionDTO regionDTO) {
+      @RequestBody CreateRegionDTO regionDTO) {
     return ResponseEntity.ok(regionService.patchRegion(id, regionDTO));
   }
 

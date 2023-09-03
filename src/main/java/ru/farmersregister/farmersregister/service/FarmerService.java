@@ -1,10 +1,12 @@
 package ru.farmersregister.farmersregister.service;
 
-import java.sql.SQLException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import ru.farmersregister.farmersregister.dto.CreateFarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
+
+import java.sql.SQLException;
 
 /**
  * Сервис для сущности фермеров
@@ -31,7 +33,7 @@ public interface FarmerService {
    * @param farmerDTO
    * @return
    */
-  FarmerDTO addFarmer(FarmerDTO farmerDTO);
+  FarmerDTO addFarmer(CreateFarmerDTO farmerDTO);
 
   /**
    * Получение Фермера по идентификатору
@@ -48,7 +50,7 @@ public interface FarmerService {
    * @param farmerDTO
    * @return
    */
-  FarmerDTO patchFarmer(Long id, FarmerDTO farmerDTO);
+  FarmerDTO patchFarmer(Long id, CreateFarmerDTO farmerDTO);
 
   /**
    * Перемещение Фермера в архив
