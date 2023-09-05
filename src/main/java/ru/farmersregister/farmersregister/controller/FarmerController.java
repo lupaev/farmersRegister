@@ -19,6 +19,7 @@ import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.service.FarmerInArchiveService;
 import ru.farmersregister.farmersregister.service.FarmerService;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.sql.SQLException;
 
@@ -133,7 +134,7 @@ public class FarmerController {
             ),
     })
     @PostMapping(value = "/add")
-    public ResponseEntity<FarmerDTO> addFarmer(@RequestBody CreateFarmerDTO farmerDTO) {
+    public ResponseEntity<FarmerDTO> addFarmer(@RequestBody @Valid CreateFarmerDTO farmerDTO) {
         return ResponseEntity.ok(farmerService.addFarmer(farmerDTO));
     }
 
@@ -159,7 +160,7 @@ public class FarmerController {
     @PatchMapping(value = "/patch/{id}")
     public ResponseEntity<FarmerDTO> patchFarmer(@PathVariable(name = "id")
                                                  @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
-                                                 @RequestBody CreateFarmerDTO farmerDTO) {
+                                                 @RequestBody @Valid CreateFarmerDTO farmerDTO) {
         return ResponseEntity.ok(farmerService.patchFarmer(id, farmerDTO));
     }
 

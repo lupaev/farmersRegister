@@ -19,6 +19,7 @@ import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.service.RegionService;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.sql.SQLException;
 
@@ -105,7 +106,7 @@ public class RegionController {
             ),
     })
     @PostMapping(value = "/add")
-    public ResponseEntity<RegionDTO> addRegion(@RequestBody CreateRegionDTO regionDTO) {
+    public ResponseEntity<RegionDTO> addRegion(@RequestBody @Valid CreateRegionDTO regionDTO) {
         return ResponseEntity.ok(regionService.addRegion(regionDTO));
     }
 
@@ -132,7 +133,7 @@ public class RegionController {
     @PatchMapping(value = "/patch/{id}")
     public ResponseEntity<RegionDTO> patchRegion(
             @PathVariable(name = "id") @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
-            @RequestBody CreateRegionDTO regionDTO) {
+            @RequestBody @Valid CreateRegionDTO regionDTO) {
         return ResponseEntity.ok(regionService.patchRegion(id, regionDTO));
     }
 
