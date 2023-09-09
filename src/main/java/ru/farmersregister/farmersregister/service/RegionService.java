@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import ru.farmersregister.farmersregister.dto.CreateRegionDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
-import ru.farmersregister.farmersregister.exception.ElemNotFound;
+import ru.farmersregister.farmersregister.exception.ElementNotFound;
 
 import java.sql.SQLException;
 
@@ -42,9 +42,9 @@ public interface RegionService {
      * @param id
      * @param regionDTO
      * @return
-     * @throws ElemNotFound
+     * @throws ElementNotFound
      */
-    RegionDTO patchRegion(Long id, CreateRegionDTO regionDTO) throws ElemNotFound;
+    RegionDTO patchRegion(Long id, CreateRegionDTO regionDTO) throws ElementNotFound;
 
     /**
      * Перемещение Района в архив

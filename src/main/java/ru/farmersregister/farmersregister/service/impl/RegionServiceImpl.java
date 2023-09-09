@@ -9,8 +9,8 @@ import ru.farmersregister.farmersregister.dto.CreateRegionDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.exception.ElemNotFound;
-import ru.farmersregister.farmersregister.exception.MoveToAchiveException;
+import ru.farmersregister.farmersregister.exception.ElementNotFound;
+import ru.farmersregister.farmersregister.exception.MoveToArchiveException;
 import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.RegionMapper;
 import ru.farmersregister.farmersregister.repository.RegionRepository;
@@ -58,10 +58,10 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public RegionDTO patchRegion(Long id, CreateRegionDTO regionDTO) throws ElemNotFound {
+  public RegionDTO patchRegion(Long id, CreateRegionDTO regionDTO) throws ElementNotFound {
     log.info(FormLogInfo.getInfo());
     Region region = regionRepository.findById(id)
-        .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
+        .orElseThrow(() -> new ElementNotFound("Region not found on :: " + id));
     regionMapper.updateEntity(regionDTO, region);
     return regionMapper.toDTO(regionRepository.save(region));
   }
@@ -69,12 +69,12 @@ public class RegionServiceImpl implements RegionService {
   @Override
   public RegionDTO delRegion(Long id) throws SQLException {
     Region region = regionRepository.findById(id)
-        .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
+        .orElseThrow(() -> new ElementNotFound("Region not found on :: " + id));
     try {
       regionRepository.saveToArchive(id);
       regionRepository.deleteById(id);
     } catch (Exception exception) {
-      throw new MoveToAchiveException("В данном регионе есть зарегистрированные фермеры");
+      throw new MoveToArchiveException("В данном регионе есть зарегистрированные фермеры");
     }
     return regionMapper.toDTO(region);
   }

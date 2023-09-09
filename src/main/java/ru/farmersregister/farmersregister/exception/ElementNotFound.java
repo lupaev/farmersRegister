@@ -9,12 +9,12 @@ import ru.farmersregister.farmersregister.loger.FormLogInfo;
  * Исключение
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class ElemNotFound extends RuntimeException {
+public class ElementNotFound extends RuntimeException {
 
-    public ElemNotFound() {
+    public ElementNotFound() {
     }
 
-    public ElemNotFound(String message) {
+    public ElementNotFound(String message) {
         super("Exception: " + message + FormLogInfo.getInfo());
         System.err.println("Exception: " + message + FormLogInfo.getException());
     }

@@ -9,7 +9,7 @@ import ru.farmersregister.farmersregister.dto.CreateFarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.dto.RequestDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
-import ru.farmersregister.farmersregister.exception.ElemNotFound;
+import ru.farmersregister.farmersregister.exception.ElementNotFound;
 import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.FarmerMapper;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
@@ -54,7 +54,7 @@ public class FarmerServiceImpl implements FarmerService {
     public FarmerDTO getFarmer(Long id) {
         log.info(FormLogInfo.getInfo());
         Farmer farmer = farmerRepository.findById(id)
-                .orElseThrow(() -> new ElemNotFound("Farmer not found on :: " + id));
+                .orElseThrow(() -> new ElementNotFound("Farmer not found on :: " + id));
         return farmerMapper.toDTO(farmer);
     }
 
@@ -62,7 +62,7 @@ public class FarmerServiceImpl implements FarmerService {
     public FarmerDTO patchFarmer(Long id, CreateFarmerDTO farmerDTO) {
         log.info(FormLogInfo.getInfo());
         Farmer farmer = farmerRepository.findById(id)
-                .orElseThrow(() -> new ElemNotFound("Farmer not found on :: " + id));
+                .orElseThrow(() -> new ElementNotFound("Farmer not found on :: " + id));
         farmerMapper.updateEntity(farmerDTO, farmer);
         return farmerMapper.toDTO(farmerRepository.save(farmer));
     }
@@ -70,7 +70,7 @@ public class FarmerServiceImpl implements FarmerService {
     @Override
     public FarmerDTO delFarmer(Long id) {
         Farmer farmer = farmerRepository.findById(id)
-                .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
+                .orElseThrow(() -> new ElementNotFound("Region not found on :: " + id));
         farmerRepository.saveToArchive(id);
         farmerRepository.saveFarmerFieldsToArchive(id);
         farmerRepository.deleteById(id);
