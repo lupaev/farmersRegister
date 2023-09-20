@@ -1,22 +1,20 @@
 package ru.farmersregister.farmersregister.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.farmersregister.farmersregister.dto.CreateRegionDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class RegionMapperTest {
@@ -24,6 +22,8 @@ class RegionMapperTest {
   private Region entity;
 
   private RegionDTO dto;
+
+  private CreateRegionDTO createRegionDTO;
 
 
   @Autowired
@@ -41,12 +41,17 @@ class RegionMapperTest {
     dto.setId(1L);
     dto.setName("TestRegion");
     dto.setCodeRegion(11);
+
+    createRegionDTO = new CreateRegionDTO();
+    createRegionDTO.setName("TestRegion");
+    createRegionDTO.setCodeRegion(11);
   }
 
   @AfterEach
   void afterEach() {
     entity = null;
     dto = null;
+    createRegionDTO = null;
   }
 
   @Test
@@ -126,19 +131,19 @@ class RegionMapperTest {
   @Test
   void updateEntityPositive() {
     assertNotNull(entity);
-    assertNotNull(dto);
-    dto.setCodeRegion(999);
-    mapper.updateEntity(dto, entity);
-    assertEquals(dto.getCodeRegion(), entity.getCodeRegion());
+    assertNotNull(createRegionDTO);
+    createRegionDTO.setCodeRegion(999);
+    mapper.updateEntity(createRegionDTO, entity);
+    assertEquals(createRegionDTO.getCodeRegion(), entity.getCodeRegion());
   }
 
   @Test
   void updateEntityNegative() {
     assertNotNull(entity);
-    assertNotNull(dto);
-    dto.setCodeRegion(999);
-    mapper.updateEntity(dto, entity);
+    assertNotNull(createRegionDTO);
+    createRegionDTO.setCodeRegion(999);
+    mapper.updateEntity(createRegionDTO, entity);
     entity.setCodeRegion(666);
-    assertNotEquals(dto.getCodeRegion(), entity.getCodeRegion());
+    assertNotEquals(createRegionDTO.getCodeRegion(), entity.getCodeRegion());
   }
 }
