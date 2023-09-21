@@ -7,12 +7,12 @@ import lombok.Setter;
 @Setter
 public class SearchRequestDTO {
 
-  String column;
-  String value;
-  Operation operation;
+    String column;
+    String value;
+    Operation operation;
 
-  public enum Operation {
-    EQUAL, LIKE, IN, GT, LT, BT
-  }
+    public enum Operation {
+        EQUAL, LIKE, IN, GT, LT, BT
+    }
 
 }

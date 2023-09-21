@@ -1,21 +1,5 @@
 package ru.farmersregister.farmersregister.service;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,14 +8,29 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import ru.farmersregister.farmersregister.dto.CreateRegionDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.exception.ElemNotFound;
+import ru.farmersregister.farmersregister.exception.ElementNotFound;
 import ru.farmersregister.farmersregister.mapper.RegionMapper;
 import ru.farmersregister.farmersregister.repository.RegionRepository;
 import ru.farmersregister.farmersregister.service.impl.RegionServiceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
+@SpringBootTest
 class RegionServiceTest {
 
   @InjectMocks
@@ -42,6 +41,8 @@ class RegionServiceTest {
 
   @Spy
   private RegionMapper mapper;
+
+  private CreateRegionDTO createRegionDTO;
 
   private Region entity;
 
@@ -58,6 +59,10 @@ class RegionServiceTest {
     dto.setId(1L);
     dto.setName("TestRegion");
     dto.setCodeRegion(11);
+
+    createRegionDTO = new CreateRegionDTO();
+    createRegionDTO.setName("TestRegion");
+    createRegionDTO.setCodeRegion(11);
   }
 
   @AfterEach
@@ -68,7 +73,6 @@ class RegionServiceTest {
 
   @Test
   void findAllPositive() {
-    RegionServiceImpl service = mock(RegionServiceImpl.class);
     RegionMapper mapper = mock(RegionMapper.class);
 
     List<Region> regions = new ArrayList<>();
@@ -88,16 +92,15 @@ class RegionServiceTest {
 
   @Test
   void findAllNegative() {
-    RegionServiceImpl service = mock(RegionServiceImpl.class);
 
     List<Region> regions = new ArrayList<>();
     regions.add(entity);
     List<RegionDTO> regionDTOS = new ArrayList<>();
     regionDTOS.add(dto);
 
-    when(repository.findAll()).thenThrow(ElemNotFound.class);
+    when(repository.findAll()).thenThrow(ElementNotFound.class);
 
-    assertThrows(ElemNotFound.class, () -> repository.findAll());
+    assertThrows(ElementNotFound.class, () -> repository.findAll());
 
     verify(repository, times(1)).findAll();
   }
@@ -109,16 +112,16 @@ class RegionServiceTest {
 
     when(mapper.toEntity(dto)).thenReturn(entity);
     when(
-        service.addRegion(dto)).thenReturn(dto);
-    when(repository.save(any(Region.class))).thenReturn(entity);
-    assertThat(service.addRegion(dto)).isNotNull()
+        service.addRegion(createRegionDTO)).thenReturn(dto);
+    when(repository.save(entity)).thenReturn(entity);
+    assertThat(service.addRegion(createRegionDTO)).isNotNull()
         .isEqualTo(dto).isExactlyInstanceOf(RegionDTO.class);
     assertThat(mapper.toEntity(dto)).isNotNull().isEqualTo(entity)
-        .isExactlyInstanceOf(ru.farmersregister.farmersregister.entity.Region.class);
+        .isExactlyInstanceOf(Region.class);
     assertThat(repository.save(entity)).isNotNull().isExactlyInstanceOf(Region.class);
 
     verify(repository, times(1)).save(entity);
-    verify(service, times(1)).addRegion(dto);
+    verify(service, times(1)).addRegion(createRegionDTO);
     verify(mapper, times(1)).toEntity(dto);
   }
 
@@ -129,15 +132,15 @@ class RegionServiceTest {
 
     when(mapper.toEntity(any())).thenThrow(NullPointerException.class);
     when(repository.save(any())).thenThrow(RuntimeException.class);
-    when(service.addRegion(dto)).thenThrow(
+    when(service.addRegion(createRegionDTO)).thenThrow(
         RuntimeException.class);
     assertThrows(NullPointerException.class, () -> mapper.toEntity(any()));
     assertThrows(RuntimeException.class, () -> repository.save(any(Region.class)));
     assertThatExceptionOfType(RuntimeException.class).isThrownBy(
-        () -> service.addRegion(dto));
+        () -> service.addRegion(createRegionDTO));
 
     verify(repository, times(1)).save(any());
-    verify(service, times(1)).addRegion(dto);
+    verify(service, times(1)).addRegion(createRegionDTO);
     verify(mapper, times(1)).toEntity(any());
   }
 
@@ -147,29 +150,29 @@ class RegionServiceTest {
     RegionMapper mapper = mock(RegionMapper.class);
     Long id = 1L;
 
-    when(repository.findById(anyLong())).thenReturn(Optional.ofNullable(entity));
+    when(repository.findById(id)).thenReturn(Optional.ofNullable(entity));
     when(mapper.toDTO(entity)).thenReturn(dto);
-    doNothing().when(mapper).updateEntity(dto, entity);
-    when(repository.save(any(Region.class))).thenReturn(entity);
-    when(service.patchRegion(id, dto)).thenReturn(dto);
+    doNothing().when(mapper).updateEntity(createRegionDTO, entity);
+    when(repository.save(entity)).thenReturn(entity);
+    when(service.patchRegion(id, createRegionDTO)).thenReturn(dto);
 
-    assertThat(repository.findById(anyLong())).isNotNull();
+    assertThat(repository.findById(id)).isNotNull();
     assertThat(mapper.toDTO(entity)).isNotNull().isEqualTo(dto)
         .isExactlyInstanceOf(RegionDTO.class);
     assertDoesNotThrow(
-        () -> mapper.updateEntity(dto, entity));
+        () -> mapper.updateEntity(createRegionDTO, entity));
     assertThat(repository.save(entity)).isNotNull().isExactlyInstanceOf(Region.class);
 
     assertThat(
-        service.patchRegion(id, dto)).isNotNull().isEqualTo(dto)
+        service.patchRegion(id, createRegionDTO)).isNotNull().isEqualTo(dto)
         .isExactlyInstanceOf(RegionDTO.class);
 
     verify(repository, times(1)).save(entity);
-    verify(repository, times(1)).findById(anyLong());
-    verify(mapper, times(1)).toDTO(any(Region.class));
-    verify(mapper, times(1)).updateEntity(any(RegionDTO.class), any(Region.class));
+    verify(repository, times(1)).findById(id);
+    verify(mapper, times(1)).toDTO(entity);
+    verify(mapper, times(1)).updateEntity(createRegionDTO, entity);
 
-    verify(service, times(1)).patchRegion(id, dto);
+    verify(service, times(1)).patchRegion(id, createRegionDTO);
   }
 
   @Test
@@ -178,23 +181,23 @@ class RegionServiceTest {
     RegionMapper mapper = mock(RegionMapper.class);
     Long id = 1L;
 
-    when(repository.findById(anyLong())).thenThrow(ElemNotFound.class);
+    when(repository.findById(anyLong())).thenThrow(ElementNotFound.class);
     when(mapper.toDTO(any())).thenThrow(NullPointerException.class);
     doThrow(NullPointerException.class).when(mapper).updateEntity(any(), any());
     when(repository.save(any())).thenThrow(RuntimeException.class);
-    when(service.patchRegion(id, dto)).thenThrow(RuntimeException.class);
-    assertThrows(ElemNotFound.class, () -> repository.findById(anyLong()));
+    when(service.patchRegion(id, createRegionDTO)).thenThrow(RuntimeException.class);
+    assertThrows(ElementNotFound.class, () -> repository.findById(anyLong()));
     assertThrows(NullPointerException.class, () -> mapper.toDTO(any()));
     assertThrows(NullPointerException.class, () -> mapper.updateEntity(any(), any()));
     assertThrows(RuntimeException.class, () -> repository.save(any()));
     assertThatExceptionOfType(RuntimeException.class).isThrownBy(
-        () -> service.patchRegion(id, dto));
+        () -> service.patchRegion(id, createRegionDTO));
 
     verify(repository, times(1)).save(any());
     verify(repository, times(1)).findById(anyLong());
     verify(mapper, times(1)).toDTO(any());
     verify(mapper, times(1)).updateEntity(any(), any());
 
-    verify(service, times(1)).patchRegion(id, dto);
+    verify(service, times(1)).patchRegion(id, createRegionDTO);
   }
 }

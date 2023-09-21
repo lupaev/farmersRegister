@@ -18,9 +18,9 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Table(name = "farmer")
+@Table(name = "farmer_archive")
 @Entity
-public class Farmer {
+public class FarmerInArchive {
 
     /**
      * Идентификатор
@@ -78,7 +78,7 @@ public class Farmer {
      * Районы посевных полей
      */
     @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinTable(name = "farmer_regions",
+    @JoinTable(name = "farmer_regions_archive",
             joinColumns = @JoinColumn(name = "farmer_id"),
             inverseJoinColumns = @JoinColumn(name = "regions_id"))
     private Collection<Region> fields;

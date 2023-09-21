@@ -1,19 +1,20 @@
 package ru.farmersregister.farmersregister.dto;
 
-import java.util.Collection;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Collection;
 
 @Getter
 @Setter
 public class RequestDTO {
 
-  private Collection<SearchRequestDTO> searchRequestDTO;
+    private Collection<SearchRequestDTO> searchRequestDTO;
 
-  private GlobalOperator globalOperator;
+    private GlobalOperator globalOperator;
 
-  public enum GlobalOperator {
-    AND, OR
-  }
+    public enum GlobalOperator {
+        AND, OR
+    }
 
 }
