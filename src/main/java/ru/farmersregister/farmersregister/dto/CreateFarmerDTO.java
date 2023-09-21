@@ -59,15 +59,9 @@ public class CreateFarmerDTO {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Schema(description = "Дата регистрации")
-//    @NotNull
-//    @NotEmpty
-//    @NotBlank
     private LocalDate dateRegistration;
 
     @Schema(description = "Районы посевных полей")
-//    @NotNull
-//    @NotEmpty
-//    @NotBlank
     private Collection<Long> regionIds;
 
 }
