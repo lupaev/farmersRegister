@@ -1,12 +1,13 @@
 package ru.farmersregister.farmersregister.service;
 
 import com.querydsl.core.types.Predicate;
-import java.sql.SQLException;
-import java.util.Collection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
-import ru.farmersregister.farmersregister.exception.ElemNotFound;
+import ru.farmersregister.farmersregister.exception.ElementNotFound;
+
+import java.sql.SQLException;
+import java.util.Collection;
 
 /**
  * Сервис для сущности районов
@@ -41,9 +42,9 @@ public interface RegionService {
    * @param id
    * @param regionDTO
    * @return
-   * @throws ElemNotFound
+   * @throws ElementNotFound
    */
-  RegionDTO patchRegion(Long id, RegionDTO regionDTO) throws ElemNotFound;
+  RegionDTO patchRegion(Long id, RegionDTO regionDTO) throws ElementNotFound;
 
   /**
    * Перемещение Района в архив

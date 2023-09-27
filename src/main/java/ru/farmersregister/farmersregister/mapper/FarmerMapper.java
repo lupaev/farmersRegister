@@ -1,17 +1,22 @@
 package ru.farmersregister.farmersregister.mapper;
 
-import java.util.Collection;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import ru.farmersregister.farmersregister.dto.CreateFarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
+import ru.farmersregister.farmersregister.entity.FarmerInArchive;
+
+import java.util.Collection;
 
 /**
  * Маппер для фермера
  */
-@Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, uses = RegionToLong.class)
 public interface FarmerMapper {
+
 
   /**
    * Преобразование DTO в сущность фермера
@@ -19,8 +24,22 @@ public interface FarmerMapper {
    * @param farmerDTO
    * @return
    */
-//  @Mapping(source = "registrationRegion", target = "region.id")
+  @Mapping(source = "registrationRegion", target = "region.id")
+  @Mapping(source = "regionIds", target = "fields")
   Farmer toEntity(FarmerDTO farmerDTO);
+
+
+  /**
+   * ДТО для создания сущности фермера
+   *
+   * @param createFarmerDTO
+   * @return
+   */
+  @Mapping(source = "registrationRegion", target = "region.id")
+  @Mapping(source = "regionIds", target = "fields")
+  @Mapping(ignore = true, target = "id")
+  Farmer createEntity(CreateFarmerDTO createFarmerDTO);
+
 
   /**
    * Преобразование сущности фермера в DTO
@@ -28,8 +47,15 @@ public interface FarmerMapper {
    * @param farmer
    * @return
    */
-//  @Mapping(source = "region.id", target = "registrationRegion")
+  @Mapping(source = "region.id", target = "registrationRegion")
+  @Mapping(source = "fields", target = "regionIds")
   FarmerDTO toDTO(Farmer farmer);
+
+
+  @Mapping(source = "region.id", target = "registrationRegion")
+  @Mapping(source = "fields", target = "regionIds")
+  FarmerDTO toDTO(FarmerInArchive farmer);
+
 
   /**
    * Преобразование коллекции фермеров в коллекцию  DTO
@@ -45,7 +71,7 @@ public interface FarmerMapper {
    * @param farmerDTO
    * @param farmer
    */
-  void updateEntity(FarmerDTO farmerDTO, @MappingTarget Farmer farmer);
+  void updateEntity(CreateFarmerDTO farmerDTO, @MappingTarget Farmer farmer);
 
 
 }

@@ -26,7 +26,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.exception.ElemNotFound;
+import ru.farmersregister.farmersregister.exception.ElementNotFound;
 import ru.farmersregister.farmersregister.mapper.RegionMapper;
 import ru.farmersregister.farmersregister.repository.RegionRepository;
 import ru.farmersregister.farmersregister.service.impl.RegionServiceImpl;
@@ -95,9 +95,9 @@ class RegionServiceTest {
     List<RegionDTO> regionDTOS = new ArrayList<>();
     regionDTOS.add(dto);
 
-    when(repository.findAll()).thenThrow(ElemNotFound.class);
+    when(repository.findAll()).thenThrow(ElementNotFound.class);
 
-    assertThrows(ElemNotFound.class, () -> repository.findAll());
+    assertThrows(ElementNotFound.class, () -> repository.findAll());
 
     verify(repository, times(1)).findAll();
   }
@@ -178,12 +178,12 @@ class RegionServiceTest {
     RegionMapper mapper = mock(RegionMapper.class);
     Long id = 1L;
 
-    when(repository.findById(anyLong())).thenThrow(ElemNotFound.class);
+    when(repository.findById(anyLong())).thenThrow(ElementNotFound.class);
     when(mapper.toDTO(any())).thenThrow(NullPointerException.class);
     doThrow(NullPointerException.class).when(mapper).updateEntity(any(), any());
     when(repository.save(any())).thenThrow(RuntimeException.class);
     when(service.patchRegion(id, dto)).thenThrow(RuntimeException.class);
-    assertThrows(ElemNotFound.class, () -> repository.findById(anyLong()));
+    assertThrows(ElementNotFound.class, () -> repository.findById(anyLong()));
     assertThrows(NullPointerException.class, () -> mapper.toDTO(any()));
     assertThrows(NullPointerException.class, () -> mapper.updateEntity(any(), any()));
     assertThrows(RuntimeException.class, () -> repository.save(any()));

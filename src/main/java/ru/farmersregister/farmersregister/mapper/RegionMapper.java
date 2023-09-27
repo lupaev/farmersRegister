@@ -1,11 +1,14 @@
 package ru.farmersregister.farmersregister.mapper;
 
-import java.util.Collection;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import ru.farmersregister.farmersregister.dto.CreateRegionDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
+
+import java.util.Collection;
 
 /**
  * Маппер для района
@@ -20,6 +23,15 @@ public interface RegionMapper {
    * @return
    */
   Region toEntity(RegionDTO regionDTO);
+
+  /**
+   * ДТО для создания сущности региона
+   *
+   * @param createRegionDTO
+   * @return
+   */
+  @Mapping(ignore = true, target = "id")
+  Region createEntity(CreateRegionDTO createRegionDTO);
 
   /**
    * Преобразование сущности района в DTO
@@ -43,6 +55,6 @@ public interface RegionMapper {
    * @param regionDTO
    * @param region
    */
-  void updateEntity(RegionDTO regionDTO, @MappingTarget Region region);
+  void updateEntity(CreateRegionDTO regionDTO, @MappingTarget Region region);
 
 }

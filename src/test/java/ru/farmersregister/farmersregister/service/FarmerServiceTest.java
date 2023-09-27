@@ -1,24 +1,5 @@
 package ru.farmersregister.farmersregister.service;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,10 +11,23 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.exception.ElemNotFound;
+import ru.farmersregister.farmersregister.exception.ElementNotFound;
 import ru.farmersregister.farmersregister.mapper.FarmerMapper;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
 import ru.farmersregister.farmersregister.service.impl.FarmerServiceImpl;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FarmerServiceTest {
@@ -138,9 +132,9 @@ class FarmerServiceTest {
     List<FarmerDTO> farmerDTOS = new ArrayList<>();
     farmerDTOS.add(dto);
 
-    when(repository.findAll()).thenThrow(ElemNotFound.class);
+    when(repository.findAll()).thenThrow(ElementNotFound.class);
 
-    assertThrows(ElemNotFound.class, () -> repository.findAll());
+    assertThrows(ElementNotFound.class, () -> repository.findAll());
 
     verify(repository, times(1)).findAll();
   }
@@ -219,13 +213,13 @@ class FarmerServiceTest {
     FarmerMapper mapper = mock(FarmerMapper.class);
     Long id = 1L;
 
-    when(repository.findById(anyLong())).thenThrow(ElemNotFound.class);
+    when(repository.findById(anyLong())).thenThrow(ElementNotFound.class);
     when(mapper.toDTO(any())).thenThrow(NullPointerException.class);
     doThrow(NullPointerException.class).when(mapper).updateEntity(any(), any());
     when(repository.save(any())).thenThrow(RuntimeException.class);
     when(service.patchFarmer(id, dto))
         .thenThrow(RuntimeException.class);
-    assertThrows(ElemNotFound.class, () -> repository.findById(anyLong()));
+    assertThrows(ElementNotFound.class, () -> repository.findById(anyLong()));
     assertThrows(NullPointerException.class, () -> mapper.toDTO(any()));
     assertThrows(NullPointerException.class, () -> mapper.updateEntity(any(), any()));
     assertThrows(RuntimeException.class, () -> repository.save(any()));
@@ -265,13 +259,13 @@ class FarmerServiceTest {
     FarmerServiceImpl service = mock(FarmerServiceImpl.class);
     FarmerMapper mapper = mock(FarmerMapper.class);
 
-    when(repository.findById(anyLong())).thenThrow(ElemNotFound.class);
+    when(repository.findById(anyLong())).thenThrow(ElementNotFound.class);
     when(mapper.toDTO(entity)).thenThrow(NullPointerException.class);
-    when(service.getFarmer(anyLong())).thenThrow(ElemNotFound.class);
+    when(service.getFarmer(anyLong())).thenThrow(ElementNotFound.class);
 
-    assertThrows(ElemNotFound.class, () -> repository.findById(anyLong()));
+    assertThrows(ElementNotFound.class, () -> repository.findById(anyLong()));
     assertThrows(NullPointerException.class, () -> mapper.toDTO(entity));
-    assertThrows(ElemNotFound.class, () -> service.getFarmer(anyLong()));
+    assertThrows(ElementNotFound.class, () -> service.getFarmer(anyLong()));
 
     verify(repository, times(1)).findById(anyLong());
     verify(mapper, times(1)).toDTO(entity);

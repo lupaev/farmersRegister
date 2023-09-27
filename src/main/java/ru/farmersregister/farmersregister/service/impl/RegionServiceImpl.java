@@ -1,20 +1,21 @@
 package ru.farmersregister.farmersregister.service.impl;
 
 import com.querydsl.core.types.Predicate;
-import java.sql.SQLException;
-import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
-import ru.farmersregister.farmersregister.exception.ElemNotFound;
+import ru.farmersregister.farmersregister.exception.ElementNotFound;
 import ru.farmersregister.farmersregister.exception.MoveToAchive;
 import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.RegionMapper;
 import ru.farmersregister.farmersregister.repository.RegionRepository;
 import ru.farmersregister.farmersregister.service.RegionService;
+
+import java.sql.SQLException;
+import java.util.Collection;
 
 @Service
 @Slf4j
@@ -48,10 +49,10 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public RegionDTO patchRegion(Long id, RegionDTO regionDTO) throws ElemNotFound {
+  public RegionDTO patchRegion(Long id, RegionDTO regionDTO) throws ElementNotFound {
     log.info(FormLogInfo.getInfo());
     Region region = regionRepository.findById(id)
-        .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
+        .orElseThrow(() -> new ElementNotFound("Region not found on :: " + id));
     regionMapper.updateEntity(regionDTO, region);
     regionRepository.save(region);
     return regionMapper.toDTO(region);
@@ -60,7 +61,7 @@ public class RegionServiceImpl implements RegionService {
   @Override
   public RegionDTO delRegion(Long id) throws SQLException {
     Region region = regionRepository.findById(id)
-        .orElseThrow(() -> new ElemNotFound("Region not found on :: " + id));
+        .orElseThrow(() -> new ElementNotFound("Region not found on :: " + id));
     try {
       regionRepository.saveToArchive(id);
       regionRepository.deleteById(id);
