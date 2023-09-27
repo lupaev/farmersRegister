@@ -5,10 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.farmersregister.farmersregister.dto.CreateRegionDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.entity.Region;
 import ru.farmersregister.farmersregister.exception.ElementNotFound;
-import ru.farmersregister.farmersregister.exception.MoveToAchive;
+import ru.farmersregister.farmersregister.exception.MoveToAchiveException;
 import ru.farmersregister.farmersregister.loger.FormLogInfo;
 import ru.farmersregister.farmersregister.mapper.RegionMapper;
 import ru.farmersregister.farmersregister.repository.RegionRepository;
@@ -42,18 +43,18 @@ public class RegionServiceImpl implements RegionService {
   }
 
   @Override
-  public RegionDTO addRegion(RegionDTO regionDTO) {
+  public RegionDTO addRegion(CreateRegionDTO createRegionDTO) {
     log.info(FormLogInfo.getInfo());
-    Region region = regionRepository.save(regionMapper.toEntity(regionDTO));
+    Region region = regionRepository.save(regionMapper.createEntity(createRegionDTO));
     return regionMapper.toDTO(region);
   }
 
   @Override
-  public RegionDTO patchRegion(Long id, RegionDTO regionDTO) throws ElementNotFound {
+  public RegionDTO patchRegion(Long id, CreateRegionDTO createRegionDTO) throws ElementNotFound {
     log.info(FormLogInfo.getInfo());
     Region region = regionRepository.findById(id)
         .orElseThrow(() -> new ElementNotFound("Region not found on :: " + id));
-    regionMapper.updateEntity(regionDTO, region);
+    regionMapper.updateEntity(createRegionDTO, region);
     regionRepository.save(region);
     return regionMapper.toDTO(region);
   }
@@ -66,7 +67,7 @@ public class RegionServiceImpl implements RegionService {
       regionRepository.saveToArchive(id);
       regionRepository.deleteById(id);
     } catch (Exception exception) {
-      throw new MoveToAchive("В данном регионе есть зарегистрированные фермеры");
+      throw new MoveToAchiveException("В данном регионе есть зарегистрированные фермеры");
     }
     return regionMapper.toDTO(region);
   }

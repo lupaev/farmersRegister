@@ -1,16 +1,11 @@
 package ru.farmersregister.farmersregister.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.Collection;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
-import ru.farmersregister.farmersregister.entity.Region;
 
 
 @Getter
@@ -41,13 +36,13 @@ public class FarmerDTO {
   private String ogrn;
 
   @Schema(description = "Район регистрации фермера")
-  private Region region;
+  private Long registrationRegion;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   @Schema(description = "Дата регистрации")
   private LocalDate dateRegistration;
 
   @Schema(description = "Районы посевных полей")
-  private Collection<Region> fields;
+  private Collection<Long> regionIds;
 
 }

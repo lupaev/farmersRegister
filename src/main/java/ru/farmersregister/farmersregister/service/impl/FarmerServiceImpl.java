@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.farmersregister.farmersregister.dto.CreateFarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.exception.ElementNotFound;
@@ -42,9 +43,9 @@ public class FarmerServiceImpl implements FarmerService {
   }
 
   @Override
-  public FarmerDTO addFarmer(FarmerDTO farmerDTO) {
+  public FarmerDTO addFarmer(CreateFarmerDTO createFarmerDTO) {
     log.info(FormLogInfo.getInfo());
-    Farmer farmer = farmerRepository.save(farmerMapper.toEntity(farmerDTO));
+    Farmer farmer = farmerRepository.save(farmerMapper.createEntity(createFarmerDTO));
     return farmerMapper.toDTO(farmer);
   }
 
@@ -58,11 +59,11 @@ public class FarmerServiceImpl implements FarmerService {
   }
 
   @Override
-  public FarmerDTO patchFarmer(Long id, FarmerDTO farmerDTO) {
+  public FarmerDTO patchFarmer(Long id, CreateFarmerDTO createFarmerDTO) {
     log.info(FormLogInfo.getInfo());
     Farmer farmer = farmerRepository.findById(id)
         .orElseThrow(() -> new ElementNotFound("Farmer not found on :: " + id));
-    farmerMapper.updateEntity(farmerDTO, farmer);
+    farmerMapper.updateEntity(createFarmerDTO, farmer);
     farmerRepository.save(farmer);
     return farmerMapper.toDTO(farmerRepository.findById(id)
         .orElseThrow(() -> new ElementNotFound("Farmer not found on :: " + id)));

@@ -9,26 +9,21 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.sql.SQLException;
-import java.util.Collection;
-import javax.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.farmersregister.farmersregister.dto.CreateFarmerDTO;
 import ru.farmersregister.farmersregister.dto.FarmerDTO;
 import ru.farmersregister.farmersregister.entity.Farmer;
 import ru.farmersregister.farmersregister.repository.FarmerRepository;
 import ru.farmersregister.farmersregister.service.FarmerService;
+
+import javax.validation.constraints.Min;
+import java.sql.SQLException;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/farmer")
@@ -140,8 +135,8 @@ public class FarmerController {
       ),
   })
   @PostMapping(value = "/add")
-  public ResponseEntity<FarmerDTO> addFarmer(@RequestBody FarmerDTO farmerDTO) {
-    return ResponseEntity.ok(farmerService.addFarmer(farmerDTO));
+  public ResponseEntity<FarmerDTO> addFarmer(@RequestBody CreateFarmerDTO createFarmerDTO) {
+    return ResponseEntity.ok(farmerService.addFarmer(createFarmerDTO));
   }
 
   @Operation(summary = "Изменение данных фермера.")
@@ -166,8 +161,8 @@ public class FarmerController {
   @PatchMapping(value = "/patch/{id}")
   public ResponseEntity<FarmerDTO> patchFarmer(@PathVariable(name = "id")
   @Parameter(description = "Идентификатор", example = "1") @Min(1) Long id,
-      @RequestBody FarmerDTO farmerDTO) {
-    return ResponseEntity.ok(farmerService.patchFarmer(id, farmerDTO));
+      @RequestBody CreateFarmerDTO createFarmerDTO) {
+    return ResponseEntity.ok(farmerService.patchFarmer(id, createFarmerDTO));
   }
 
 

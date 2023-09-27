@@ -3,6 +3,7 @@ package ru.farmersregister.farmersregister.service;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import ru.farmersregister.farmersregister.dto.CreateRegionDTO;
 import ru.farmersregister.farmersregister.dto.RegionDTO;
 import ru.farmersregister.farmersregister.exception.ElementNotFound;
 
@@ -31,20 +32,20 @@ public interface RegionService {
   /**
    * Добавление нового Района в БД
    *
-   * @param regionDTO
+   * @param createRegionDTO
    * @return
    */
-  RegionDTO addRegion(RegionDTO regionDTO);
+  RegionDTO addRegion(CreateRegionDTO createRegionDTO);
 
   /**
    * Изменение данных Района
    *
    * @param id
-   * @param regionDTO
+   * @param createRegionDTO
    * @return
    * @throws ElementNotFound
    */
-  RegionDTO patchRegion(Long id, RegionDTO regionDTO) throws ElementNotFound;
+  RegionDTO patchRegion(Long id, CreateRegionDTO createRegionDTO) throws ElementNotFound;
 
   /**
    * Перемещение Района в архив
