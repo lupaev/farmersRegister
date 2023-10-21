@@ -1,7 +1,8 @@
 #!/bin/sh
 
-mvn test
-if [ $? -ne 0 ]; then
+./mvnw test
+status=$?
+if [ $status -ne 0 ]; then
 	echo "Тесты не прошли успешно. Отмена push."
 	exit 1
 fi
