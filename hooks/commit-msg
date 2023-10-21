@@ -1,0 +1,13 @@
+#!/bin/sh
+
+valid_commit="((feature)|(bugfix)|(hotfix))\/(NEURO)\-[0-9]{1,4}[[:space:]]-[[:space:]][0-9a-Z[:punct:]]+"
+commit_msg=$(cat $1)
+message_error="Данный commit не соответствует установленной системе 
+именования. Сообщение каждого commit должно начинаться с определенного 
+префикса, который отражает тип задачи. 
+Например: 'feature/NEURO-9999 - textMessage'"
+
+if ! [[ "$commit_msg" =~ $valid_commit ]]; then
+    echo "$message_error"
+    exit 1     
+fi

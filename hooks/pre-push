@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "*****Запуск unit тестов******"
+git stash -q --keep-index
+
+status=$?
+./mvnw test
+if [ status != 0 ]; then 
+	echo "*****Завершение unit тестов******"
+	echo "Тесты не прошли успешно. Отмена push."
+	git stash pop -q
+	exit 1
+fi
